@@ -43,7 +43,7 @@
 				<executions>
 					<execution>
 						<goals>
-							<goal>process</goal>
+							<goal>antlr4</goal>
 						</goals>
 						<configuration>
 							<outputDirectory>target/generated-sources/java</outputDirectory>
