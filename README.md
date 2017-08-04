@@ -3,6 +3,7 @@
 ## Ambiente de desenvolvimento
 
 Para manter e desenvolver o projeto é necessário ter as seguintes tecnologias instaladas:
+
   - Java versão 8 ou superior 
   - Mavem 3
   - Eclipse
