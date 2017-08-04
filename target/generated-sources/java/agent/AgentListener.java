@@ -1,6 +1,5 @@
-// Generated from Agent.g4 by ANTLR 4.5
-package br.ufsc.ine.agent_project;
-import org.antlr.v4.runtime.misc.NotNull;
+// Generated from agent/Agent.g4 by ANTLR 4.7
+package agent;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**

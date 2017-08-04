@@ -39,19 +39,15 @@
 			<plugin>
 				<groupId>org.antlr</groupId>
 				<artifactId>antlr4-maven-plugin</artifactId>
-				<version>4.5</version>
-				<configuration>
-					<arguments>
-						<argument>-package</argument>
-						<argument>br.ufsc.ine.agent_project.antlr4</argument>
-						<argument>-visitor</argument>
-					</arguments>
-				</configuration>
+				<version>4.7</version>
 				<executions>
 					<execution>
 						<goals>
-							<goal>antlr4</goal>
+							<goal>process</goal>
 						</goals>
+						<configuration>
+							<outputDirectory>target/generated-sources/java</outputDirectory>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
