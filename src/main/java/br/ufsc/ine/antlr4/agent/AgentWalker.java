@@ -1,4 +1,4 @@
-package teste;
+package br.ufsc.ine.antlr4.agent;
 
 import agent.AgentBaseListener;
 import agent.AgentParser.ActionContext;
