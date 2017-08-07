@@ -18,6 +18,8 @@ _Obs: A IDE utilizada para o desenvolvimento é o Eclipse, para importar o proje
 
 ## Gerar as classes da gramática
 
+_O comando clean install já deve gerar as classes, o objetivo de usar o goal antlr4 é forçar a geração_
+
 
 ```sh
 $ mvn antlr4:antlr4 
