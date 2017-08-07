@@ -28,11 +28,15 @@ public class Main {
 			CharStream stream = CharStreams.fromFileName(filename);
 			AgentLexer lexer = new AgentLexer(stream);
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
-			AgentParser parser = new AgentParser(tokens);
-			ParseTree tree = parser.agent();
 
+			AgentParser parser = new AgentParser(tokens);
+			parser.removeErrorListeners();
+			parser.addErrorListener(new VerboseListener());
+
+			ParseTree tree = parser.agent();
 			ParseTreeWalker walker = new ParseTreeWalker();
 			walker.walk(new AgentWalker(), tree);
+
 		} catch (IOException e) {
 			System.out.println("I/O exception.");
 		}

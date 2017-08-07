@@ -6,6 +6,7 @@ agent
 	:
 	  contextDeclare*
 	  bridgeRules*
+	  EOF
 	;
 
  
