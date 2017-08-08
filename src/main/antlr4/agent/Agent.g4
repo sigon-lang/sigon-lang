@@ -4,31 +4,47 @@ grammar Agent;
 
 agent
 	:
-	  contextDeclare*
-	  bridgeRules*
+	  (context | bridgeRule)*
 	  EOF
 	;
 
  
-contextDeclare
-	: (primitiveContext | customContext) '(' type ')' ':' formulas
+context
+	: contextName '(' param? ')' ':' formulas
+	| PLANS '(' ('prop' | 'fol')? ')' ':' plansFormulas
 	;
 
-primitiveContext
-	: (BELIEFS | DESIRES | INTENTIONS | PLANS)
+
+
+param
+	: type 
 	;
 
-customContext
+	
+contextName
+	: primitiveContextName 
+	| customContextName
+;
+
+primitiveContextName
+	: (BELIEFS | DESIRES | INTENTIONS)
+	;
+
+customContextName
 	:
-	'_' + (LCLETTER | UCLETTER) + character*
+	'_'(LCLETTER | UCLETTER)+ character*
 	;
 
 
 type
 	: 'prop'
 	| 'fol'
+	| customType (',' semanticRules)
 	;
 
+customType
+	: character +
+	;
 
  
 
@@ -41,14 +57,16 @@ action
 	;
 
 somethingToBeTrue
-	: (propClause | folClause)
+	: propClause 
+	| folClause
 	;
 
 compoundaction
 	: ('[' action (',' action)* ']')?;
 
 preconditions
-	: (propClause | folClause)
+	: propClause
+	| folClause
 	;
 
 postconditions
@@ -60,22 +78,24 @@ postconditions
 formulas
 	: ((propClause  | (propClause ':-' propLogExpr ))'.')*
 	| ((folClause | (folClause ':-' folLogExpr )) '.')*
-	| ((plan  | action )'.') *
 	;
+plansFormulas
+	: ((plan  | action )'.') *
+	;	
 
-bridgeRules
+bridgeRule
 	:
 	head ':-' body '.'
 	;
 
 head
 	:
-('!' (primitiveContext | customContext) '(' type ')' ) ('not')? (propClause | folClause)
+('!' contextName '(' type ')' ) ('not')? (propClause | folClause)
 ;
 
 body
 	:
-(primitiveContext | customContext) '(' type ')' 'not'? (propClause | folClause) (('and'|'or')  (primitiveContext | customContext) '(' type ')' 'not'? (propClause | folClause))*
+contextName '(' type ')' 'not'? (propClause | folClause) (('and'|'or')  contextName '(' type ')' 'not'? (propClause | folClause))*
 	;
 
 
@@ -107,6 +127,12 @@ character
     : LCLETTER | UCLETTER | DIGIT
     ;
 
+/* Permiter que o usuário descreva a semântica da lógica.
+*/
+
+semanticRules
+	: character+ '.semantic'
+	;
 
 
 BELIEFS

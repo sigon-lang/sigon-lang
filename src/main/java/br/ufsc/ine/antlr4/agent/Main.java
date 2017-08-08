@@ -8,9 +8,9 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
-
 import agent.AgentLexer;
 import agent.AgentParser;
+import br.ufsc.ine.antlr4.agent.VerboseListener;
 
 public class Main {
 

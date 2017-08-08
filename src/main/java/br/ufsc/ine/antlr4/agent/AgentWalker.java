@@ -2,8 +2,8 @@ package br.ufsc.ine.antlr4.agent;
 
 import agent.AgentBaseListener;
 import agent.AgentParser.ActionContext;
-import agent.AgentParser.BridgeRulesContext;
-import agent.AgentParser.PrimitiveContextContext;
+import agent.AgentParser.BridgeRuleContext;
+import agent.AgentParser.PrimitiveContextNameContext;
 import agent.AgentParser.TypeContext;
 
 public class AgentWalker extends AgentBaseListener {
@@ -15,9 +15,9 @@ public class AgentWalker extends AgentBaseListener {
 	}
 
 	@Override
-	public void enterPrimitiveContext(PrimitiveContextContext ctx) {
+	public void enterPrimitiveContextName(PrimitiveContextNameContext ctx) {
 		System.out.println(ctx.getText());
-		super.enterPrimitiveContext(ctx);
+		super.enterPrimitiveContextName(ctx);
 	}
 	
 	@Override
@@ -27,8 +27,8 @@ public class AgentWalker extends AgentBaseListener {
 	}
 	
 	@Override
-	public void enterBridgeRules(BridgeRulesContext ctx) {
+	public void enterBridgeRule(BridgeRuleContext ctx) {
 		System.out.println(ctx.getText());
-		super.enterBridgeRules(ctx);
+		super.enterBridgeRule(ctx);
 	}
 }
