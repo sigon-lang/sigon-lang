@@ -35,7 +35,9 @@ public class Main {
 
 			ParseTree tree = parser.agent();
 			ParseTreeWalker walker = new ParseTreeWalker();
-			walker.walk(new AgentWalker(), tree);
+			
+			ContextWalker contextWalker = new ContextWalker();
+			walker.walk(contextWalker, tree);
 
 		} catch (IOException e) {
 			System.out.println("I/O exception.");
