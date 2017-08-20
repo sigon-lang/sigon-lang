@@ -76,9 +76,18 @@ postconditions
 
 
 formulas
-	: ((propClause  | (propClause ':-' propLogExpr ))'.')*
-	| ((folClause | (folClause ':-' folLogExpr )) '.')*
+	: propFormula*
+	| folFormula*
 	;
+	
+propFormula
+	: ((propClause  | (propClause ':-' propLogExpr ))'.')
+	;
+	
+folFormula
+	: ((folClause | (folClause ':-' folLogExpr )) '.')
+	;
+		
 plansFormulas
 	: ((plan  | action )'.') *
 	;	

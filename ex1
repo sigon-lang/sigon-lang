@@ -1,3 +1,6 @@
-beliefs (fol):
-	a(b).
-	b(c) :- d(e).
+desires(prop):
+    started.
+    
+desires(fol):
+    humano(socrates).
+    b(c).

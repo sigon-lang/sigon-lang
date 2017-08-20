@@ -29,8 +29,10 @@ public class Context {
 		return clauses;
 	}
 
-	public void setClauses(List<String> clauses) {
-		this.clauses = clauses;
+	 
+
+	public void addClause(String clause) {
+		this.clauses.add(clause);
 	}
 
 }
