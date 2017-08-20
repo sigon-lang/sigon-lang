@@ -1,4 +1,4 @@
-package br.ufsc.ine.antlr4.agent;
+package br.ufsc.ine.agent;
 
 import java.util.Collections;
 import java.util.List;

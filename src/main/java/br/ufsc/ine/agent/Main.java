@@ -1,4 +1,4 @@
-package br.ufsc.ine.antlr4.agent;
+package br.ufsc.ine.agent;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +10,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import agent.AgentLexer;
 import agent.AgentParser;
-import br.ufsc.ine.antlr4.agent.VerboseListener;
+import br.ufsc.ine.agent.VerboseListener;
 
 public class Main {
 
@@ -35,9 +35,13 @@ public class Main {
 
 			ParseTree tree = parser.agent();
 			ParseTreeWalker walker = new ParseTreeWalker();
-			
+
 			ContextWalker contextWalker = new ContextWalker();
 			walker.walk(contextWalker, tree);
+
+			contextWalker.getContexts().forEach(c -> {
+				//TODO: Mapear para o prolog
+			});
 
 		} catch (IOException e) {
 			System.out.println("I/O exception.");

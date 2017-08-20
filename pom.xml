@@ -70,7 +70,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>br.ufsc.ine.antlr4.agent.Main</mainClass>
+							<mainClass>br.ufsc.ine.agent.Main</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>
