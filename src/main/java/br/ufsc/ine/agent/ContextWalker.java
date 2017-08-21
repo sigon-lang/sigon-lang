@@ -10,8 +10,6 @@ import agent.AgentParser.FormulasContext;
 import agent.AgentParser.PropFormulaContext;
 import agent.AgentParser.TypeContext;
 import br.ufsc.ine.context.Context;
-import br.ufsc.ine.context.ContextName;
-import br.ufsc.ine.context.ContextType;
 
 public class ContextWalker extends AgentBaseListener {
 
@@ -22,14 +20,13 @@ public class ContextWalker extends AgentBaseListener {
 	@Override
 	public void enterContextName(ContextNameContext ctx) {
 		this.lastContext = new Context();
-		this.lastContext.setName(ContextName.getByName(ctx.getText()));
+		this.lastContext.setName(ctx.getText());
 		super.enterContextName(ctx);
 	}
 
-
 	@Override
 	public void enterType(TypeContext ctx) {
-		this.lastContext.setType(ContextType.getByName(ctx.getText()));
+		this.lastContext.setType(ctx.getText());
 		super.enterType(ctx);
 	}
 

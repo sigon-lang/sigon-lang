@@ -16,7 +16,7 @@ public class TestFile {
 	public static void main(String[] args) {
 
 		try {
-			CharStream stream = CharStreams.fromFileName("/home/valdirluiz/works/agent-project/ex1");
+			CharStream stream = CharStreams.fromFileName("/home/valdir/Documents/agent-project/ex1");
 			AgentLexer lexer = new AgentLexer(stream);
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
 
@@ -31,10 +31,7 @@ public class TestFile {
 			walker.walk(contextWalker, tree);
 
 			contextWalker.getContexts().forEach(ctx -> {
-				System.out.println("Context: " 
-						+ ctx.getName().toString().toLowerCase() 
-						+ ", type: " 
-						+  ctx.getType().toString().toLowerCase());
+				System.out.println("Context: " + ctx.getName() + ", type: " + ctx.getType());
 				ctx.getClauses().forEach(System.out::println);
 			});
 

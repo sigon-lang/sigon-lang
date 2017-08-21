@@ -40,10 +40,7 @@ public class Main {
 			walker.walk(contextWalker, tree);
 
 			contextWalker.getContexts().forEach(ctx -> {
-				System.out.println("Context: " 
-						+ ctx.getName().toString().toLowerCase() 
-						+ ", type: " 
-						+  ctx.getType().toString().toLowerCase());
+				System.out.println("Context: " + ctx.getName() + ", type: " + ctx.getType());
 				ctx.getClauses().forEach(System.out::println);
 			});
 

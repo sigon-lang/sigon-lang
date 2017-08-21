@@ -1,6 +1,3 @@
-desires(prop):
-    started.
-    
-beliefs(fol):
+_teste(fol):
     humano(socrates).
     b(c).

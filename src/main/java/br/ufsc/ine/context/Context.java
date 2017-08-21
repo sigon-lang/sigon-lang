@@ -5,23 +5,23 @@ import java.util.List;
 
 public class Context {
 
-	private ContextName name;
-	private ContextType type;
+	private String name;
+	private String type;
 	private List<String> clauses = new ArrayList<>();
 
-	public ContextName getName() {
+	public String getName() {
 		return name;
 	}
 
-	public void setName(ContextName name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
-	public ContextType getType() {
+	public String getType() {
 		return type;
 	}
 
-	public void setType(ContextType type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 
