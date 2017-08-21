@@ -1,6 +1,6 @@
 desires(prop):
     started.
     
-desires(fol):
+beliefs(fol):
     humano(socrates).
     b(c).

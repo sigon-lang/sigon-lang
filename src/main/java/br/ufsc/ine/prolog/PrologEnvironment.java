@@ -1,8 +1,5 @@
 package br.ufsc.ine.prolog;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
 import alice.tuprolog.InvalidTheoryException;
 import alice.tuprolog.MalformedGoalException;
 import alice.tuprolog.Prolog;
@@ -33,33 +30,6 @@ public class PrologEnvironment {
 		return info;
 	}
 
-	public static void main(String args[]) throws Exception {
-		Prolog engine = new Prolog();
-		engine.setTheory(new Theory("mortal(socrates)."));
-		BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
-		while (true) {
-			// interpreter main loop
-			String goal;
-			do {
-				System.out.print("?- ");
-				goal = stdin.readLine();
-			} while (goal.equals(""));
-			try {
-				SolveInfo info = engine.solve(goal);
-				if (engine.isHalted())
-					break;
-				else if (!info.isSuccess())
-					System.out.println("no.");
-				else if (!engine.hasOpenAlternatives()) {
-					System.out.println(info);
-				} else { // main case
-				} // end main case
-			} catch (MalformedGoalException ex) {
-				System.err.println("syntax error.");
-			} // end try
-		} // end main loop
-
-	}
 
 	public Prolog getEngine() {
 		return engine;
