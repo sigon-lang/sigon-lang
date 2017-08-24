@@ -1,0 +1,8 @@
+desires(prop):
+    started.
+
+plans(fol):
+    action(print("Oi mundo"), started, started).
+
+//Isso é 'implícito'
+//intention(fol) Y :- desires(prop) X and plans(fol) plan(X, Y, _, _).

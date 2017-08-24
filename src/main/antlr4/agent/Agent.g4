@@ -160,3 +160,14 @@ DIGIT
 WS
    : [ \t\r\n] -> skip
 ;
+
+
+BlockComment
+    :   '/*' .*? '*/'
+        -> skip
+    ;
+
+LineComment
+    :   '//' ~[\r\n]*
+        -> skip
+;

@@ -16,7 +16,7 @@ public class TestFile {
 	public static void main(String[] args) {
 
 		try {
-			CharStream stream = CharStreams.fromFileName("/home/valdir/Documents/agent-project/ex1");
+			CharStream stream = CharStreams.fromFileName("/home/thiago/projetos/agent-project/examples/ex1");
 			AgentLexer lexer = new AgentLexer(stream);
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
 
