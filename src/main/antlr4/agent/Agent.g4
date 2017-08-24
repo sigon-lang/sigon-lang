@@ -47,33 +47,23 @@ customType
 	;
 
  
-
+//'plan' '(' somethingToBeTrue ',' compoundaction ',' preconditions ',' postconditions ')'
 plan
-	: 'plan' '(' somethingToBeTrue ',' compoundaction ',' preconditions ',' postconditions ')'
+	: 'plan' '(' listOfClauses ',' compoundaction ',' listOfClauses ',' listOfClauses ')'
 	;
 
 action
-	: 'action' '(' (propClause | folClause) ',' preconditions ',' postconditions ')'
+	: 'action' '(' listOfClauses ',' listOfClauses ',' listOfClauses ')'
 	;
 
-somethingToBeTrue
-	: propClause 
-	| folClause
-	;
 
 compoundaction
 	: ('[' action (',' action)* ']')?;
 
-preconditions
-	: propClause
-	| folClause
+listOfClauses
+	: (propClause | '[' propClause (',' propClause)* ']')
+	| (folClause | '[' folClause (',' folClause)* ']')
 	;
-
-postconditions
-	: (propClause | folClause)
-	;
-
-
 
 formulas
 	: propFormula*
