@@ -5,10 +5,32 @@ import java.util.Set;
 
 public class Plan {
 
-	public Set<String> preConditions = new HashSet<>();
-	public Set<String> posConditions = new HashSet<>();
-	public Set<Function> functions = new HashSet<>();
-	
-	
+	private Set<String> preConditions = new HashSet<>();
+	private Set<String> posConditions = new HashSet<>();
+	private Set<Function> functions = new HashSet<>();
+
+	public Set<String> getPreConditions() {
+		return preConditions;
+	}
+
+	public void setPreConditions(Set<String> preConditions) {
+		this.preConditions = preConditions;
+	}
+
+	public Set<String> getPosConditions() {
+		return posConditions;
+	}
+
+	public void setPosConditions(Set<String> posConditions) {
+		this.posConditions = posConditions;
+	}
+
+	public Set<Function> getFunctions() {
+		return functions;
+	}
+
+	public void setFunctions(Set<Function> functions) {
+		this.functions = functions;
+	}
 
 }
