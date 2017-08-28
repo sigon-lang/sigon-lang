@@ -29,11 +29,9 @@ public class TestFile {
 
 			ContextWalker contextWalker = new ContextWalker();
 			walker.walk(contextWalker, tree);
-
-			contextWalker.getContexts().forEach(ctx -> {
-				System.out.println("Context: " + ctx.getName() + ", type: " + ctx.getType());
-				ctx.getClauses().forEach(System.out::println);
-			});
+			
+			Agent agent = new Agent();
+			agent.run(contextWalker);
 
 		} catch (IOException e) {
 			System.out.println("I/O exception.");
