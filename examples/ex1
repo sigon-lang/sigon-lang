@@ -1,3 +1,3 @@
-_teste(fol):
+desires(fol):
     humano(socrates).
     b(c).

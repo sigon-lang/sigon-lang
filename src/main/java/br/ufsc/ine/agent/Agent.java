@@ -15,10 +15,10 @@ public class Agent {
 
 	public void run(ContextWalker walker) {
 
-		List<Context> beliefs = walker.getContexts().stream().filter(c -> c.getType().equals(BELIEFS))
+		List<Context> beliefs = walker.getContexts().stream().filter(c -> c.getName().equals(BELIEFS))
 				.collect(Collectors.toList());
 		
-		List<Context> desires = walker.getContexts().stream().filter(c -> c.getType().equals(DESIRES))
+		List<Context> desires = walker.getContexts().stream().filter(c -> c.getName().equals(DESIRES))
 				.collect(Collectors.toList());
 		
 		//BeliefsService.start();
@@ -26,12 +26,7 @@ public class Agent {
 		
 		Flowable.just(beliefs).subscribe(BeliefsService::println);
 		Flowable.just(desires).subscribe(DesiresService::println);
-
-		walker.getContexts().forEach(ctx -> {
-			System.out.println("Context: " + ctx.getName() + ", type: " + ctx.getType());
-			ctx.getClauses().forEach(System.out::println);
-		});
-
+ 
 	}
 
 }
