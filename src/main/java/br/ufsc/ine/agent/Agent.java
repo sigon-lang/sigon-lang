@@ -17,20 +17,20 @@ public class Agent {
 
 	public void run(ContextWalker walker, PlanWalker planWalker) {
 
-		List<Context> beliefs = walker.getContexts().stream().filter(c -> c.getName().equals(BELIEFS))
-				.collect(Collectors.toList());
+//		List<Context> beliefs = walker.getContexts().stream().filter(c -> c.getName().equals(BELIEFS))
+//				.collect(Collectors.toList());
 
 		List<Context> desires = walker.getContexts().stream().filter(c -> c.getName().equals(DESIRES))
 				.collect(Collectors.toList());
 
-		List<Context> plans = walker.getContexts().stream().filter(c -> c.getName().equals(PLANS))
-				.collect(Collectors.toList());
+//		List<Context> plans = walker.getContexts().stream().filter(c -> c.getName().equals(PLANS))
+//				.collect(Collectors.toList());
 
 		DesiresService.startService();
 
 		// Flowable.just(beliefs).subscribe(BeliefsService::println);
 		Flowable.just(desires).subscribe(DesiresService::desires);
-		Flowable.just(planWalker.getPlans()).subscribe(PlansService::run);
+		Flowable.just(planWalker.getPlans()).subscribe(PlansService::execute);
 
 	}
 
