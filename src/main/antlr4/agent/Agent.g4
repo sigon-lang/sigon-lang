@@ -72,7 +72,7 @@ argumentList
 ;
 
 expression
-	: '"' character*  '"'
+	: STRING
 	;
 
 compoundaction
@@ -159,6 +159,9 @@ semanticRules
 	: character+ '.semantic'
 	;
 
+STRING
+	 : '"' (~[\r\n"] | '""')* '"'
+ 	 ;
 
 BELIEFS
 	: 'beliefs'
