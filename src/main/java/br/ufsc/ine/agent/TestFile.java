@@ -28,10 +28,12 @@ public class TestFile {
 			ParseTreeWalker walker = new ParseTreeWalker();
 
 			ContextWalker contextWalker = new ContextWalker();
+			PlanWalker planWalker = new PlanWalker();
 			walker.walk(contextWalker, tree);
+			walker.walk(planWalker, tree);
 			
 			Agent agent = new Agent();
-			agent.run(contextWalker);
+			agent.run(contextWalker, planWalker);
 
 		} catch (IOException e) {
 			System.out.println("I/O exception.");

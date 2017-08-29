@@ -23,6 +23,7 @@ public class ContextWalker extends AgentBaseListener {
 		this.lastContext.setName(ctx.getText());
 		super.enterContextName(ctx);
 	}
+	
 
 	@Override
 	public void enterType(TypeContext ctx) {

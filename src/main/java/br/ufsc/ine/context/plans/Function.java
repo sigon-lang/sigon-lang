@@ -1,12 +1,13 @@
 package br.ufsc.ine.context.plans;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Function {
 
 	private String name;
 	private String className;
-	private List<Object> arguments;
+	private List<Object> arguments = new ArrayList<>();
 
 	public String getName() {
 		return name;

@@ -37,7 +37,9 @@ public class Main {
 			ParseTreeWalker walker = new ParseTreeWalker();
 
 			ContextWalker contextWalker = new ContextWalker();
+			PlanWalker planWalker = new PlanWalker();
 			walker.walk(contextWalker, tree);
+			walker.walk(planWalker, tree);
 
 			contextWalker.getContexts().forEach(ctx -> {
 				System.out.println("Context: " + ctx.getName() + ", type: " + ctx.getType());

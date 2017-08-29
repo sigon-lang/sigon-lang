@@ -15,7 +15,7 @@ public class Agent {
 	private static final Object BELIEFS = "beliefs";
 	private static final Object PLANS = "plans";
 
-	public void run(ContextWalker walker) {
+	public void run(ContextWalker walker, PlanWalker planWalker) {
 
 		List<Context> beliefs = walker.getContexts().stream().filter(c -> c.getName().equals(BELIEFS))
 				.collect(Collectors.toList());
@@ -31,7 +31,7 @@ public class Agent {
 
 		Flowable.just(beliefs).subscribe(BeliefsService::println);
 		Flowable.just(desires).subscribe(DesiresService::println);
-		Flowable.just(plans).subscribe(PlansService::println);
+		Flowable.just(planWalker.getPlans()).subscribe(PlansService::println);
 
 	}
 

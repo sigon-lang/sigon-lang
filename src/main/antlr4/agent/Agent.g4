@@ -11,10 +11,13 @@ agent
  
 context
 	: contextName '(' param? ')' ':' formulas
-	| PLANS '(' ('prop' | 'fol')? ')' ':' plansFormulas
+	| PLANS '(' planType ')' ':' plansFormulas
 	;
 
-
+planType
+	: ('prop' | 'fol')?
+	;
+	
 
 param
 	: type 
@@ -53,7 +56,7 @@ plan
 	;
 
 action
-	: 'action' '(' functionInvocation ',' listOfClauses ',' listOfClauses ')'
+	: 'action' '(' functionInvocation ',' preconditions ',' postconditions ')'
 	;
 
 functionInvocation
@@ -74,6 +77,14 @@ expression
 
 compoundaction
 	: ('[' action (',' action)* ']')?;
+	
+preconditions
+	:listOfClauses
+	;
+	
+postconditions
+	:listOfClauses
+	;
 
 listOfClauses
 	: (propClause | '[' propClause (',' propClause)* ']')
