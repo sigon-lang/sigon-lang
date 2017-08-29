@@ -53,9 +53,24 @@ plan
 	;
 
 action
-	: 'action' '(' listOfClauses ',' listOfClauses ',' listOfClauses ')'
+	: 'action' '(' functionInvocation ',' listOfClauses ',' listOfClauses ')'
 	;
 
+functionInvocation
+	: functionName '(' argumentList? ')'
+	;
+
+functionName
+	: LCLETTER + character*
+	;
+
+argumentList
+	:	expression (',' expression)*
+;
+
+expression
+	: '"' character*  '"'
+	;
 
 compoundaction
 	: ('[' action (',' action)* ']')?;

@@ -16,7 +16,7 @@ public class TestFile {
 	public static void main(String[] args) {
 
 		try {
-			CharStream stream = CharStreams.fromFileName("/home/valdir/Documents/agent-project/examples/ex1");
+			CharStream stream = CharStreams.fromFileName("/home/valdir/Documents/agent-project/examples/oiMundo");
 			AgentLexer lexer = new AgentLexer(stream);
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
 
