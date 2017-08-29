@@ -26,12 +26,11 @@ public class Agent {
 		List<Context> plans = walker.getContexts().stream().filter(c -> c.getName().equals(PLANS))
 				.collect(Collectors.toList());
 
-		// BeliefsService.start();
-		// DesiresService.start();
+		DesiresService.startService();
 
-		Flowable.just(beliefs).subscribe(BeliefsService::println);
-		Flowable.just(desires).subscribe(DesiresService::println);
-		Flowable.just(planWalker.getPlans()).subscribe(PlansService::println);
+		// Flowable.just(beliefs).subscribe(BeliefsService::println);
+		Flowable.just(desires).subscribe(DesiresService::desires);
+		Flowable.just(planWalker.getPlans()).subscribe(PlansService::run);
 
 	}
 

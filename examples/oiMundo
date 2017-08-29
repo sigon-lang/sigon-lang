@@ -1,5 +1,5 @@
-//desires(prop):
- //   started.
+desires(prop):
+    started.
 
 plans(fol):
     action(print("Oi mundo"), started, started).
