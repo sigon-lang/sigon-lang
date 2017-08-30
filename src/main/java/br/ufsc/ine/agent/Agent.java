@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import br.ufsc.ine.context.Context;
-import br.ufsc.ine.context.beliefs.BeliefsService;
 import br.ufsc.ine.context.desires.DesiresService;
 import br.ufsc.ine.context.plans.PlansService;
 import io.reactivex.Flowable;

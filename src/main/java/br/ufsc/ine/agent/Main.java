@@ -41,10 +41,8 @@ public class Main {
 			walker.walk(contextWalker, tree);
 			walker.walk(planWalker, tree);
 
-			contextWalker.getContexts().forEach(ctx -> {
-				System.out.println("Context: " + ctx.getName() + ", type: " + ctx.getType());
-				ctx.getClauses().forEach(System.out::println);
-			});
+			Agent agent = new Agent();
+			agent.run(contextWalker, planWalker);
 
 		} catch (IOException e) {
 			System.out.println("I/O exception.");
