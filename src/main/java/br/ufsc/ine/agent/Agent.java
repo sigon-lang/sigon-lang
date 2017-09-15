@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import br.ufsc.ine.context.Context;
 import br.ufsc.ine.context.desires.DesiresService;
 import br.ufsc.ine.context.plans.PlansService;
+import br.ufsc.ine.intentions.IntentionsService;
 import io.reactivex.Flowable;
 
 public class Agent {
@@ -16,21 +17,18 @@ public class Agent {
 
 	public void run(ContextWalker walker, PlanWalker planWalker) {
 
-//		List<Context> beliefs = walker.getContexts().stream().filter(c -> c.getName().equals(BELIEFS))
-//				.collect(Collectors.toList());
-
+ 
 		List<Context> desires = walker.getContexts().stream().filter(c -> c.getName().equals(DESIRES))
 				.collect(Collectors.toList());
 
-//		List<Context> plans = walker.getContexts().stream().filter(c -> c.getName().equals(PLANS))
-//				.collect(Collectors.toList());
 
 		DesiresService.startService();
-
-		// Flowable.just(beliefs).subscribe(BeliefsService::println);
+		
+	
 		Flowable.just(desires).subscribe(DesiresService::desires);
+		Flowable.just(walker.getContexts()).subscribe(IntentionsService::intentions);
 		Flowable.just(planWalker.getPlans()).subscribe(PlansService::execute);
-
+		
 	}
 
 }

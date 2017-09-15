@@ -1,18 +1,18 @@
-package br.ufsc.ine.context.functions;
+package br.ufsc.ine.environment;
 
 import java.lang.reflect.Method;
 
 import br.ufsc.ine.context.plans.Function;
 
-public class Functions {
+public class Environment {
 
-	private Functions() {
+	private Environment() {
 
 	}
 
-	private static Functions ourInstance = new Functions();
+	private static Environment ourInstance = new Environment();
 
-	public static Functions getInstance() {
+	public static Environment getInstance() {
 		return ourInstance;
 	}
 
@@ -20,7 +20,7 @@ public class Functions {
 	public void execute(Function function) {
 
 		try {
-			Class clazz = Class.forName(Functions.class.getName());
+			Class clazz = Class.forName(Environment.class.getName());
 			Method method = clazz.getMethod(function.getName(), String.class);
 			method.invoke(this, function.getArguments().toArray());
 
