@@ -3,18 +3,9 @@ package br.ufsc.ine.environment;
 import java.lang.reflect.Method;
 
 import br.ufsc.ine.context.plans.Function;
+import rx.Observable;
 
-public class Environment {
-
-	private Environment() {
-
-	}
-
-	private static Environment ourInstance = new Environment();
-
-	public static Environment getInstance() {
-		return ourInstance;
-	}
+public abstract class Environment {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void execute(Function function) {
@@ -26,7 +17,6 @@ public class Environment {
 
 		} catch (Exception e) {
 			System.out.println(e);
-			// TODO: tratar erros
 		}
 
 	}
@@ -34,5 +24,7 @@ public class Environment {
 	public void print(String arg) {
 		System.out.println(arg);
 	}
+
+	public abstract Observable<String> observe();
 
 }

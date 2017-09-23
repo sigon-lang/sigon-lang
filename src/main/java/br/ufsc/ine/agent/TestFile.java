@@ -10,13 +10,16 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import agent.AgentLexer;
 import agent.AgentParser;
+import br.ufsc.ine.parser.ContextWalker;
+import br.ufsc.ine.parser.PlanWalker;
+import br.ufsc.ine.parser.VerboseListener;
 
 public class TestFile {
 
 	public static void main(String[] args) {
 
 		try {
-			CharStream stream = CharStreams.fromFileName("/home/valdir/Documents/agent-project/examples/oiMundo");
+			CharStream stream = CharStreams.fromFileName("/home/valdirluiz/works/agent-project/examples/oiMundo");
 			AgentLexer lexer = new AgentLexer(stream);
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
 

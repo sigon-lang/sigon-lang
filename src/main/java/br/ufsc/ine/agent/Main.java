@@ -10,7 +10,9 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import agent.AgentLexer;
 import agent.AgentParser;
-import br.ufsc.ine.agent.VerboseListener;
+import br.ufsc.ine.parser.ContextWalker;
+import br.ufsc.ine.parser.PlanWalker;
+import br.ufsc.ine.parser.VerboseListener;
 
 public class Main {
 

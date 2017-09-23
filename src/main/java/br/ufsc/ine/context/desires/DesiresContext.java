@@ -8,38 +8,43 @@ import alice.tuprolog.SolveInfo;
 import br.ufsc.ine.context.Context;
 import br.ufsc.ine.prolog.PrologEnvironment;
 
-public class DesiresService {
+public class DesiresContext {
 
-	public static DesiresService instance;
+	public static DesiresContext instance;
 	private static PrologEnvironment prologEnvironment;
 
-	private DesiresService() {
+	private DesiresContext() {
 
 	}
 
 	public static void startService() {
-		instance = new DesiresService();
+		instance = new DesiresContext();
 		prologEnvironment = new PrologEnvironment();
+	}
+
+	public static DesiresContext getInstance() {
+		return instance;
 	}
 
 	public boolean haveDesire(String desire) {
 		SolveInfo solveGoal;
 		try {
-			solveGoal = prologEnvironment.solveGoal(desire+".");
+			solveGoal = prologEnvironment.solveGoal(desire);
 			return solveGoal.isSuccess();
 		} catch (MalformedGoalException e) {
 			return false;
 		}
 
 	}
+	
+	
 
-	public static void desires(List<Context> contexts) {
+	public void desires(List<Context> contexts) {
 		contexts.forEach(ctx -> {
 			ctx.getClauses().forEach(clause -> {
 				try {
 					prologEnvironment.appendFact(clause);
 				} catch (InvalidTheoryException e) {
-					// TODO: logar erro
 					e.printStackTrace();
 				}
 			});

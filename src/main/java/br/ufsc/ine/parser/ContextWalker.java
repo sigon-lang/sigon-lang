@@ -1,4 +1,4 @@
-package br.ufsc.ine.agent;
+package br.ufsc.ine.parser;
 
 import java.util.ArrayList;
 import java.util.List;

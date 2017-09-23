@@ -1,4 +1,4 @@
-package br.ufsc.ine.agent;
+package br.ufsc.ine.parser;
 
 import java.util.Collections;
 import java.util.List;

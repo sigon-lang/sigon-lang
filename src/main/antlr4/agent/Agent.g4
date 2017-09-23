@@ -127,7 +127,7 @@ contextName '(' type ')' 'not'? (propClause | folClause) (('and'|'or')  contextN
 
 
 propClause
-	: LCLETTER character*
+	: ('not')? LCLETTER character*
 	;
 
 folClause
