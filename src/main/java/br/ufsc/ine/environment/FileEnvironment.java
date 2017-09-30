@@ -7,13 +7,13 @@ import rx.Observable;
 public class FileEnvironment extends Environment {
 
 	@Override
-	public Observable<String> observe() {
+	public void init() {
+		Observable<String> fileObservable = FileObservable
+				.tailer().file("/home/valdirluiz/teste").tailText();
+		super.addSensor(fileObservable);
 
-		Observable<String> items = FileObservable
-										.tailer()
-										.file("/home/valdirluiz/teste")
-										.tailText();
-		return items;
 	}
+
+ 
 
 }
