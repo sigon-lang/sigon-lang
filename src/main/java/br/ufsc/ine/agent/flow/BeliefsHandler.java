@@ -4,7 +4,8 @@ public class BeliefsHandler extends ContextHandler{
 
 	@Override
 	public void handleRequest(String literal) {
-		// TODO Auto-generated method stub
+		 
+		System.out.println("Beliefs: " + literal);
 		
 	}
 

@@ -14,7 +14,6 @@ import br.ufsc.ine.environment.Environment;
 import br.ufsc.ine.environment.FileEnvironment;
 import br.ufsc.ine.parser.ContextWalker;
 import br.ufsc.ine.parser.PlanWalker;
-import rx.Observable;
 
 public class Agent {
 
@@ -36,15 +35,13 @@ public class Agent {
 	public void run(ContextWalker walker, PlanWalker planWalker) {
 
 		this.initAgent(walker);
-		List<Observable<String>> sensors = environment.getSensors();
-
+		
 		ContextHandler desiresHandler = new DesiresHandler();
 		ContextHandler beliefsHandler = new BeliefsHandler();
 
 		desiresHandler.setSuccessor(beliefsHandler);
 
-		sensors.stream().forEach(sensor -> {
-
+		environment.getSensors().stream().forEach(sensor -> {
 			sensor.
 				subscribe(desiresHandler::handleRequest, Throwable::printStackTrace);
 		});
@@ -53,17 +50,16 @@ public class Agent {
 
 	 
 
+	//TODO: fazer verificações iniciais, por exemplo intencoes que pode ser criadas sem ter nehuma percepcao
 	private void initAgent(ContextWalker walker) {
 
 		List<Context> desires = getContext(walker, DESIRES);
 		List<Context> beliefs = getContext(walker, BELIEFS);
 
+		
 		BeliefsContext.getInstance().beliefs(beliefs);
 		DesiresContext.getInstance().desires(desires);
 
-		// Flowable
-		// .just(desires)
-		// .subscribe(IntentionsContext.getInstance()::checkIntentions);
 	}
 
 	private List<Context> getContext(ContextWalker walker, String context) {
