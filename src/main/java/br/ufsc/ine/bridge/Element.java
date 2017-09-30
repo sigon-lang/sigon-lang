@@ -7,6 +7,7 @@ public class Element {
 	private String value;
 	private Context context;
 	private String connector;
+	private Element next;
 	
 	public String getValue() {
 		return value;
@@ -25,6 +26,12 @@ public class Element {
 	}
 	public void setConnector(String connector) {
 		this.connector = connector;
+	}
+	public Element getNext() {
+		return next;
+	}
+	public void setNext(Element next) {
+		this.next = next;
 	}
 	
 	

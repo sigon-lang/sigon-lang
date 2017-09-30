@@ -1,11 +1,15 @@
 package br.ufsc.ine.environment;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.ufsc.ine.context.plans.Function;
 import rx.Observable;
 
 public abstract class Environment {
+
+	private List<Observable<String>> sensors = new ArrayList<>();
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void execute(Function function) {
@@ -25,6 +29,14 @@ public abstract class Environment {
 		System.out.println(arg);
 	}
 
-	public abstract Observable<String> observe();
+	public void addSensor(Observable<String> observable) {
+		this.sensors.add(observable);
+	}
+	
+	public List<Observable<String>> getSensors() {
+		return sensors;
+	}
+	
+	public abstract void init();
 
 }

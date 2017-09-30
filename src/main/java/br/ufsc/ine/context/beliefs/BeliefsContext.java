@@ -1,5 +1,6 @@
 package br.ufsc.ine.context.beliefs;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,6 +14,7 @@ public class BeliefsContext {
 
 	private static BeliefsContext instance;
 	private static PrologEnvironment prologEnvironment;
+	private List<Context> beliefs = new ArrayList<>();
 
 	private BeliefsContext() {
 
@@ -27,8 +29,9 @@ public class BeliefsContext {
 		prologEnvironment = new PrologEnvironment();
 	}
 
-	public void beliefs(List<Context> contexts) {
-		List<String> clauses = contexts.stream()
+	public void beliefs(List<Context> beliefs) {
+		this.beliefs = beliefs;
+		List<String> clauses = beliefs.stream()
 			.map(c -> c.getClauses())
 			.flatMap(l -> l.stream())
 			.collect(Collectors.toList());
@@ -55,6 +58,10 @@ public class BeliefsContext {
 			return false;
 		}
 
+	}
+	
+	public List<Context> getBeliefs() {
+		return beliefs;
 	}
 
 }
