@@ -8,24 +8,25 @@ import alice.tuprolog.InvalidTheoryException;
 import alice.tuprolog.MalformedGoalException;
 import alice.tuprolog.SolveInfo;
 import br.ufsc.ine.context.Context;
+import br.ufsc.ine.context.ContextService;
 import br.ufsc.ine.prolog.PrologEnvironment;
 
-public class BeliefsContext {
+public class BeliefsContextService implements ContextService{
 
-	private static BeliefsContext instance;
+	private static BeliefsContextService instance;
 	private static PrologEnvironment prologEnvironment;
 	private List<Context> beliefs = new ArrayList<>();
 
-	private BeliefsContext() {
+	private BeliefsContextService() {
 
 	}
 
-	public static BeliefsContext getInstance() {
+	public static BeliefsContextService getInstance() {
 		return instance;
 	}
 
 	public static void startService() {
-		instance = new BeliefsContext();
+		instance = new BeliefsContextService();
 		prologEnvironment = new PrologEnvironment();
 	}
 
@@ -49,19 +50,27 @@ public class BeliefsContext {
 		}
 	}
 	
-	public boolean haveBelief(String desire) {
+	 
+	
+	public List<Context> getBeliefs() {
+		return beliefs;
+	}
+
+	//TODO: add na lista de beliefs
+	public void addBelief(String fact) throws InvalidTheoryException {
+		prologEnvironment.appendFact(fact);
+		
+	}
+	
+	@Override
+	public boolean verify(String fact) {
 		SolveInfo solveGoal;
 		try {
-			solveGoal = prologEnvironment.solveGoal(desire);
+			solveGoal = prologEnvironment.solveGoal(fact);
 			return solveGoal.isSuccess();
 		} catch (MalformedGoalException e) {
 			return false;
 		}
-
-	}
-	
-	public List<Context> getBeliefs() {
-		return beliefs;
 	}
 
 }

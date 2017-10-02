@@ -5,24 +5,24 @@ import java.util.stream.Collectors;
 
 import alice.tuprolog.InvalidTheoryException;
 import br.ufsc.ine.context.Context;
-import br.ufsc.ine.context.beliefs.BeliefsContext;
+import br.ufsc.ine.context.beliefs.BeliefsContextService;
 import br.ufsc.ine.prolog.PrologEnvironment;
 
-public class IntentionsContext {
+public class IntentionsContextService {
 
-	public static IntentionsContext instance;
+	public static IntentionsContextService instance;
 	private static PrologEnvironment prologEnvironment;
 
-	private IntentionsContext() {
+	private IntentionsContextService() {
 
 	}
 
 	public static void startService() {
-		instance = new IntentionsContext();
+		instance = new IntentionsContextService();
 		prologEnvironment = new PrologEnvironment();
 	}
 
-	public static IntentionsContext getInstance() {
+	public static IntentionsContextService getInstance() {
 		return instance;
 	}
 
@@ -32,7 +32,7 @@ public class IntentionsContext {
 				.collect(Collectors.toList());
 
 		clauses.forEach(d -> {
-			if (!BeliefsContext.getInstance().haveBelief(d)) {
+			if (!BeliefsContextService.getInstance().verify(d)) {
 				try {
 					prologEnvironment.appendFact(d);
 					System.out.println(d);

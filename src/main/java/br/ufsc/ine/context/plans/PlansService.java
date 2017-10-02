@@ -3,7 +3,7 @@ package br.ufsc.ine.context.plans;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import br.ufsc.ine.context.desires.DesiresContext;
+import br.ufsc.ine.context.desires.DesiresContextService;
 import br.ufsc.ine.environment.Environment;
 
 public class PlansService {

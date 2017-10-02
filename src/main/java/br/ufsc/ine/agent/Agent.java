@@ -7,9 +7,9 @@ import br.ufsc.ine.agent.flow.BeliefsHandler;
 import br.ufsc.ine.agent.flow.ContextHandler;
 import br.ufsc.ine.agent.flow.DesiresHandler;
 import br.ufsc.ine.context.Context;
-import br.ufsc.ine.context.beliefs.BeliefsContext;
-import br.ufsc.ine.context.desires.DesiresContext;
-import br.ufsc.ine.context.intentions.IntentionsContext;
+import br.ufsc.ine.context.beliefs.BeliefsContextService;
+import br.ufsc.ine.context.desires.DesiresContextService;
+import br.ufsc.ine.context.intentions.IntentionsContextService;
 import br.ufsc.ine.environment.Environment;
 import br.ufsc.ine.environment.FileEnvironment;
 import br.ufsc.ine.parser.ContextWalker;
@@ -22,9 +22,9 @@ public class Agent {
 	private Environment environment;
 
 	public Agent() {
-		BeliefsContext.startService();
-		DesiresContext.startService();
-		IntentionsContext.startService();
+		BeliefsContextService.startService();
+		DesiresContextService.startService();
+		IntentionsContextService.startService();
 
 		// TODO: permitir que o usuário possa definir seu proprio ambiente
 		environment = new FileEnvironment();
@@ -57,8 +57,8 @@ public class Agent {
 		List<Context> beliefs = getContext(walker, BELIEFS);
 
 		
-		BeliefsContext.getInstance().beliefs(beliefs);
-		DesiresContext.getInstance().desires(desires);
+		BeliefsContextService.getInstance().beliefs(beliefs);
+		DesiresContextService.getInstance().desires(desires);
 
 	}
 
