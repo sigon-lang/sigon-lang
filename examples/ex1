@@ -1,3 +1,16 @@
+beliefs(fol):
+	position(0,0).
+
 desires(fol):
-    humano(socrates).
-    b(c).
+	position(1,1).
+	
+plans(fol):
+	//action(functionInvocation, preconditions, postconditions)
+	action(moveFront(), position(_,_), position(_,_)).
+	action(moveUp(), position(_,_), position(_,_)).
+	
+	//plan(somethingToBeTrue, compoundaction, preconditions, postconditions)
+	plan(position(1,1), [action(moveFront(), position(_,_), position(_,_)),
+			action(moveUp(), position(_,_), position(_,_))]	, position(_,_), position(_,_)).
+	
+intention(fol) position(1,1) :- desires(prop) position(1,1) and plans(fol) plan(position(1,1), _, _, _).

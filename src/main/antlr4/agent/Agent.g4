@@ -52,7 +52,7 @@ customType
  
 //'plan' '(' somethingToBeTrue ',' compoundaction ',' preconditions ',' postconditions ')'
 plan
-	: 'plan' '(' listOfClauses ',' compoundaction ',' listOfClauses ',' listOfClauses ')'
+	: 'plan' '(' listOfClauses ',' compoundaction ',' '_' | listOfClauses ',' '_' | listOfClauses ')'
 	;
 
 action
@@ -127,14 +127,20 @@ contextName '(' type ')' 'not'? (propClause | folClause) (('and'|'or')  contextN
 
 
 propClause
-	: ('not')? LCLETTER character*
+	: ('not')? constant*
 	;
 
 folClause
-	: LCLETTER character* '(' ((LCLETTER | UCLETTER) character*) (','(LCLETTER | UCLETTER) character*)* ')'
+	: constant '(' (constant | variable | '_') (',' constant | variable | '_')* ')'
 	;
 
+constant
+	: LCLETTER character*
+	;
 
+variable
+	: UCLETTER character*	
+	;
 
 propLogExpr
 	: propLogExpr ('and' | 'or') propLogExpr
