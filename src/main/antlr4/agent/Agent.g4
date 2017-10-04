@@ -131,7 +131,11 @@ propClause
 	;
 
 folClause
-	: constant '(' (constant | variable | '_') (',' constant | variable | '_')* ')'
+	: constant '(' (numeral | constant | variable | '_') (',' numeral | constant | variable | '_')* ')'
+	;
+	
+numeral 
+	: DIGIT | numeral DIGIT 
 	;
 
 constant
