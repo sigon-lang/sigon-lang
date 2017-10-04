@@ -131,7 +131,7 @@ propClause
 	;
 
 folClause
-	: constant '(' (numeral | constant | variable | '_') (',' numeral | constant | variable | '_')* ')'
+	: constant '(' (numeral | constant | variable | '_') (',' (numeral | constant | variable | '_') )* ')'
 	;
 	
 numeral 
