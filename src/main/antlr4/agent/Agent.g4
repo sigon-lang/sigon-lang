@@ -46,17 +46,18 @@ type
 	;
 
 customType
-	: character +
+	: (LCLETTER | UCLETTER) character *
 	;
 
  
 //'plan' '(' somethingToBeTrue ',' compoundaction ',' preconditions ',' postconditions ')'
 plan
-	: 'plan' '(' listOfClauses ',' compoundaction ',' '_' | listOfClauses ',' '_' | listOfClauses ')'
+	: 'plan' '(' listOfClauses ',' ('_' |compoundaction )',' ('_' | listOfClauses) ',' ('_' | listOfClauses) ')'
 	;
 
+//'action' '(' functionInvocation ',' preconditions ',' postconditions ')'
 action
-	: 'action' '(' functionInvocation ',' preconditions ',' postconditions ')'
+	: 'action' '(' functionInvocation ',' listOfClauses ',' listOfClauses ')'
 	;
 
 functionInvocation
@@ -78,17 +79,9 @@ expression
 compoundaction
 	: ('[' action (',' action)* ']')?;
 	
-preconditions
-	:listOfClauses
-	;
-	
-postconditions
-	:listOfClauses
-	;
-
 listOfClauses
-	: (propClause | '[' propClause (',' propClause)* ']')
-	| (folClause | '[' folClause (',' folClause)* ']')
+	: (propClause | ('[' propClause (',' propClause)* ']'))
+	| (folClause | ('[' folClause (',' folClause)* ']'))
 	;
 
 formulas
@@ -115,12 +108,13 @@ bridgeRule
 
 head
 	:
-('!' contextName '(' type ')' ) ('not')? (propClause | folClause)
+('!' (contextName | PLANS) '(' type ')' ) ('not')? (propClause | folClause)
 ;
 
 body
 	:
-contextName '(' type ')' 'not'? (propClause | folClause) (('and'|'or')  contextName '(' type ')' 'not'? (propClause | folClause))*
+(contextName | PLANS) '(' type ')' (('not'? (propClause | folClause))
+| plan) (('and'|'or')  (contextName | PLANS) '(' type ')' (('not'? (propClause | folClause)) |plan))*
 	;
 
 
@@ -135,7 +129,7 @@ folClause
 	;
 	
 numeral 
-	: DIGIT | numeral DIGIT 
+	: DIGIT+
 	;
 
 constant
@@ -166,7 +160,7 @@ character
 */
 
 semanticRules
-	: character+ '.semantic'
+	: (LCLETTER | UCLETTER) character* '.semantic'
 	;
 
 STRING
