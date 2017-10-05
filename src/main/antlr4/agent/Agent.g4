@@ -131,11 +131,11 @@ propClause
 	;
 
 folClause
-	: constant '(' (constant | variable | '_') (',' constant | variable | '_')* ')'
+	: constant '(' ( constant | variable | '_') (',' constant | variable | '_')* ')'
 	;
 
 constant
-	: LCLETTER character*
+	: LCLETTER character* 
 	;
 
 variable

@@ -19,7 +19,7 @@ public class TestFile {
 	public static void main(String[] args) {
 
 		try {
-			CharStream stream = CharStreams.fromFileName("/home/valdirluiz/works/agent-project/examples/oiMundo");
+			CharStream stream = CharStreams.fromFileName("/home/valdirluiz/works/agent-project/examples/ex1");
 			AgentLexer lexer = new AgentLexer(stream);
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
 

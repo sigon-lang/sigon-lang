@@ -17,7 +17,7 @@ public class RuleTest {
 		DesiresContextService.startService();
 		
 		BeliefsContextService.getInstance().addBelief("position(1,1).");
-		DesiresContextService.getInstance().addDesire("position(1,2).");
+		DesiresContextService.getInstance().addDesire("position(1,1).");
 	
 		Rule rule = buildRule("position(1,1).");
 		assertTrue(rule.execute());
