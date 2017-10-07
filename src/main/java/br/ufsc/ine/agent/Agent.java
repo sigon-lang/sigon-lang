@@ -6,10 +6,12 @@ import java.util.stream.Collectors;
 import br.ufsc.ine.agent.flow.BeliefsHandler;
 import br.ufsc.ine.agent.flow.ContextHandler;
 import br.ufsc.ine.agent.flow.DesiresHandler;
+import br.ufsc.ine.agent.flow.PlansHandler;
 import br.ufsc.ine.context.Context;
 import br.ufsc.ine.context.beliefs.BeliefsContextService;
 import br.ufsc.ine.context.desires.DesiresContextService;
 import br.ufsc.ine.context.intentions.IntentionsContextService;
+import br.ufsc.ine.context.plans.PlansContextService;
 import br.ufsc.ine.environment.Environment;
 import br.ufsc.ine.environment.FileEnvironment;
 import br.ufsc.ine.parser.ContextWalker;
@@ -25,33 +27,34 @@ public class Agent {
 		BeliefsContextService.startService();
 		DesiresContextService.startService();
 		IntentionsContextService.startService();
+		PlansContextService.startService();
 
 		// TODO: permitir que o usuário possa definir seu proprio ambiente
 		environment = new FileEnvironment();
-		
+
 		environment.init();
 	}
 
 	public void run(ContextWalker walker, PlanWalker planWalker) {
 
-		this.initAgent(walker);
-		
+		this.initAgent(walker, planWalker);
+
 		ContextHandler desiresHandler = new DesiresHandler();
 		ContextHandler beliefsHandler = new BeliefsHandler();
+		PlansHandler plansHandler = new PlansHandler();
 
 		desiresHandler.setSuccessor(beliefsHandler);
-
+		beliefsHandler.setSuccessor(plansHandler);
+		
 		environment.getSensors().stream().forEach(sensor -> {
-			sensor.
-				subscribe(desiresHandler::handleRequest, Throwable::printStackTrace);
+			sensor.subscribe(desiresHandler::handleRequest, Throwable::printStackTrace);
 		});
 
 	}
 
-	 
-
-	//TODO: fazer verificações iniciais, por exemplo intencoes que pode ser criadas sem ter nehuma percepcao
-	private void initAgent(ContextWalker walker) {
+	// TODO: fazer verificações iniciais, por exemplo intencoes que pode ser criadas
+	// sem ter nehuma percepcao
+	private void initAgent(ContextWalker walker, PlanWalker planWalker) {
 
 		List<Context> desires = getContext(walker, DESIRES);
 		List<Context> beliefs = getContext(walker, BELIEFS);
@@ -59,6 +62,7 @@ public class Agent {
 		
 		BeliefsContextService.getInstance().beliefs(beliefs);
 		DesiresContextService.getInstance().desires(desires);
+		PlansContextService.getInstance().plans(planWalker.getPlans());
 
 	}
 

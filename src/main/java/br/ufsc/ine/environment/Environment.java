@@ -4,7 +4,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.ufsc.ine.context.plans.Function;
+import br.ufsc.ine.context.plans.Action;
 import rx.Observable;
 
 public abstract class Environment {
@@ -12,7 +12,7 @@ public abstract class Environment {
 	private List<Observable<String>> sensors = new ArrayList<>();
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public void execute(Function function) {
+	public void execute(Action function) {
 
 		try {
 			Class clazz = Class.forName(Environment.class.getName());

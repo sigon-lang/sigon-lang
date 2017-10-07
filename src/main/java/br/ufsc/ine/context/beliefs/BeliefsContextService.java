@@ -11,7 +11,7 @@ import br.ufsc.ine.context.Context;
 import br.ufsc.ine.context.ContextService;
 import br.ufsc.ine.prolog.PrologEnvironment;
 
-public class BeliefsContextService implements ContextService{
+public class BeliefsContextService implements ContextService {
 
 	private static BeliefsContextService instance;
 	private static PrologEnvironment prologEnvironment;
@@ -32,11 +32,9 @@ public class BeliefsContextService implements ContextService{
 
 	public void beliefs(List<Context> beliefs) {
 		this.beliefs = beliefs;
-		List<String> clauses = beliefs.stream()
-			.map(c -> c.getClauses())
-			.flatMap(l -> l.stream())
-			.collect(Collectors.toList());
-		
+		List<String> clauses = beliefs.stream().map(c -> c.getClauses()).flatMap(l -> l.stream())
+				.collect(Collectors.toList());
+
 		clauses.forEach(c -> {
 			appendFact(c);
 		});
@@ -49,19 +47,24 @@ public class BeliefsContextService implements ContextService{
 			e.printStackTrace();
 		}
 	}
-	
-	 
-	
+
 	public List<Context> getBeliefs() {
 		return beliefs;
 	}
 
-	//TODO: add na lista de beliefs
+	// TODO: add na lista de beliefs
 	public void addBelief(String fact) throws InvalidTheoryException {
 		prologEnvironment.appendFact(fact);
-		
+
 	}
-	
+
+	//TODO: ver como atualizar para nao precisa recriar a base
+	public void updateBelief(String literal) throws InvalidTheoryException {
+		prologEnvironment = new PrologEnvironment();
+		prologEnvironment.appendFact(literal);
+
+	}
+
 	@Override
 	public boolean verify(String fact) {
 		SolveInfo solveGoal;

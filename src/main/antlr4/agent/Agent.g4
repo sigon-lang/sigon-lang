@@ -46,17 +46,45 @@ type
 	;
 
 customType
-	: character +
+	: (LCLETTER | UCLETTER) character *
 	;
 
+
+conditions
+	: ('_' | listOfClauses)
+	;
+ 
  
 //'plan' '(' somethingToBeTrue ',' compoundaction ',' preconditions ',' postconditions ')'
 plan
-	: 'plan' '(' listOfClauses ',' compoundaction ',' '_' | listOfClauses ',' '_' | listOfClauses ')'
+	: 'plan' '(' somethingToBeTrue ',' ('_' |compoundaction )',' planPreconditions ',' planPostconditions ')'
 	;
 
+somethingToBeTrue
+	: listOfClauses
+	;	
+
+planPreconditions
+	: conditions
+	;
+	
+planPostconditions
+	: conditions
+	;
+	
+
+
+//'action' '(' functionInvocation ',' preconditions ',' postconditions ')'
 action
-	: 'action' '(' functionInvocation ',' preconditions ',' postconditions ')'
+	: 'action' '(' functionInvocation ',' actionPreconditions ',' actionPostconditions ')'
+	;
+	
+actionPreconditions
+	: conditions
+	;
+	
+actionPostconditions
+	: conditions
 	;
 
 functionInvocation
@@ -78,17 +106,9 @@ expression
 compoundaction
 	: ('[' action (',' action)* ']')?;
 	
-preconditions
-	:listOfClauses
-	;
-	
-postconditions
-	:listOfClauses
-	;
-
 listOfClauses
-	: (propClause | '[' propClause (',' propClause)* ']')
-	| (folClause | '[' folClause (',' folClause)* ']')
+	: (propClause | ('[' propClause (',' propClause)* ']'))
+	| (folClause | ('[' folClause (',' folClause)* ']'))
 	;
 
 formulas
@@ -115,12 +135,13 @@ bridgeRule
 
 head
 	:
-('!' contextName '(' type ')' ) ('not')? (propClause | folClause)
+('!' (contextName | PLANS) '(' type ')' ) ('not')? (propClause | folClause)
 ;
 
 body
 	:
-contextName '(' type ')' 'not'? (propClause | folClause) (('and'|'or')  contextName '(' type ')' 'not'? (propClause | folClause))*
+(contextName | PLANS) '(' type ')' (('not'? (propClause | folClause))
+| plan) (('and'|'or')  (contextName | PLANS) '(' type ')' (('not'? (propClause | folClause)) |plan))*
 	;
 
 
@@ -131,11 +152,15 @@ propClause
 	;
 
 folClause
-	: constant '(' ( constant | variable | '_') (',' constant | variable | '_')* ')'
+	: constant '(' (numeral | constant | variable | '_') (',' (numeral | constant | variable | '_') )* ')'
+	;
+	
+numeral 
+	: DIGIT+
 	;
 
 constant
-	: LCLETTER character* 
+	: LCLETTER character*
 	;
 
 variable
@@ -158,11 +183,11 @@ character
     : LCLETTER | UCLETTER | DIGIT
     ;
 
-/* Permiter que o usuário descreva a semântica da lógica.
+/* Permiter que o usuÃ¡rio descreva a semÃ¢ntica da lÃ³gica.
 */
 
 semanticRules
-	: character+ '.semantic'
+	: (LCLETTER | UCLETTER) character* '.semantic'
 	;
 
 STRING
