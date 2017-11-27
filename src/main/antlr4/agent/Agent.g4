@@ -1,14 +1,27 @@
 grammar Agent;
 
- 
-
 agent
 	:
-	  (context | bridgeRule)*
+	 (sensors)?  (context | bridgeRule)*
 	  EOF
 	;
 
- 
+sensors
+    : 'sensors' ':' (sensor)*
+    ;
+
+sensor
+    : '{' 'name:' + sensorName +  ',' 'implementation:'  sensorImplementation '}' (',')?
+    ;
+
+sensorName
+    : STRING
+    ;
+
+sensorImplementation
+    : STRING
+    ;
+
 context
 	: contextName '(' param? ')' ':' formulas
 	| PLANS '(' planType ')' ':' plansFormulas
@@ -168,13 +181,13 @@ variable
 	;
 
 propLogExpr
-	: propLogExpr ('and' | 'or') propLogExpr
+	: propLogExpr (AND | OR) propLogExpr
 	| propClause
 	;
 
 
 folLogExpr
-	: folLogExpr ('and' | 'or') folLogExpr
+	: folLogExpr (AND | OR) folLogExpr
 	| folClause
 	;
 
@@ -189,6 +202,14 @@ character
 semanticRules
 	: (LCLETTER | UCLETTER) character* '.semantic'
 	;
+
+AND
+   : 'and'
+   ;
+
+OR
+   : 'or'
+   ;
 
 STRING
 	 : '"' (~[\r\n"] | '""')* '"'
@@ -231,3 +252,4 @@ LineComment
     :   '//' ~[\r\n]*
         -> skip
 ;
+

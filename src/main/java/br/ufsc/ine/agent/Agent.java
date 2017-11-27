@@ -1,73 +1,98 @@
 package br.ufsc.ine.agent;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import br.ufsc.ine.agent.flow.BeliefsHandler;
 import br.ufsc.ine.agent.flow.ContextHandler;
-import br.ufsc.ine.agent.flow.DesiresHandler;
-import br.ufsc.ine.agent.flow.PlansHandler;
 import br.ufsc.ine.context.Context;
 import br.ufsc.ine.context.beliefs.BeliefsContextService;
 import br.ufsc.ine.context.desires.DesiresContextService;
 import br.ufsc.ine.context.intentions.IntentionsContextService;
 import br.ufsc.ine.context.plans.PlansContextService;
-import br.ufsc.ine.environment.Environment;
-import br.ufsc.ine.environment.FileEnvironment;
-import br.ufsc.ine.parser.ContextWalker;
+import br.ufsc.ine.parser.AgentWalker;
 import br.ufsc.ine.parser.PlanWalker;
+import br.ufsc.ine.sensor.Sensor;
+import rx.Observable;
+
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Agent {
 
-	private static final String DESIRES = "desires";
-	private static final String BELIEFS = "beliefs";
-	private Environment environment;
+    private static final String DESIRES = "desires";
+    private static final String BELIEFS = "beliefs";
 
-	public Agent() {
-		BeliefsContextService.startService();
-		DesiresContextService.startService();
-		IntentionsContextService.startService();
-		PlansContextService.startService();
+    private List<Sensor> sensors = new ArrayList<>();
 
-		// TODO: permitir que o usuário possa definir seu proprio ambiente
-		environment = new FileEnvironment();
+    public Agent() {
+        BeliefsContextService.startService();
+        DesiresContextService.startService();
+        IntentionsContextService.startService();
+        PlansContextService.startService();
 
-		environment.init();
-	}
 
-	public void run(ContextWalker walker, PlanWalker planWalker) {
 
-		this.initAgent(walker, planWalker);
+    }
 
-		ContextHandler desiresHandler = new DesiresHandler();
-		ContextHandler beliefsHandler = new BeliefsHandler();
-		PlansHandler plansHandler = new PlansHandler();
+    public void run(AgentWalker walker, PlanWalker planWalker) {
 
-		desiresHandler.setSuccessor(beliefsHandler);
-		beliefsHandler.setSuccessor(plansHandler);
-		
-		environment.getSensors().stream().forEach(sensor -> {
-			sensor.subscribe(desiresHandler::handleRequest, Throwable::printStackTrace);
-		});
+        this.initAgent(walker, planWalker);
 
-	}
 
-	// TODO: fazer verificações iniciais, por exemplo intencoes que pode ser criadas
-	// sem ter nehuma percepcao
-	private void initAgent(ContextWalker walker, PlanWalker planWalker) {
+        //TODO: fazer um metodo para criar a cadeia de forma dinamica, considerar contextos criadas pelo usuario
+        ContextHandler beliefsHandler = new BeliefsHandler();
+        //ContextHandler desiresHandler = new DesiresHandler();
+        //PlansHandler plansHandler = new PlansHandler();
 
-		List<Context> desires = getContext(walker, DESIRES);
-		List<Context> beliefs = getContext(walker, BELIEFS);
+        //beliefsHandler.setSuccessor(desiresHandler);
+        //desiresHandler.setSuccessor(plansHandler);
 
-		
-		BeliefsContextService.getInstance().beliefs(beliefs);
-		DesiresContextService.getInstance().desires(desires);
-		PlansContextService.getInstance().plans(planWalker.getPlans());
+        this.subscribeSensors(beliefsHandler);
+        this.startSensors();
 
-	}
 
-	private List<Context> getContext(ContextWalker walker, String context) {
-		return walker.getContexts().stream().filter(c -> c.getName().equals(context)).collect(Collectors.toList());
-	}
+    }
+
+    private void subscribeSensors(ContextHandler beliefsHandler) {
+        List<Observable<String>> observables = this.sensors.stream().map(s -> s.getPublisher()).collect(Collectors.toList());
+
+        observables.forEach(stringObservable -> stringObservable.subscribe(beliefsHandler::handleRequest, Throwable::printStackTrace));
+    }
+
+    private void startSensors() {
+        this.sensors.stream().forEach(s-> {
+            Thread sensorThread = new Thread(s);
+            sensorThread.start();
+        });
+    }
+
+    private void initAgent(AgentWalker walker, PlanWalker planWalker) {
+
+        List<Context> desires = getContext(walker, DESIRES);
+        List<Context> beliefs = getContext(walker, BELIEFS);
+
+        walker.getLangSensors().stream().map(s -> s.getImplementation()).forEach(implementation -> {
+            try{
+                Class<?> clazz = Class.forName(implementation);
+                Constructor<?> ctor = clazz.getConstructor();
+                Sensor sensor = (Sensor) ctor.newInstance();
+                sensors.add(sensor);
+            } catch (Exception e){
+                e.printStackTrace();
+                //TODO: implementar log
+            }
+
+        });
+
+
+        BeliefsContextService.getInstance().beliefs(beliefs);
+        DesiresContextService.getInstance().desires(desires);
+        PlansContextService.getInstance().plans(planWalker.getPlans());
+
+    }
+
+    private List<Context> getContext(AgentWalker walker, String context) {
+        return walker.getContexts().stream().filter(c -> c.getName().equals(context)).collect(Collectors.toList());
+    }
 
 }

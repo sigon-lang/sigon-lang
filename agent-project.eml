@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component LANGUAGE_LEVEL="JDK_1_8" inheritJdk="true">
+	<output-test url="file://$MODULE_DIR$/target/test-classes"/>
+	<contentEntry url="file://$MODULE_DIR$">
+		<testFolder url="file://$MODULE_DIR$/src/test/java"/>
+		<excludeFolder url="file://$MODULE_DIR$/target"/>
+	</contentEntry>
+	<lib name="Maven: org.projectlombok:lombok:1.16.18" scope="PROVIDED"/>
+	<lib name="Maven: junit:junit:4.12" scope="TEST"/>
+	<lib name="Maven: org.hamcrest:hamcrest-core:1.3" scope="TEST"/>
+	<levels>
+		<level name="Maven: org.antlr:antlr4:4.7" value="project"/>
+		<level name="Maven: org.antlr:antlr4-runtime:4.7" value="project"/>
+		<level name="Maven: org.antlr:antlr-runtime:3.5.2" value="project"/>
+		<level name="Maven: org.antlr:ST4:4.0.8" value="project"/>
+		<level name="Maven: org.abego.treelayout:org.abego.treelayout.core:1.0.3" value="project"/>
+		<level name="Maven: org.glassfish:javax.json:1.0.4" value="project"/>
+		<level name="Maven: com.ibm.icu:icu4j:58.2" value="project"/>
+		<level name="Maven: it.unibo.alice.tuprolog:tuprolog:3.2.1" value="project"/>
+		<level name="Maven: org.apache.commons:commons-lang3:3.0" value="project"/>
+		<level name="Maven: com.google.code.gson:gson:2.6.2" value="project"/>
+		<level name="Maven: io.reactivex.rxjava2:rxjava:2.0.1" value="project"/>
+		<level name="Maven: org.reactivestreams:reactive-streams:1.0.0" value="project"/>
+		<level name="Maven: com.github.davidmoten:rxjava-file:0.4.4" value="project"/>
+		<level name="Maven: io.reactivex:rxjava:1.3.2" value="project"/>
+		<level name="Maven: com.github.davidmoten:rxjava-extras:0.8.0.10" value="project"/>
+		<level name="Maven: com.github.davidmoten:guava-mini:0.1" value="project"/>
+		<level name="Maven: org.projectlombok:lombok:1.16.18" value="project"/>
+		<level name="Maven: junit:junit:4.12" value="project"/>
+		<level name="Maven: org.hamcrest:hamcrest-core:1.3" value="project"/>
+	</levels>
+</component>

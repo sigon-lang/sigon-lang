@@ -10,7 +10,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import agent.AgentLexer;
 import agent.AgentParser;
-import br.ufsc.ine.parser.ContextWalker;
+import br.ufsc.ine.parser.AgentWalker;
 import br.ufsc.ine.parser.PlanWalker;
 import br.ufsc.ine.parser.VerboseListener;
 
@@ -38,13 +38,13 @@ public class Main {
 			ParseTree tree = parser.agent();
 			ParseTreeWalker walker = new ParseTreeWalker();
 
-			ContextWalker contextWalker = new ContextWalker();
+			AgentWalker agentWalker = new AgentWalker();
 			PlanWalker planWalker = new PlanWalker();
-			walker.walk(contextWalker, tree);
+			walker.walk(agentWalker, tree);
 			walker.walk(planWalker, tree);
 
 			Agent agent = new Agent();
-			agent.run(contextWalker, planWalker);
+			agent.run(agentWalker, planWalker);
 
 		} catch (IOException e) {
 			System.out.println("I/O exception.");
