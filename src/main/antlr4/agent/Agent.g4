@@ -2,7 +2,7 @@ grammar Agent;
 
 agent
 	:
-	 (sensors)?  (context | bridgeRule)*
+	 (sensors)? (actuators)?  (context | bridgeRule)*
 	  EOF
 	;
 
@@ -21,6 +21,23 @@ sensorName
 sensorImplementation
     : STRING
     ;
+
+actuators
+    : 'actuators' ':' (actuator)*
+    ;
+
+actuator
+    : '{' 'name:' + actuatorName +  ',' 'implementation:'  actuatorImplementation '}' (',')?
+    ;
+
+actuatorName
+    : STRING
+    ;
+
+actuatorImplementation
+    : STRING
+    ;
+
 
 context
 	: contextName '(' param? ')' ':' formulas
@@ -165,7 +182,7 @@ propClause
 	;
 
 folClause
-	: constant '(' (numeral | constant | variable | '_') (',' (numeral | constant | variable | '_') )* ')'
+	: ('not')? constant '(' (numeral | constant | variable | '_') (',' (numeral | constant | variable | '_') )* ')'
 	;
 	
 numeral 

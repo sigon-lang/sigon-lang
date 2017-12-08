@@ -10,16 +10,45 @@ import agent.AgentParser.FolFormulaContext;
 import agent.AgentParser.FormulasContext;
 import agent.AgentParser.PropFormulaContext;
 import agent.AgentParser.TypeContext;
+import br.ufsc.ine.actuator.LangActuator;
 import br.ufsc.ine.context.Context;
+import br.ufsc.ine.context.plans.Action;
+import br.ufsc.ine.context.plans.Plan;
 import br.ufsc.ine.sensor.LangSensor;
 
 public class AgentWalker extends AgentBaseListener {
 
+	private List<Plan> plans = new ArrayList<>();
+	private Plan plan;
+	private Action action;
+
 	private List<Context> contexts = new ArrayList<>();
+
 	private List<LangSensor> langSensors = new ArrayList<>();
+	private List<LangActuator> langActuators = new ArrayList<>();
 
 	private Context lastContext;
 	private LangSensor lastSensor;
+	private  LangActuator lastActuator;
+
+	@Override
+	public void enterActuator(AgentParser.ActuatorContext ctx) {
+		this.lastActuator = new LangActuator();
+		super.enterActuator(ctx);
+	}
+
+	@Override
+	public void enterActuatorName(AgentParser.ActuatorNameContext ctx) {
+		this.lastActuator.setName(ctx.getText().replace("\"", ""));
+		super.enterActuatorName(ctx);
+	}
+
+	@Override
+	public void enterActuatorImplementation(AgentParser.ActuatorImplementationContext ctx) {
+		this.lastActuator.setImplementation(ctx.getText().replace("\"", ""));
+		this.langActuators.add(this.lastActuator);
+		super.enterActuatorImplementation(ctx);
+	}
 
 	@Override
 	public void enterSensor(AgentParser.SensorContext ctx) {
@@ -72,11 +101,76 @@ public class AgentWalker extends AgentBaseListener {
 		super.enterFormulas(ctx);
 	}
 
+	@Override
+	public void enterPlanType(AgentParser.PlanTypeContext ctx) {
+		this.plan = new Plan();
+		this.plan.setType(ctx.getText());
+		super.enterPlanType(ctx);
+	}
+
+	@Override
+	public void enterSomethingToBeTrue(AgentParser.SomethingToBeTrueContext ctx) {
+		this.plan.setSomethingToBeTrue(ctx.getText());
+		super.enterSomethingToBeTrue(ctx);
+	}
+
+	@Override
+	public void enterPlanPreconditions(AgentParser.PlanPreconditionsContext ctx) {
+		this.plan.getPreConditions().add(ctx.getText());
+		super.enterPlanPreconditions(ctx);
+	}
+
+	@Override
+	public void enterPlanPostconditions(AgentParser.PlanPostconditionsContext ctx) {
+		this.plan.getPosConditions().add(ctx.getText());
+		super.enterPlanPostconditions(ctx);
+	}
+
+	@Override
+	public void enterFunctionName(AgentParser.FunctionNameContext ctx) {
+		this.action = new Action();
+		this.action.setName(ctx.getText());
+		super.enterFunctionName(ctx);
+	}
+
+	@Override
+	public void enterArgumentList(AgentParser.ArgumentListContext ctx) {
+		this.action.getArguments().add(ctx.getText());
+		super.enterArgumentList(ctx);
+	}
+
+	@Override
+	public void enterActionPreconditions(AgentParser.ActionPreconditionsContext ctx) {
+		action.getPreConditions().add(ctx.getText());
+		super.enterActionPreconditions(ctx);
+	}
+
+	@Override
+	public void enterActionPostconditions(AgentParser.ActionPostconditionsContext ctx) {
+		action.getPosConditions().add(ctx.getText());
+		this.plan.getActions().add(action);
+		super.enterActionPostconditions(ctx);
+	}
+
+	@Override
+	public void enterPlansFormulas(AgentParser.PlansFormulasContext ctx) {
+		this.getPlans().add(plan);
+		super.enterPlansFormulas(ctx);
+	}
+
 	public List<Context> getContexts() {
 		return contexts;
 	}
 
 	public List<LangSensor> getLangSensors() {
 		return langSensors;
+	}
+
+	public List<LangActuator> getLangActuators() {
+		return langActuators;
+	}
+
+	public List<Plan> getPlans() {
+		return plans;
 	}
 }

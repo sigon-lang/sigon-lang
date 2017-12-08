@@ -1,29 +1,28 @@
 
 sensors:
-    {name: "name1", implementation: "br.ufsc.ine.environment.TestSensor"},
-    {name: "name1", implementation: "br.ufsc.ine.environment.TestSensor2"},
+    {name: "positionSensor", implementation: "br.ufsc.ine.environment.PositionSensor"}
+
+actuators:
+    {name: "moveUp", implementation: "br.ufsc.ine.environment.MoveUp"},
+    {name: "moveFront", implementation: "br.ufsc.ine.environment.MoveFront"},
 
 
-//beliefs(fol):
-//	position(0,0).
+beliefs(fol):
+	position(0,0).
 
-//desires(fol):
-//	position(1,1).
+desires(fol):
+	position(1,1).
 	
 plans(fol):
-	//action(functionInvocation, preconditions, postconditions)
-	//action(moveFront(), position(_,_), position(_,_)).
-	//action(moveUp(), position(_,_), position(_,_)).
-	
 	//plan(somethingToBeTrue, compoundaction, preconditions, postconditions)
-//	plan(
-//		position(1,1),
-//		[
-//			action(moveFront(),  position(0,_), position(_,_)),
-//			action(moveUp(), position(_,0), position(_,_))
-//		]
-//		,
-//		position(_,_),
-//		position(_,_)).
+	plan(
+		position(1,1),
+		[
+			action(moveFront(),  not position(_,20), position(_,_)),
+			action(moveUp(), not position(20,_), position(_,_))
+		]
+		,
+		position(_,_),
+		position(_,_)).
 	
 //!intention(fol) position(1,1) :- desires(prop) position(1,1) and plans(fol) plan(position(1,1), _, _, _).

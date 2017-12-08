@@ -1,4 +1,4 @@
-package br.ufsc.ine.agent.flow;
+package br.ufsc.ine.context.flow;
 
 import alice.tuprolog.InvalidTheoryException;
 import br.ufsc.ine.context.beliefs.BeliefsContextService;
@@ -7,9 +7,9 @@ public class BeliefsHandler extends ContextHandler{
 
 	@Override
 	public void handleRequest(String literal) {
-		 System.out.println(literal);
+
 		//TODO: ver como tratar erros
-		/* try {
+		try {
 			BeliefsContextService.getInstance().updateBelief(literal);
 		} catch (InvalidTheoryException e) {
 			// TODO Auto-generated catch block
@@ -18,7 +18,7 @@ public class BeliefsHandler extends ContextHandler{
 		
 		if (super.successor != null) {
 			super.successor.handleRequest(literal);
-		}*/
+		}
 		
 	}
 

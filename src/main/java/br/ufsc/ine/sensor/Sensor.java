@@ -7,6 +7,8 @@ public abstract class Sensor implements Runnable{
 
     protected PublishSubject<String>  publisher;
 
+
+
     public Sensor(){
         publisher  = PublishSubject.create();
     }

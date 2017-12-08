@@ -1,14 +1,16 @@
 package br.ufsc.ine.agent;
 
-import br.ufsc.ine.agent.flow.BeliefsHandler;
-import br.ufsc.ine.agent.flow.ContextHandler;
+import br.ufsc.ine.actuator.Actuator;
+import br.ufsc.ine.context.flow.BeliefsHandler;
+import br.ufsc.ine.context.flow.ContextHandler;
 import br.ufsc.ine.context.Context;
 import br.ufsc.ine.context.beliefs.BeliefsContextService;
 import br.ufsc.ine.context.desires.DesiresContextService;
+import br.ufsc.ine.context.flow.DesiresHandler;
+import br.ufsc.ine.context.flow.PlansHandler;
 import br.ufsc.ine.context.intentions.IntentionsContextService;
 import br.ufsc.ine.context.plans.PlansContextService;
 import br.ufsc.ine.parser.AgentWalker;
-import br.ufsc.ine.parser.PlanWalker;
 import br.ufsc.ine.sensor.Sensor;
 import rx.Observable;
 
@@ -23,29 +25,32 @@ public class Agent {
     private static final String BELIEFS = "beliefs";
 
     private List<Sensor> sensors = new ArrayList<>();
+    private List<Actuator> actuators = new ArrayList<>();
 
     public Agent() {
         BeliefsContextService.startService();
         DesiresContextService.startService();
         IntentionsContextService.startService();
-        PlansContextService.startService();
+
+        PlansContextService.startService(this.actuators);
+
+
 
 
 
     }
 
-    public void run(AgentWalker walker, PlanWalker planWalker) {
-
-        this.initAgent(walker, planWalker);
-
-
+    public void run(AgentWalker walker) {
+        this.initAgent(walker);
         //TODO: fazer um metodo para criar a cadeia de forma dinamica, considerar contextos criadas pelo usuario
         ContextHandler beliefsHandler = new BeliefsHandler();
-        //ContextHandler desiresHandler = new DesiresHandler();
-        //PlansHandler plansHandler = new PlansHandler();
+        ContextHandler desiresHandler = new DesiresHandler();
+        PlansHandler plansHandler = new PlansHandler();
 
-        //beliefsHandler.setSuccessor(desiresHandler);
-        //desiresHandler.setSuccessor(plansHandler);
+        beliefsHandler.setSuccessor(desiresHandler);
+        desiresHandler.setSuccessor(plansHandler);
+
+
 
         this.subscribeSensors(beliefsHandler);
         this.startSensors();
@@ -66,10 +71,23 @@ public class Agent {
         });
     }
 
-    private void initAgent(AgentWalker walker, PlanWalker planWalker) {
+    private void initAgent(AgentWalker walker) {
 
         List<Context> desires = getContext(walker, DESIRES);
         List<Context> beliefs = getContext(walker, BELIEFS);
+
+        walker.getLangActuators().forEach(a ->{
+            try{
+                Class<?> clazz = Class.forName(a.getImplementation());
+                Constructor<?> ctor = clazz.getConstructor();
+                Actuator actuator = (Actuator) ctor.newInstance();
+                actuator.setName(a.getName());
+                actuators.add(actuator);
+            } catch (Exception e){
+                e.printStackTrace();
+                //TODO: implementar log
+            }
+        });
 
         walker.getLangSensors().stream().map(s -> s.getImplementation()).forEach(implementation -> {
             try{
@@ -87,7 +105,7 @@ public class Agent {
 
         BeliefsContextService.getInstance().beliefs(beliefs);
         DesiresContextService.getInstance().desires(desires);
-        PlansContextService.getInstance().plans(planWalker.getPlans());
+      PlansContextService.getInstance().plans(walker.getPlans());
 
     }
 
@@ -95,4 +113,7 @@ public class Agent {
         return walker.getContexts().stream().filter(c -> c.getName().equals(context)).collect(Collectors.toList());
     }
 
+    public List<Actuator> getActuators() {
+        return actuators;
+    }
 }

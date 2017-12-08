@@ -8,15 +8,11 @@ public class TestSensor2 extends Sensor{
 
     private  Observable<String> fileObservable;
 
-    public TestSensor2(){
-        super();
-        this.fileObservable = FileObservable
-                .tailer().file("/home/valdirluiz/teste1").tailText();
-
-    }
 
     @Override
     public void run() {
+        this.fileObservable = FileObservable
+                .tailer().file("/home/valdirluiz/teste1").tailText();
         this.fileObservable.subscribe(super.publisher);
     }
 }

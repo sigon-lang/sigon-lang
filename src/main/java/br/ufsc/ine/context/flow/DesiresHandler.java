@@ -1,4 +1,4 @@
-package br.ufsc.ine.agent.flow;
+package br.ufsc.ine.context.flow;
 
 public class DesiresHandler extends ContextHandler {
 

@@ -6,8 +6,7 @@ import br.ufsc.ine.context.desires.DesiresContextService;
 import lombok.Builder;
 import lombok.Data;
 
-@Data
-@Builder
+
 public class Rule {
 
 	private String verify;
@@ -50,4 +49,19 @@ public class Rule {
 		return isValid;
 	}
 
+	public String getVerify() {
+		return verify;
+	}
+
+	public void setVerify(String verify) {
+		this.verify = verify;
+	}
+
+	public Element getIn() {
+		return in;
+	}
+
+	public void setIn(Element in) {
+		this.in = in;
+	}
 }

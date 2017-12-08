@@ -11,7 +11,6 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import agent.AgentLexer;
 import agent.AgentParser;
 import br.ufsc.ine.parser.AgentWalker;
-import br.ufsc.ine.parser.PlanWalker;
 import br.ufsc.ine.parser.VerboseListener;
 
 public class Main {
@@ -39,12 +38,12 @@ public class Main {
 			ParseTreeWalker walker = new ParseTreeWalker();
 
 			AgentWalker agentWalker = new AgentWalker();
-			PlanWalker planWalker = new PlanWalker();
+
 			walker.walk(agentWalker, tree);
-			walker.walk(planWalker, tree);
+
 
 			Agent agent = new Agent();
-			agent.run(agentWalker, planWalker);
+			agent.run(agentWalker);
 
 		} catch (IOException e) {
 			System.out.println("I/O exception.");
