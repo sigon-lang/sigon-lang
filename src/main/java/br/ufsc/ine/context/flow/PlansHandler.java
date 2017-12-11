@@ -1,8 +1,11 @@
 package br.ufsc.ine.context.flow;
 
+
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import br.ufsc.ine.actuator.Actuator;
 import br.ufsc.ine.bridge.Element;
@@ -17,9 +20,14 @@ public class PlansHandler extends ContextHandler {
 		@Override
 		public boolean test(Action action) {
 			for (String clause : action.getPreConditions()) {
-				if (!buildBeliefsRule(clause).execute()) {
-					return false;
+
+				if(clause.startsWith("not")){
+					return !buildBeliefsRule(clause.replace("not", "")).execute();
+				} else{
+					return buildBeliefsRule(clause).execute();
 				}
+
+
 			}
 			return true;
 		}
@@ -37,19 +45,14 @@ public class PlansHandler extends ContextHandler {
 
 
 		plans.stream().filter(p -> !this.buildBeliefsRule(p.getSomethingToBeTrue()).execute()).forEach(p -> {
-
-			Optional<Action> any = p.getActions().stream().filter(actionPredicate).findAny();
+			List<Action> actions = p.getActions().stream().filter(actionPredicate).collect(Collectors.toList());
+			Collections.shuffle(actions);
+			Optional<Action> any = actions.stream().findAny();
 			if (any.isPresent()) {
 				System.out.println("Executar: " + any.get().getName());
 				Actuator actuator = actuators.stream().filter(a -> a.getName().equals(any.get().getName())).findFirst().get();
 				actuator.act(null);
 			}
-
-			//p.getActions().forEach(action -> {
-			//	action.getPreConditions().forEach(pre -> {
-
-			//	});
-			//});
 
 		});
 

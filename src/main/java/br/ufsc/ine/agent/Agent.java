@@ -105,7 +105,7 @@ public class Agent {
 
         BeliefsContextService.getInstance().beliefs(beliefs);
         DesiresContextService.getInstance().desires(desires);
-      PlansContextService.getInstance().plans(walker.getPlans());
+        PlansContextService.getInstance().plans(walker.getPlans());
 
     }
 
