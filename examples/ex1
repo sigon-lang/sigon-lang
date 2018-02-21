@@ -1,19 +1,17 @@
 
-sensors:
-    {name: "positionSensor", implementation: "br.ufsc.ine.environment.PositionSensor"}
-
-actuators:
-    {name: "moveUp", implementation: "br.ufsc.ine.environment.MoveUp"},
-    {name: "moveFront", implementation: "br.ufsc.ine.environment.MoveFront"},
+communication:
+    sensor("positionSensor", "br.ufsc.ine.environment.PositionSensor").
+    actuator("moveUp", "br.ufsc.ine.environment.MoveUp").
+    actuator("moveFront", "br.ufsc.ine.environment.MoveFront").
 
 
-beliefs(fol):
+beliefs:
 	position(0,0).
 
-desires(fol):
+desires:
 	position(1,1).
 	
-plans(fol):
+planning:
 	//plan(somethingToBeTrue, compoundaction, preconditions, postconditions)
 	plan(
 		position(1,1),
@@ -25,4 +23,3 @@ plans(fol):
 		position(_,_),
 		position(_,_)).
 	
-//!intention(fol) position(1,1) :- desires(prop) position(1,1) and plans(fol) plan(position(1,1), _, _, _).

@@ -7,20 +7,12 @@ import lombok.Data;
 
 
 public class Plan {
-	
-	private String type;
+
 	private String somethingToBeTrue;
 	private Set<String> preConditions = new HashSet<>();
 	private Set<String> posConditions = new HashSet<>();
 	private Set<Action> actions = new HashSet<>();
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
 
 	public String getSomethingToBeTrue() {
 		return somethingToBeTrue;

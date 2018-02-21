@@ -1,20 +1,58 @@
-grammar Agent;
+grammar old;
 
 agent
 	:
-	  (context | bridgeRule)*
+	 (sensors)? (actuators)?  (context | bridgeRule)*
 	  EOF
 	;
 
+sensors
+    : 'sensors' ':' (sensor)*
+    ;
+
+sensor
+    : '{' 'identifier:' + sensorName +  ',' 'implementation:'  sensorImplementation '}' (',')?
+    ;
+
+sensorName
+    : STRING
+    ;
+
+sensorImplementation
+    : STRING
+    ;
+
+actuators
+    : 'actuators' ':' (actuator)*
+    ;
+
+actuator
+    : '{' 'identifier:' + actuatorName +  ',' 'implementation:'  actuatorImplementation '}' (',')?
+    ;
+
+actuatorName
+    : STRING
+    ;
+
+actuatorImplementation
+    : STRING
+    ;
+
+
 context
-	: contextName ':' formulas
-	| communicationContext
-	| PLANS  ':' plansFormulas
+	: contextName '(' param? ')' ':' formulas
+	| PLANS '(' planType ')' ':' plansFormulas
 	;
 
-communicationContext
-    : 'communication' ':' (sensors)? (actuators)?
-    ;
+planType
+	: ('prop' | 'fol')?
+	;
+
+
+param
+	: type
+	;
+
 
 contextName
 	: primitiveContextName 
@@ -28,6 +66,17 @@ primitiveContextName
 customContextName
 	:
 	'_'(LCLETTER | UCLETTER)+ character*
+	;
+
+
+type
+	: 'prop'
+	| 'fol'
+	| customType (',' semanticRules)
+	;
+
+customType
+	: (LCLETTER | UCLETTER) character *
 	;
 
 
@@ -76,39 +125,6 @@ functionName
 	: LCLETTER + character*
 	;
 
-sensors
-    : (sensor)*
-    ;
-
-sensor
-    : 'sensor(' + sensorIdentifier+  ',' sensorImplementation ')' '.'
-    ;
-
-sensorIdentifier
-    : STRING
-    ;
-
-sensorImplementation
-    : STRING
-    ;
-
-actuators
-    : (actuator)*
-    ;
-
-actuator
-    : 'actuator(' + actuatorIdentifier+  ',' actuatorImplementation ')' '.'
-    ;
-
-actuatorIdentifier
-    : STRING
-    ;
-
-actuatorImplementation
-    : STRING
-    ;
-
-
 argumentList
 	:	expression (',' expression)*
 ;
@@ -149,13 +165,13 @@ bridgeRule
 
 head
 	:
-('!' (contextName | PLANS)  ) ('not')? (propClause | folClause)
+('!' (contextName | PLANS) '(' type ')' ) ('not')? (propClause | folClause)
 ;
 
 body
 	:
-(contextName | PLANS)   (('not'? (propClause | folClause))
-| plan) (('and'|'or')  (contextName | PLANS)   (('not'? (propClause | folClause)) |plan))*
+(contextName | PLANS) '(' type ')' (('not'? (propClause | folClause))
+| plan) (('and'|'or')  (contextName | PLANS) '(' type ')' (('not'? (propClause | folClause)) |plan))*
 	;
 
 
@@ -228,7 +244,7 @@ INTENTIONS
 	: 'intentions'
 	;
 PLANS
-	: 'planning'
+	: 'plans'
 	;
 LCLETTER
     : [a-z_];

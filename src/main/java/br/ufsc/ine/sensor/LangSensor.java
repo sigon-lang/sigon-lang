@@ -2,15 +2,15 @@ package br.ufsc.ine.sensor;
 
 public class LangSensor {
 
-    private String name;
+    private String identifier;
     private String implementation;
 
-    public String getName() {
-        return name;
+    public String getIdentifier() {
+        return identifier;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
 
     public String getImplementation() {

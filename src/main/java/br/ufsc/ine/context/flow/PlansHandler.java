@@ -46,6 +46,7 @@ public class PlansHandler extends ContextHandler {
 
 		plans.stream().filter(p -> !this.buildBeliefsRule(p.getSomethingToBeTrue()).execute()).forEach(p -> {
 			List<Action> actions = p.getActions().stream().filter(actionPredicate).collect(Collectors.toList());
+			System.out.println("Executar plano");
 			Collections.shuffle(actions);
 			Optional<Action> any = actions.stream().findAny();
 			if (any.isPresent()) {

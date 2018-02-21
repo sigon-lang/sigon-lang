@@ -6,7 +6,6 @@ import java.util.List;
 public class Context {
 
 	private String name;
-	private String type;
 	private List<String> clauses = new ArrayList<>();
 
 	public String getName() {
@@ -17,13 +16,6 @@ public class Context {
 		this.name = name;
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
 
 	public List<String> getClauses() {
 		return clauses;

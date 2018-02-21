@@ -9,7 +9,6 @@ import agent.AgentParser.ContextNameContext;
 import agent.AgentParser.FolFormulaContext;
 import agent.AgentParser.FormulasContext;
 import agent.AgentParser.PropFormulaContext;
-import agent.AgentParser.TypeContext;
 import br.ufsc.ine.actuator.LangActuator;
 import br.ufsc.ine.context.Context;
 import br.ufsc.ine.context.plans.Action;
@@ -29,7 +28,7 @@ public class AgentWalker extends AgentBaseListener {
 
 	private Context lastContext;
 	private LangSensor lastSensor;
-	private  LangActuator lastActuator;
+	private LangActuator lastActuator;
 
 	@Override
 	public void enterActuator(AgentParser.ActuatorContext ctx) {
@@ -38,9 +37,9 @@ public class AgentWalker extends AgentBaseListener {
 	}
 
 	@Override
-	public void enterActuatorName(AgentParser.ActuatorNameContext ctx) {
-		this.lastActuator.setName(ctx.getText().replace("\"", ""));
-		super.enterActuatorName(ctx);
+	public void enterActuatorIdentifier(AgentParser.ActuatorIdentifierContext ctx) {
+		this.lastActuator.setIdentifier(ctx.getText().replace("\"", ""));
+		super.enterActuatorIdentifier(ctx);
 	}
 
 	@Override
@@ -57,9 +56,9 @@ public class AgentWalker extends AgentBaseListener {
 	}
 
 	@Override
-	public void enterSensorName(AgentParser.SensorNameContext ctx) {
-		this.lastSensor.setName(ctx.getText());
-		super.enterSensorName(ctx);
+	public void enterSensorIdentifier(AgentParser.SensorIdentifierContext ctx) {
+		this.lastSensor.setIdentifier(ctx.getText().replace("\"", ""));
+		super.enterSensorIdentifier(ctx);
 	}
 
 	@Override
@@ -77,11 +76,6 @@ public class AgentWalker extends AgentBaseListener {
 	}
 
 
-	@Override
-	public void enterType(TypeContext ctx) {
-		this.lastContext.setType(ctx.getText());
-		super.enterType(ctx);
-	}
 
 	@Override
 	public void enterPropFormula(PropFormulaContext ctx) {
@@ -101,16 +95,12 @@ public class AgentWalker extends AgentBaseListener {
 		super.enterFormulas(ctx);
 	}
 
-	@Override
-	public void enterPlanType(AgentParser.PlanTypeContext ctx) {
-		this.plan = new Plan();
-		this.plan.setType(ctx.getText());
-		super.enterPlanType(ctx);
-	}
 
 	@Override
 	public void enterSomethingToBeTrue(AgentParser.SomethingToBeTrueContext ctx) {
-		this.plan.setSomethingToBeTrue(ctx.getText());
+		this.plan = new Plan();
+		this.getPlans().add(plan);
+	    this.plan.setSomethingToBeTrue(ctx.getText());
 		super.enterSomethingToBeTrue(ctx);
 	}
 
@@ -152,11 +142,7 @@ public class AgentWalker extends AgentBaseListener {
 		super.enterActionPostconditions(ctx);
 	}
 
-	@Override
-	public void enterPlansFormulas(AgentParser.PlansFormulasContext ctx) {
-		this.getPlans().add(plan);
-		super.enterPlansFormulas(ctx);
-	}
+
 
 	public List<Context> getContexts() {
 		return contexts;

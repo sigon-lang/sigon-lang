@@ -81,7 +81,7 @@ public class Agent {
                 Class<?> clazz = Class.forName(a.getImplementation());
                 Constructor<?> ctor = clazz.getConstructor();
                 Actuator actuator = (Actuator) ctor.newInstance();
-                actuator.setName(a.getName());
+                actuator.setName(a.getIdentifier());
                 actuators.add(actuator);
             } catch (Exception e){
                 e.printStackTrace();
