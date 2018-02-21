@@ -1,17 +1,17 @@
 package br.ufsc.ine.agent;
 
-import br.ufsc.ine.actuator.Actuator;
-import br.ufsc.ine.context.flow.BeliefsHandler;
-import br.ufsc.ine.context.flow.ContextHandler;
-import br.ufsc.ine.context.Context;
-import br.ufsc.ine.context.beliefs.BeliefsContextService;
-import br.ufsc.ine.context.desires.DesiresContextService;
-import br.ufsc.ine.context.flow.DesiresHandler;
-import br.ufsc.ine.context.flow.PlansHandler;
-import br.ufsc.ine.context.intentions.IntentionsContextService;
-import br.ufsc.ine.context.plans.PlansContextService;
+import br.ufsc.ine.agent.context.communication.Actuator;
+import br.ufsc.ine.agent.context.flow.BeliefsHandler;
+import br.ufsc.ine.agent.context.flow.ContextHandler;
+import br.ufsc.ine.agent.context.Context;
+import br.ufsc.ine.agent.context.beliefs.BeliefsContextService;
+import br.ufsc.ine.agent.context.desires.DesiresContextService;
+import br.ufsc.ine.agent.context.flow.DesiresHandler;
+import br.ufsc.ine.agent.context.flow.PlansHandler;
+import br.ufsc.ine.agent.context.intentions.IntentionsContextService;
+import br.ufsc.ine.agent.context.plans.PlansContextService;
 import br.ufsc.ine.parser.AgentWalker;
-import br.ufsc.ine.sensor.Sensor;
+import br.ufsc.ine.agent.context.communication.Sensor;
 import rx.Observable;
 
 import java.lang.reflect.Constructor;

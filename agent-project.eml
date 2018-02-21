@@ -8,6 +8,7 @@
 	<lib name="Maven: org.projectlombok:lombok:1.16.18" scope="PROVIDED"/>
 	<lib name="Maven: junit:junit:4.12" scope="TEST"/>
 	<lib name="Maven: org.hamcrest:hamcrest-core:1.3" scope="TEST"/>
+	<lib name="Maven: org.hamcrest:hamcrest-all:1.3" scope="TEST"/>
 	<levels>
 		<level name="Maven: org.antlr:antlr4:4.7" value="project"/>
 		<level name="Maven: org.antlr:antlr4-runtime:4.7" value="project"/>
@@ -28,5 +29,6 @@
 		<level name="Maven: org.projectlombok:lombok:1.16.18" value="project"/>
 		<level name="Maven: junit:junit:4.12" value="project"/>
 		<level name="Maven: org.hamcrest:hamcrest-core:1.3" value="project"/>
+		<level name="Maven: org.hamcrest:hamcrest-all:1.3" value="project"/>
 	</levels>
 </component>

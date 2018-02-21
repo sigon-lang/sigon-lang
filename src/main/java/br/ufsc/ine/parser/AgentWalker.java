@@ -9,11 +9,11 @@ import agent.AgentParser.ContextNameContext;
 import agent.AgentParser.FolFormulaContext;
 import agent.AgentParser.FormulasContext;
 import agent.AgentParser.PropFormulaContext;
-import br.ufsc.ine.actuator.LangActuator;
-import br.ufsc.ine.context.Context;
-import br.ufsc.ine.context.plans.Action;
-import br.ufsc.ine.context.plans.Plan;
-import br.ufsc.ine.sensor.LangSensor;
+import br.ufsc.ine.agent.context.communication.LangActuator;
+import br.ufsc.ine.agent.context.Context;
+import br.ufsc.ine.agent.context.plans.Action;
+import br.ufsc.ine.agent.context.plans.Plan;
+import br.ufsc.ine.agent.context.communication.LangSensor;
 
 public class AgentWalker extends AgentBaseListener {
 
