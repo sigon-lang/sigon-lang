@@ -13,4 +13,7 @@ public class Head {
     @Getter
     private String clause;
 
+    public boolean isVariable() {
+        return (this.clause!=null && Character.isUpperCase(this.clause.charAt(0)));
+    }
 }

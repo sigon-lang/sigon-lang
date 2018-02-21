@@ -11,6 +11,7 @@ public class BridgeRule {
     private Head head;
     private Body body;
 
+
     public boolean verify(){
         return this.body.verify();
     }
@@ -18,7 +19,11 @@ public class BridgeRule {
     public void execute(){
         if(this.body.verify()){
             ContextService context = this.head.getContext();
-            context.appendFact(head.getClause());
+            if(head.isVariable()){
+                this.body.getVariableFacts().forEach(context::appendFact);
+            } else{
+                context.appendFact(head.getClause());
+            }
         }
     }
 }

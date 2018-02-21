@@ -5,6 +5,7 @@ import java.util.List;
 import alice.tuprolog.InvalidTheoryException;
 import alice.tuprolog.MalformedGoalException;
 import alice.tuprolog.SolveInfo;
+import alice.tuprolog.Theory;
 import br.ufsc.ine.agent.context.Context;
 import br.ufsc.ine.agent.context.ContextService;
 import br.ufsc.ine.utils.PrologEnvironment;
@@ -58,6 +59,11 @@ public class DesiresContextService  implements ContextService{
 		} catch (MalformedGoalException e) {
 			return false;
 		}
+	}
+
+	@Override
+	public Theory getAllFacts(){
+		return prologEnvironment.getEngine().getTheory();
 	}
 
 }
