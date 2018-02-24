@@ -12,20 +12,15 @@ import br.ufsc.ine.utils.PrologEnvironment;
 
 public class DesiresContextService  implements ContextService{
 
-	public static DesiresContextService instance;
+	public static DesiresContextService ourInstance = new DesiresContextService();
 	private static PrologEnvironment prologEnvironment;
 
 	private DesiresContextService() {
-
-	}
-
-	public static void startService() {
-		instance = new DesiresContextService();
 		prologEnvironment = new PrologEnvironment();
 	}
 
 	public static DesiresContextService getInstance() {
-		return instance;
+		return ourInstance;
 	}
 
 	 
@@ -62,8 +57,13 @@ public class DesiresContextService  implements ContextService{
 	}
 
 	@Override
-	public Theory getAllFacts(){
+	public Theory getTheory(){
 		return prologEnvironment.getEngine().getTheory();
+	}
+
+	@Override
+	public String getName() {
+		return "dc";
 	}
 
 }

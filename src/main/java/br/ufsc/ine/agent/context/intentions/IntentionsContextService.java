@@ -14,17 +14,14 @@ import br.ufsc.ine.utils.PrologEnvironment;
 
 public class IntentionsContextService implements ContextService {
 
-	public static IntentionsContextService instance;
+	public static IntentionsContextService instance = new IntentionsContextService();
 	private static PrologEnvironment prologEnvironment;
 
 	private IntentionsContextService() {
-
-	}
-
-	public static void startService() {
-		instance = new IntentionsContextService();
 		prologEnvironment = new PrologEnvironment();
 	}
+
+
 
 	public static IntentionsContextService getInstance() {
 		return instance;
@@ -69,7 +66,12 @@ public class IntentionsContextService implements ContextService {
 	}
 
 	@Override
-	public Theory getAllFacts(){
+	public Theory getTheory(){
 		return prologEnvironment.getEngine().getTheory();
+	}
+
+	@Override
+	public String getName() {
+		return "ic";
 	}
 }

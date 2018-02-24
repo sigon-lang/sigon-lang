@@ -14,22 +14,19 @@ import br.ufsc.ine.utils.PrologEnvironment;
 
 public class BeliefsContextService implements ContextService {
 
-	private static BeliefsContextService instance;
+	private static BeliefsContextService instance = new BeliefsContextService();
 	private static PrologEnvironment prologEnvironment;
 	private List<Context> beliefs = new ArrayList<>();
 
 	private BeliefsContextService() {
-
+		prologEnvironment = new PrologEnvironment();
 	}
 
 	public static BeliefsContextService getInstance() {
 		return instance;
 	}
 
-	public static void startService() {
-		instance = new BeliefsContextService();
-		prologEnvironment = new PrologEnvironment();
-	}
+
 
 	public void beliefs(List<Context> beliefs) {
 		this.beliefs = beliefs;
@@ -77,7 +74,12 @@ public class BeliefsContextService implements ContextService {
 	}
 
 	@Override
-	public Theory getAllFacts(){
+	public Theory getTheory(){
 		return prologEnvironment.getEngine().getTheory();
+	}
+
+	@Override
+	public String getName() {
+		return "bc";
 	}
 }

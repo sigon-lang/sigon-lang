@@ -17,13 +17,10 @@ public class BridgeRule {
     }
 
     public void execute(){
+        this.body.setHead(this.head);
         if(this.body.verify()){
             ContextService context = this.head.getContext();
-            if(head.isVariable()){
-                this.body.getVariableFacts().forEach(context::appendFact);
-            } else{
-                context.appendFact(head.getClause());
-            }
+            this.body.getVariableFacts().forEach(context::appendFact);
         }
     }
 }

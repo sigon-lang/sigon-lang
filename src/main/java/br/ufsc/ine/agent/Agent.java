@@ -1,14 +1,11 @@
 package br.ufsc.ine.agent;
 
+import br.ufsc.ine.agent.bridgerules.BridgeRulesService;
 import br.ufsc.ine.agent.context.communication.Actuator;
-import br.ufsc.ine.agent.context.flow.BeliefsHandler;
-import br.ufsc.ine.agent.context.flow.ContextHandler;
+import br.ufsc.ine.agent.context.communication.CommunicationContextService;
 import br.ufsc.ine.agent.context.Context;
 import br.ufsc.ine.agent.context.beliefs.BeliefsContextService;
 import br.ufsc.ine.agent.context.desires.DesiresContextService;
-import br.ufsc.ine.agent.context.flow.DesiresHandler;
-import br.ufsc.ine.agent.context.flow.PlansHandler;
-import br.ufsc.ine.agent.context.intentions.IntentionsContextService;
 import br.ufsc.ine.agent.context.plans.PlansContextService;
 import br.ufsc.ine.parser.AgentWalker;
 import br.ufsc.ine.agent.context.communication.Sensor;
@@ -23,45 +20,26 @@ public class Agent {
 
     private static final String DESIRES = "desires";
     private static final String BELIEFS = "beliefs";
-
     private List<Sensor> sensors = new ArrayList<>();
     private List<Actuator> actuators = new ArrayList<>();
 
-    public Agent() {
-        BeliefsContextService.startService();
-        DesiresContextService.startService();
-        IntentionsContextService.startService();
-
-        PlansContextService.startService(this.actuators);
-
-
-
-
-
-    }
-
     public void run(AgentWalker walker) {
         this.initAgent(walker);
-        //TODO: fazer um metodo para criar a cadeia de forma dinamica, considerar contextos criadas pelo usuario
-        ContextHandler beliefsHandler = new BeliefsHandler();
-        ContextHandler desiresHandler = new DesiresHandler();
-        PlansHandler plansHandler = new PlansHandler();
-
-        beliefsHandler.setSuccessor(desiresHandler);
-        desiresHandler.setSuccessor(plansHandler);
-
-
-
-        this.subscribeSensors(beliefsHandler);
+        this.subscribeSensors();
         this.startSensors();
-
-
     }
 
-    private void subscribeSensors(ContextHandler beliefsHandler) {
-        List<Observable<String>> observables = this.sensors.stream().map(s -> s.getPublisher()).collect(Collectors.toList());
+    private void subscribeSensors() {
+        List<Observable<String>> observables = this.sensors.stream()
+                .map(s -> s.getPublisher()).collect(Collectors.toList());
+        observables.forEach(stringObservable -> stringObservable
+                .subscribe(this::bdiAlgorithmCycle, Throwable::printStackTrace));
+    }
 
-        observables.forEach(stringObservable -> stringObservable.subscribe(beliefsHandler::handleRequest, Throwable::printStackTrace));
+    private synchronized void bdiAlgorithmCycle(String literal){
+        CommunicationContextService.getInstance().appendFact(literal);
+        BridgeRulesService.getInstance().executeBdiRules();
+        PlansContextService.getInstance().executePlanAlgorithm();
     }
 
     private void startSensors() {
@@ -113,7 +91,5 @@ public class Agent {
         return walker.getContexts().stream().filter(c -> c.getName().equals(context)).collect(Collectors.toList());
     }
 
-    public List<Actuator> getActuators() {
-        return actuators;
-    }
+
 }

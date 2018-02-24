@@ -46,11 +46,12 @@ public class PlansHandler extends ContextHandler {
 
 		plans.stream().filter(p -> !this.buildBeliefsRule(p.getSomethingToBeTrue()).execute()).forEach(p -> {
 			List<Action> actions = p.getActions().stream().filter(actionPredicate).collect(Collectors.toList());
-			System.out.println("Executar plano");
+
 			Collections.shuffle(actions);
 			Optional<Action> any = actions.stream().findAny();
 			if (any.isPresent()) {
 				System.out.println("Executar: " + any.get().getName());
+				//criar um outCommunication para invocar atuador via regra de ponte
 				Actuator actuator = actuators.stream().filter(a -> a.getName().equals(any.get().getName())).findFirst().get();
 				actuator.act(null);
 			}
