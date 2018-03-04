@@ -162,12 +162,24 @@ body
 
 
 propClause
-	: ('not')? constant*
+	: ('not')? constant* (annotation)?
 	;
 
 folClause
-	: ('not')? constant '(' (numeral | constant | variable | '_') (',' (numeral | constant | variable | '_') )* ')'
+	: ('not')? constant '(' (numeral | constant | variable | '_') (',' (numeral | constant | variable | '_') )* ')' (annotation)?
 	;
+
+annotation
+    : (preAction| gradedValue)
+    ;
+
+preAction
+    : '['constant']'
+    ;
+
+gradedValue
+    : '->0' '.'numeral
+    ;
 	
 numeral 
 	: DIGIT+
