@@ -149,13 +149,13 @@ bridgeRule
 
 head
 	:
-('!' (contextName | PLANS)  ) ('not')? (propClause | folClause)
+('!' ('not')? (contextName | PLANS)  ) ('not')? (propClause | folClause | variable)
 ;
 
 body
 	:
-(contextName | PLANS)   (('not'? (propClause | folClause))
-| plan) (('and'|'or')  (contextName | PLANS)   (('not'? (propClause | folClause)) |plan))*
+(contextName | PLANS)   (('not'? (propClause | folClause | variable))
+| plan) (('and'|'or')  (contextName | PLANS)   (('not'? (propClause | folClause | variable)) |plan))*
 	;
 
 
