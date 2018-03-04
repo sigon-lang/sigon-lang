@@ -38,13 +38,13 @@ public class AgentWalker extends AgentBaseListener {
 
 	@Override
 	public void enterActuatorIdentifier(AgentParser.ActuatorIdentifierContext ctx) {
-		this.lastActuator.setIdentifier(ctx.getText().replace("\"", ""));
+		this.lastActuator.setIdentifier(ctx.getText().replaceAll("\"", ""));
 		super.enterActuatorIdentifier(ctx);
 	}
 
 	@Override
 	public void enterActuatorImplementation(AgentParser.ActuatorImplementationContext ctx) {
-		this.lastActuator.setImplementation(ctx.getText().replace("\"", ""));
+		this.lastActuator.setImplementation(ctx.getText().replaceAll("\"", ""));
 		this.langActuators.add(this.lastActuator);
 		super.enterActuatorImplementation(ctx);
 	}
@@ -57,13 +57,13 @@ public class AgentWalker extends AgentBaseListener {
 
 	@Override
 	public void enterSensorIdentifier(AgentParser.SensorIdentifierContext ctx) {
-		this.lastSensor.setIdentifier(ctx.getText().replace("\"", ""));
+		this.lastSensor.setIdentifier(ctx.getText().replaceAll("\"", ""));
 		super.enterSensorIdentifier(ctx);
 	}
 
 	@Override
 	public void enterSensorImplementation(AgentParser.SensorImplementationContext ctx) {
-		this.lastSensor.setImplementation(ctx.getText().replace("\"", ""));
+		this.lastSensor.setImplementation(ctx.getText().replaceAll("\"", ""));
 		this.getLangSensors().add(this.lastSensor);
 		super.enterSensorImplementation(ctx);
 	}

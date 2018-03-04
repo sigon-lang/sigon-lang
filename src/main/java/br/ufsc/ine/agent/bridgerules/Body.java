@@ -17,6 +17,7 @@ public class Body {
     private String notClause;
     private Body and;
     private Body or;
+
     private Head head;
 
     @Builder.Default
@@ -27,9 +28,10 @@ public class Body {
             Theory contextTheory = defineBodyTheory();
             Prolog prolog = new Prolog();
             prolog.setTheory(contextTheory);
-            SolveInfo solve = prolog.solve(this.toString()+ END);
+            String toTest = this.toString().endsWith(".") ? this.toString() : this.toString()+ END;
+            SolveInfo solve = prolog.solve( toTest );
 
-            if(!head.isVariable()){
+            if(head!=null && !head.isVariable()){
                 variableFacts.add(head.getClause());
             } else {
                 Term solution = solve.getTerm(this.head.getClause().contains(".") ? this.head.getClause().substring(0, this.head.getClause().length() - 1)
@@ -44,6 +46,9 @@ public class Body {
                 }
             }
             return solve.isSuccess();
+        } catch (alice.tuprolog.NoSolutionException ne){
+            System.out.println("No Solution of Bridge Rule");
+            return false;
         } catch (Exception e){
             e.printStackTrace();
             return false;

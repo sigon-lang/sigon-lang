@@ -67,6 +67,7 @@ public class BeliefsContextService implements ContextService {
 	@Override
 	public void appendFact(String c) {
 		try {
+			prologEnvironment = new PrologEnvironment();
 			prologEnvironment.appendFact(c);
 		} catch (InvalidTheoryException e) {
 			e.printStackTrace();

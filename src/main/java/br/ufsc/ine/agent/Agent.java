@@ -27,6 +27,7 @@ public class Agent {
         this.initAgent(walker);
         this.subscribeSensors();
         this.startSensors();
+        CommunicationContextService.getInstance().actuators(this.actuators);
     }
 
     private void subscribeSensors() {
@@ -37,9 +38,14 @@ public class Agent {
     }
 
     private synchronized void bdiAlgorithmCycle(String literal){
-        CommunicationContextService.getInstance().appendFact(literal);
+        CommunicationContextService.getInstance().appendFact(this.getSense(literal));
         BridgeRulesService.getInstance().executeBdiRules();
         PlansContextService.getInstance().executePlanAlgorithm();
+    }
+
+    private String getSense(String literal) {
+        System.out.println("sense("+literal.substring(0, literal.length()-1)+").");
+        return "sense("+literal.substring(0, literal.length()-1)+").";
     }
 
     private void startSensors() {

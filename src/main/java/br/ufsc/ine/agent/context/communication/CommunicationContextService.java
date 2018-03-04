@@ -6,16 +6,16 @@ import alice.tuprolog.Theory;
 import br.ufsc.ine.agent.context.ContextService;
 import br.ufsc.ine.utils.PrologEnvironment;
 
+import java.util.List;
+
 public class CommunicationContextService implements ContextService{
 
     private static CommunicationContextService instance = new CommunicationContextService();
     private static PrologEnvironment prologEnvironment;
-
-
+    private List<Actuator> actuators;
     private CommunicationContextService() {
         prologEnvironment = new PrologEnvironment();
     }
-
     public static CommunicationContextService getInstance() {
         return instance;
     }
@@ -41,8 +41,19 @@ public class CommunicationContextService implements ContextService{
     @Override
     public void appendFact(String fact) {
         try{
-            prologEnvironment = new PrologEnvironment();
-            prologEnvironment.appendFact(fact);
+            if(fact.startsWith("sense")) {
+                prologEnvironment = new PrologEnvironment();
+                prologEnvironment.appendFact(fact);
+            } else {
+                String name = fact.substring(0, fact.length() -1);
+
+                Actuator actuator = actuators.stream()
+                        .filter(a -> a.getName().equals(name))
+                        .findFirst().get();
+
+                //TODO: passar parametros para funcoes
+                actuator.act(null);
+            }
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -51,6 +62,10 @@ public class CommunicationContextService implements ContextService{
     @Override
     public String getName() {
         return "cc";
+    }
+
+    public void actuators(List<Actuator> actuators) {
+        this.actuators = actuators;
     }
 }
 
