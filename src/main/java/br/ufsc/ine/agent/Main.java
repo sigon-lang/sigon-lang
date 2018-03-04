@@ -17,7 +17,9 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		String filename = getLastArgument(args);
+		//String filename = getLastArgument(args);
+
+		String filename="/home/valdirluiz/works/agent-project/examples/annotation";
 
 		File file = new File(filename);
 		if (!file.exists()) {

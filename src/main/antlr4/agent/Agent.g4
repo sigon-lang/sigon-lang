@@ -159,10 +159,8 @@ body
 	;
 
 
-
-
 propClause
-	: ('not')? constant* (annotation)?
+	: ('not')? constant (annotation)?
 	;
 
 folClause
@@ -170,18 +168,18 @@ folClause
 	;
 
 annotation
-    : (preAction| gradedValue)
-    ;
+     : (preAction| gradedValue)
+     ;
 
 preAction
     : '['constant']'
     ;
 
 gradedValue
-    : '->0' '.'numeral
+    : '->0.' numeral
     ;
-	
-numeral 
+
+numeral
 	: DIGIT+
 	;
 
@@ -190,7 +188,7 @@ constant
 	;
 
 variable
-	: UCLETTER character*	
+	: UCLETTER character*
 	;
 
 propLogExpr
@@ -209,7 +207,7 @@ character
     : LCLETTER | UCLETTER | DIGIT
     ;
 
-/* Permiter que o usuÃ¡rio descreva a semÃ¢ntica da lÃ³gica.
+/* Permiter que o usuÃƒÂ¡rio descreva a semÃƒÂ¢ntica da lÃƒÂ³gica.
 */
 
 semanticRules
@@ -265,4 +263,3 @@ LineComment
     :   '//' ~[\r\n]*
         -> skip
 ;
-

@@ -2,6 +2,7 @@ package br.ufsc.ine.parser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import agent.AgentBaseListener;
 import agent.AgentParser;
@@ -79,13 +80,36 @@ public class AgentWalker extends AgentBaseListener {
 
 	@Override
 	public void enterPropFormula(PropFormulaContext ctx) {
+		AgentParser.AnnotationContext annotationContext = ctx.propClause().annotation();
+		if(annotationContext!=null && annotationContext.gradedValue()!=null){
+			String gradedValue = annotationContext.gradedValue().getText().replaceAll("->", "");
+			String clause = ctx.propClause().constant().getText();
+			StringBuilder builder = new StringBuilder();
+			builder.append(clause);
+			builder.append("(");
+			builder.append(gradedValue);
+			builder.append(").");
+			this.lastContext.addClause(builder.toString());
+		}
 		this.lastContext.addClause(ctx.getText());
 		super.enterPropFormula(ctx);
 	}
 
 	@Override
 	public void enterFolFormula(FolFormulaContext ctx) {
-		this.lastContext.addClause(ctx.getText());
+		AgentParser.AnnotationContext annotationContext = ctx.folClause().annotation();
+		if(annotationContext!=null && annotationContext.gradedValue()!=null){
+			String gradedValue = annotationContext.gradedValue().getText().replaceAll("->", "");
+			String clause = ctx.getText();
+			StringBuilder builder = new StringBuilder();
+			builder.append(clause.substring(0, clause.lastIndexOf(")")));
+			builder.append(",");
+			builder.append(gradedValue);
+			builder.append(").");
+			this.lastContext.addClause(builder.toString());
+		} else{
+			this.lastContext.addClause(ctx.getText());
+		}
 		super.enterFolFormula(ctx);
 	}
 
