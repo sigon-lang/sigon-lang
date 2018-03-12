@@ -125,8 +125,7 @@ listOfClauses
 	;
 
 formulas
-	: propFormula*
-	| folFormula*
+	: (propFormula	| folFormula )*
 	;
 	
 propFormula
