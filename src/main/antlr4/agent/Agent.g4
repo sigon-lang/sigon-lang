@@ -2,7 +2,7 @@ grammar Agent;
 
 agent
 	:
-	  (context | bridgeRule)*
+	  context (context | bridgeRule)*
 	  EOF
 	;
 
