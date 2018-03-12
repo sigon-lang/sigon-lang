@@ -84,7 +84,7 @@ functionName
 	;
 
 sensor
-    : 'sensor(' + sensorIdentifier+  ',' sensorImplementation ')' '.'
+    : 'sensor('  sensorIdentifier  ',' sensorImplementation ')' '.'
     ;
 
 sensorIdentifier
@@ -96,7 +96,7 @@ sensorImplementation
     ;
 
 actuator
-    : 'actuator(' + actuatorIdentifier+  ',' actuatorImplementation ')' '.'
+    : 'actuator(' actuatorIdentifier ',' actuatorImplementation ')' '.'
     ;
 
 actuatorIdentifier
