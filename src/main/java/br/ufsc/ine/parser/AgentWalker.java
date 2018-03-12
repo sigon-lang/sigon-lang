@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import agent.AgentBaseListener;
 import agent.AgentParser;
-import agent.AgentParser.ContextNameContext;
+import agent.AgentParser.LogicalContextNameContext;
 import agent.AgentParser.FolFormulaContext;
 import agent.AgentParser.FormulasContext;
 import agent.AgentParser.PropFormulaContext;
@@ -70,10 +70,10 @@ public class AgentWalker extends AgentBaseListener {
 	}
 
 	@Override
-	public void enterContextName(ContextNameContext ctx) {
+	public void enterLogicalContextName(LogicalContextNameContext ctx) {
 		this.lastContext = new Context();
 		this.lastContext.setName(ctx.getText());
-		super.enterContextName(ctx);
+		super.enterLogicalContextName(ctx);
 	}
 
 

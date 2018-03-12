@@ -7,16 +7,27 @@ agent
 	;
 
 context
-	: contextName ':' formulas
-	| communicationContext
-	| PLANS  ':' plansFormulas
+	: 
+	logicalContext | functionalContext
 	;
 
-communicationContext
-    : 'communication' ':' (sensors)? (actuators)?
-    ;
+bridgeRule
+	:
+	head ':-' body '.'
+	;
 
-contextName
+logicalContext
+	:
+	logicalContextName ':' formulas
+	;
+
+functionalContext
+	:
+	COMMUNICATION ':' sensors? actuators?
+	| PLANNING  ':' plansFormulas
+	;	
+
+logicalContextName
 	: primitiveContextName 
 	| customContextName
 ;
@@ -29,12 +40,6 @@ customContextName
 	:
 	'_'(LCLETTER | UCLETTER)+ character*
 	;
-
-
-conditions
-	: ('_' | listOfClauses)
-	;
- 
  
 //'plan' '(' somethingToBeTrue ',' compoundaction ',' preconditions ',' postconditions ')'
 plan
@@ -53,7 +58,9 @@ planPostconditions
 	: conditions
 	;
 	
-
+conditions
+	: ('_' | listOfClauses)
+	;
 
 //'action' '(' functionInvocation ',' preconditions ',' postconditions ')'
 action
@@ -142,20 +149,17 @@ plansFormulas
 	: ((plan  | action )'.') *
 	;	
 
-bridgeRule
-	:
-	head ':-' body '.'
-	;
+
 
 head
 	:
-('!' ('not')? (contextName | PLANS)  ) ('not')? (propClause | folClause | variable)
+('!' ('not')? (logicalContextName | PLANS | COMMUNICATION)  ) ('not')? (propClause | folClause | variable)
 ;
 
 body
 	:
-(contextName | PLANS)   (('not'? (propClause | folClause | variable))
-| plan) (('and'|'or')  (contextName | PLANS)   (('not'? (propClause | folClause | variable)) |plan))*
+(logicalContextName | PLANS | COMMUNICATION)   (('not'? (propClause | folClause | variable))
+| plan) (('and'|'or')  (logicalContextName | PLANS | COMMUNICATION)   (('not'? (propClause | folClause | variable)) |plan))*
 	;
 
 
@@ -207,12 +211,12 @@ character
     : LCLETTER | UCLETTER | DIGIT
     ;
 
-/* Permiter que o usuÃƒÂ¡rio descreva a semÃƒÂ¢ntica da lÃƒÂ³gica.
+/* 
+* TODO: user been able to add a semantic for a context.
+*semanticRules
+*	: (LCLETTER | UCLETTER) character* '.semantic'
+*	;
 */
-
-semanticRules
-	: (LCLETTER | UCLETTER) character* '.semantic'
-	;
 
 AND
    : 'and'
@@ -237,9 +241,16 @@ DESIRES
 INTENTIONS
 	: 'intentions'
 	;
-PLANS
+PLANNING
 	: 'planning'
 	;
+
+COMMUNICATION
+	: 'communication'
+	;
+
+
+
 LCLETTER
     : [a-z_];
 
@@ -255,7 +266,7 @@ WS
 
 
 BlockComment
-    :   '/*' .*? '*/'
+    :   '/*' .* '*/'
         -> skip
     ;
 
