@@ -2,14 +2,16 @@ grammar Agent;
 
 agent
 	:
-	  context (context | bridgeRule)*
-	  EOF
+	communicationContext (context | bridgeRule)*
+	EOF
 	;
 
 context
 	: 
 	logicalContext | functionalContext
 	;
+
+
 
 bridgeRule
 	:
@@ -23,9 +25,17 @@ logicalContext
 
 functionalContext
 	:
-	COMMUNICATION ':' (sensor | actuator)+
-	| PLANNING  ':' plansFormulas
+	communicationContext | 
+	planningContext	
 	;	
+
+planningContext
+	:
+	PLANNER  ':' plansFormulas
+	;
+communicationContext:
+	COMMUNICATION ':' (sensor | actuator)+
+	;
 
 logicalContextName
 	: primitiveContextName 
@@ -144,13 +154,13 @@ plansFormulas
 
 head
 	:
-('!' ('not')? (logicalContextName | PLANNING | COMMUNICATION)  ) ('not')? (propClause | folClause | variable)
+('!' ('not')? (logicalContextName | PLANNER | COMMUNICATION)  ) ('not')? (propClause | folClause | variable)
 ;
 
 body
 	:
-(logicalContextName | PLANNING | COMMUNICATION)   (('not'? (propClause | folClause | variable))
-| plan) (('and'|'or')  (logicalContextName | PLANNING | COMMUNICATION)   (('not'? (propClause | folClause | variable)) |plan))*
+(logicalContextName | PLANNER | COMMUNICATION)   (('not'? (propClause | folClause | variable))
+| plan) (('and'|'or')  (logicalContextName | PLANNER | COMMUNICATION)   (('not'? (propClause | folClause | variable)) |plan))*
 	;
 
 
@@ -235,8 +245,8 @@ DESIRES
 INTENTIONS
 	: 'intentions'
 	;
-PLANNING
-	: 'planning'
+PLANNER
+	: 'planner'
 	;
 
 COMMUNICATION
