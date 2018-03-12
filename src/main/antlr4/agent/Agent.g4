@@ -23,7 +23,7 @@ logicalContext
 
 functionalContext
 	:
-	COMMUNICATION ':' sensors? actuators?
+	COMMUNICATION ':' (sensor | actuator)+
 	| PLANNING  ':' plansFormulas
 	;	
 
@@ -43,7 +43,7 @@ customContextName
  
 //'plan' '(' somethingToBeTrue ',' compoundaction ',' preconditions ',' postconditions ')'
 plan
-	: 'plan' '(' somethingToBeTrue ',' ('_' |compoundaction )',' planPreconditions ',' planPostconditions ')'
+	: 'plan' '(' somethingToBeTrue ',' compoundAction ',' planPreconditions ',' planPostconditions ')'
 	;
 
 somethingToBeTrue
@@ -83,10 +83,6 @@ functionName
 	: LCLETTER + character*
 	;
 
-sensors
-    : (sensor)*
-    ;
-
 sensor
     : 'sensor(' + sensorIdentifier+  ',' sensorImplementation ')' '.'
     ;
@@ -97,10 +93,6 @@ sensorIdentifier
 
 sensorImplementation
     : STRING
-    ;
-
-actuators
-    : (actuator)*
     ;
 
 actuator
@@ -124,8 +116,8 @@ expression
 	: STRING
 	;
 
-compoundaction
-	: ('[' action (',' action)* ']')?;
+compoundAction
+	: ('[' action (',' action)* ']') |'_' ;
 	
 listOfClauses
 	: (propClause | ('[' propClause (',' propClause)* ']'))
@@ -153,13 +145,13 @@ plansFormulas
 
 head
 	:
-('!' ('not')? (logicalContextName | PLANS | COMMUNICATION)  ) ('not')? (propClause | folClause | variable)
+('!' ('not')? (logicalContextName | PLANNING | COMMUNICATION)  ) ('not')? (propClause | folClause | variable)
 ;
 
 body
 	:
-(logicalContextName | PLANS | COMMUNICATION)   (('not'? (propClause | folClause | variable))
-| plan) (('and'|'or')  (logicalContextName | PLANS | COMMUNICATION)   (('not'? (propClause | folClause | variable)) |plan))*
+(logicalContextName | PLANNING | COMMUNICATION)   (('not'? (propClause | folClause | variable))
+| plan) (('and'|'or')  (logicalContextName | PLANNING | COMMUNICATION)   (('not'? (propClause | folClause | variable)) |plan))*
 	;
 
 
