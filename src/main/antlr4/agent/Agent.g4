@@ -151,16 +151,20 @@ plansFormulas
 	;	
 
 
+contextName: 
+	logicalContextName | PLANNER | COMMUNICATION
+	;
+
 
 head
 	:
-('!' ('not')? (logicalContextName | PLANNER | COMMUNICATION)  ) ('not')? (propClause | folClause | variable)
+('!' ('not')?  contextName ) ('not')? (propClause | folClause | variable)
 ;
 
 body
 	:
-(logicalContextName | PLANNER | COMMUNICATION)   (('not'? (propClause | folClause | variable))
-| plan) (('and'|'or')  (logicalContextName | PLANNER | COMMUNICATION)   (('not'? (propClause | folClause | variable)) |plan))*
+contextName   (('not'? (propClause | folClause | variable))
+| plan) (('and'|'or')  contextName   (('not'? (propClause | folClause | variable)) | plan))*
 	;
 
 
