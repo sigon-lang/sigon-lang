@@ -2,14 +2,16 @@ grammar Agent;
 
 agent
 	:
-	  context (context | bridgeRule)*
-	  EOF
+	communicationContext (context | bridgeRule)*
+	EOF
 	;
 
 context
 	: 
 	logicalContext | functionalContext
 	;
+
+
 
 bridgeRule
 	:
@@ -23,9 +25,17 @@ logicalContext
 
 functionalContext
 	:
-	COMMUNICATION ':' (sensor | actuator)+
-	| PLANNING  ':' plansFormulas
+	communicationContext | 
+	planningContext	
 	;	
+
+planningContext
+	:
+	PLANNER  ':' plansFormulas
+	;
+communicationContext:
+	COMMUNICATION ':' (sensor | actuator)+
+	;
 
 logicalContextName
 	: primitiveContextName 
@@ -84,7 +94,7 @@ functionName
 	;
 
 sensor
-    : 'sensor(' + sensorIdentifier+  ',' sensorImplementation ')' '.'
+    : 'sensor('  sensorIdentifier  ',' sensorImplementation ')' '.'
     ;
 
 sensorIdentifier
@@ -96,7 +106,7 @@ sensorImplementation
     ;
 
 actuator
-    : 'actuator(' + actuatorIdentifier+  ',' actuatorImplementation ')' '.'
+    : 'actuator(' actuatorIdentifier ',' actuatorImplementation ')' '.'
     ;
 
 actuatorIdentifier
@@ -125,8 +135,7 @@ listOfClauses
 	;
 
 formulas
-	: propFormula*
-	| folFormula*
+	: (propFormula	| folFormula )*
 	;
 	
 propFormula
@@ -142,16 +151,20 @@ plansFormulas
 	;	
 
 
+contextName: 
+	logicalContextName | PLANNER | COMMUNICATION
+	;
+
 
 head
 	:
-('!' ('not')? (logicalContextName | PLANNING | COMMUNICATION)  ) ('not')? (propClause | folClause | variable)
+('!' ('not')?  contextName ) ('not')? (propClause | folClause | variable)
 ;
 
 body
 	:
-(logicalContextName | PLANNING | COMMUNICATION)   (('not'? (propClause | folClause | variable))
-| plan) (('and'|'or')  (logicalContextName | PLANNING | COMMUNICATION)   (('not'? (propClause | folClause | variable)) |plan))*
+contextName   (('not'? (propClause | folClause | variable))
+| plan) (('and'|'or')  contextName   (('not'? (propClause | folClause | variable)) | plan))*
 	;
 
 
@@ -218,9 +231,12 @@ OR
    : 'or'
    ;
 
+
 STRING
-	 : '"' (~[\r\n"] | '""')* '"'
- 	 ;
+	:
+    '"' (~["\\\r\n] | '\"')* '"';
+
+
 
 BELIEFS
 	: 'beliefs'
@@ -233,8 +249,8 @@ DESIRES
 INTENTIONS
 	: 'intentions'
 	;
-PLANNING
-	: 'planning'
+PLANNER
+	: 'planner'
 	;
 
 COMMUNICATION
