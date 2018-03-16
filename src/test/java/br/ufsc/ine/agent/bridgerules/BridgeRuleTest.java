@@ -36,6 +36,8 @@ public class BridgeRuleTest {
         this.communicationContext = CommunicationContextService.getInstance();
     }
 
+
+
     @Test
     public void testPlanCompute() throws InvalidTheoryException, MalformedGoalException {
         String plan = "plan(position(10,10), [action(moveFront(_), \\+ position(10,_), position(_,_))], position(_,_), position(_,_)).";

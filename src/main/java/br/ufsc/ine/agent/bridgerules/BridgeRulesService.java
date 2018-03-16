@@ -7,6 +7,10 @@ import br.ufsc.ine.agent.context.desires.DesiresContextService;
 import br.ufsc.ine.agent.context.intentions.IntentionsContextService;
 import br.ufsc.ine.agent.context.plans.PlansContextService;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class BridgeRulesService {
 
     private static final String VARIABLE = "X";
@@ -18,6 +22,19 @@ public class BridgeRulesService {
 
     public static BridgeRulesService getInstance() {
         return ourInstance;
+    }
+
+    public List<BridgeRule> bridgeRules(){
+        List<BridgeRule> rules = new ArrayList<>();
+
+        Head head = Head.builder().not(true).context(BeliefsContextService.getInstance()).build();
+        Body body = Body.builder().context(DesiresContextService.getInstance()).clause("X").build();
+        BridgeRule rule1 =BridgeRule.builder().head(head)
+                .body(body)
+                .build();
+
+        rules.add(rule1);
+        return Collections.unmodifiableList(rules);
     }
 
     public void executeBdiRules() {

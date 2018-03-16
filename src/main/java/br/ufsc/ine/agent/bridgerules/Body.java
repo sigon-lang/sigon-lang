@@ -132,9 +132,11 @@ public class Body {
     public String getContextClause(){
 
         if (this.clause != null) {
-            return this.context.getName() + "("+ this.clause + ")";
+
+            return this.context.getName() + "("+ this.clause.replace(".", "") + ")";
         }
-        return this.context.getName() + "("+  this.notClause + ")";
+
+        return this.context.getName() + "("+  this.notClause.replace(".", "") + ")";
 
     }
 

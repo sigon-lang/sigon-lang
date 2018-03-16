@@ -72,6 +72,20 @@
 		</dependency>
 
 
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>1.8.9</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.8.9</version>
+		</dependency>
+
+
+
 	</dependencies>
 
 
@@ -89,6 +103,7 @@
 		</resources>
 
 		<plugins>
+
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -128,6 +143,43 @@
 					</execution>
 				</executions>
 			</plugin>
+
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>aspectj-maven-plugin</artifactId>
+				<version>1.7</version>
+				<configuration>
+					<showWeaveInfo/>
+					<forceAjcCompile>true</forceAjcCompile>
+					<complianceLevel>1.8</complianceLevel>
+					<sources/>
+					<source>1.8</source>
+					<target>1.8</target>
+					<showWeaveInfo>true</showWeaveInfo>
+					<verbose>true</verbose>
+					<Xlint>ignore</Xlint>
+					<XnoInline>true</XnoInline>
+					<encoding>UTF-8 </encoding>
+					<weaveDirectories>
+						<weaveDirectory>${project.build.directory}</weaveDirectory>
+					</weaveDirectories>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>compile</goal>
+							<goal>test-compile</goal>
+						</goals>
+					</execution>
+
+				</executions>
+			</plugin>
+
+
+
+
 		</plugins>
 	</build>
 

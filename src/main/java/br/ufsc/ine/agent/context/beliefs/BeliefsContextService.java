@@ -46,9 +46,8 @@ public class BeliefsContextService implements ContextService {
 
 
 
-	//TODO: ver como atualizar para nao precisa recriar a base
+
 	public void updateBelief(String literal) throws InvalidTheoryException {
-		prologEnvironment = new PrologEnvironment();
 		prologEnvironment.appendFact(literal);
 
 	}

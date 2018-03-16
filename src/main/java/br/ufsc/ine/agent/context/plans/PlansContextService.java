@@ -51,20 +51,20 @@ public class PlansContextService implements ContextService{
     public void executePlanAlgorithm() {
 
 		//TODO: add intencao na verificacao para busca do plano
-		//TODO: buscar o primeiro plano
-		plans.stream().filter(p -> !this.hasBelief(p.getSomethingToBeTrue())).forEach(p -> {
 
 
+		Optional<Plan> plan = plans.stream().filter(p -> !this.hasBelief(p.getSomethingToBeTrue())).findFirst();
 
+		if(plan.isPresent()) {
 
-			List<Action> actions = p.getActions().stream().filter(actionPredicate).collect(Collectors.toList());
+			List<Action> actions = plan.get().getActions().stream().filter(actionPredicate).collect(Collectors.toList());
 
 			Collections.shuffle(actions);
 			Optional<Action> any = actions.stream().findAny();
 			if (any.isPresent()) {
 
 				// TODO: 3/3/18 add argumentos da funcao
-				this.appendFact("act("+any.get().getName()+").");
+				this.appendFact("act(" + any.get().getName() + ").");
 
 				BridgeRule.builder()
 						.head(Head.builder().context(CommunicationContextService.getInstance()).clause("X").build())
@@ -72,8 +72,7 @@ public class PlansContextService implements ContextService{
 						.execute();
 
 			}
-
-		});
+		}
 		
     }
 
