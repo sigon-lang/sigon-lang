@@ -11,7 +11,12 @@ import br.ufsc.ine.parser.AgentWalker;
 import br.ufsc.ine.agent.context.communication.Sensor;
 import rx.Observable;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,10 +42,32 @@ public class Agent {
                 .subscribe(this::bdiAlgorithmCycle, Throwable::printStackTrace));
     }
 
+    long cycles = 0;
     private synchronized void bdiAlgorithmCycle(String literal){
+        cycles++;
+        long startTime = System.nanoTime();
         CommunicationContextService.getInstance().appendFact(this.getSense(literal));
         BridgeRulesService.getInstance().executeBdiRules();
         PlansContextService.getInstance().executePlanAlgorithm();
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime)/1000000;
+
+        String result = cycles+";"+duration;
+        writeResult(result);
+
+    }
+
+    private  static  void writeResult(String result)  {
+        try {
+            Path path = Paths.get("/home/valdirluiz/testes-stress/result");
+            try (BufferedWriter writer = Files.newBufferedWriter(path))
+            {
+                writer.write(result+"\n");
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     private String getSense(String literal) {

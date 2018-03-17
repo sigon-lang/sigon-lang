@@ -5,7 +5,7 @@ import br.ufsc.ine.agent.context.beliefs.BeliefsContextService;
 import br.ufsc.ine.agent.context.communication.CommunicationContextService;
 import br.ufsc.ine.agent.context.desires.DesiresContextService;
 import br.ufsc.ine.agent.context.intentions.IntentionsContextService;
-import br.ufsc.ine.agent.context.plans.PlansContextService;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,6 +16,11 @@ public class BridgeRulesService {
     private static final String VARIABLE = "X";
     private static BridgeRulesService ourInstance = new BridgeRulesService();
 
+    BeliefsContextService beliefsContext = BeliefsContextService.getInstance();
+    DesiresContextService desiresContext = DesiresContextService.getInstance();
+    CommunicationContextService communicationContext = CommunicationContextService.getInstance();
+    IntentionsContextService intentionsContext = IntentionsContextService.getInstance();
+
     private BridgeRulesService() {
 
     }
@@ -25,21 +30,57 @@ public class BridgeRulesService {
     }
 
     public List<BridgeRule> bridgeRules(){
-        List<BridgeRule> rules = new ArrayList<>();
 
-        Head head = Head.builder().not(true).context(BeliefsContextService.getInstance()).build();
-        Body body = Body.builder().context(DesiresContextService.getInstance()).clause("X").build();
-        BridgeRule rule1 =BridgeRule.builder().head(head)
-                .body(body)
+        // 1
+        BridgeRule r1 =  BridgeRule.builder()
+                .head(Head.builder().context(beliefsContext).clause(VARIABLE).build())
+                .body(Body.builder().context(communicationContext).clause("sense("+VARIABLE+")").build())
                 .build();
 
-        rules.add(rule1);
-        return Collections.unmodifiableList(rules);
+
+        // 3
+        BridgeRule r3 =  BridgeRule.builder()
+                .head(Head.builder().not(true).context(desiresContext).clause(VARIABLE).build())
+                .body(Body.builder().context(beliefsContext).notClause(VARIABLE).build())
+                .build();
+
+
+        // 4
+        BridgeRule r4 =  BridgeRule.builder()
+                .head(Head.builder().context(beliefsContext).clause(VARIABLE).build())
+                .body(Body.builder().context(desiresContext).clause(VARIABLE).build())
+                .build();
+
+        // 5
+        BridgeRule r5 =  BridgeRule.builder()
+                .head(Head.builder().not(true).context(intentionsContext).clause(VARIABLE).build())
+                .body(Body.builder().context(desiresContext).notClause(VARIABLE).build())
+                .build();
+
+        // 6
+        BridgeRule r6 =  BridgeRule.builder()
+                .head(Head.builder().context(desiresContext).clause(VARIABLE).build())
+                .body(Body.builder().context(intentionsContext).clause(VARIABLE).build())
+                .build();
+
+        List<BridgeRule> rules = new ArrayList<BridgeRule>( );
+       // rules.add(r1);
+        rules.add(r3);
+        //rules.add(r4);
+        //rules.add(r5);
+        //rules.add(r6);
+        return rules;
+    }
+
+    private List<BridgeRule> strongRealism(){
+        return null;
     }
 
     public void executeBdiRules() {
 
-        BeliefsContextService beliefsContext = BeliefsContextService.getInstance();
+        this.bridgeRules().stream().filter(r->!r.getHead().isNot()).forEach(r->{r.execute();});
+
+        /*BeliefsContextService beliefsContext = BeliefsContextService.getInstance();
         CommunicationContextService communicationContext = CommunicationContextService.getInstance();
         IntentionsContextService  intentionsContext = IntentionsContextService.getInstance();
         DesiresContextService desiresContext = DesiresContextService.getInstance();

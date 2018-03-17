@@ -11,13 +11,13 @@ public class TestAspect {
         String fact = "position(10,10).";
         BeliefsContextService beliefsContext = BeliefsContextService.getInstance();
         DesiresContextService desiresContext = DesiresContextService.getInstance();
-
+        beliefsContext.appendFact(fact);
         desiresContext.appendFact(fact);
 
-        beliefsContext.appendFact(fact);
-        beliefsContext.appendFact("test.");
+        //beliefsContext.appendFact(fact);
+        //beliefsContext.appendFact("test.");
 
-        System.out.println(BeliefsContextService.getInstance().getTheory().toString());
+        System.out.println(desiresContext.getTheory().toString());
 
     }
 

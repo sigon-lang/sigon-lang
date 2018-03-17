@@ -15,6 +15,8 @@ public class Head {
     @Setter
     private String clause;
 
+
+
     @Getter
     @Builder.Default
     private boolean not = false;
