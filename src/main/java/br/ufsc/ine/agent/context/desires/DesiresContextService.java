@@ -6,7 +6,7 @@ import alice.tuprolog.InvalidTheoryException;
 import alice.tuprolog.MalformedGoalException;
 import alice.tuprolog.SolveInfo;
 import alice.tuprolog.Theory;
-import br.ufsc.ine.agent.context.Context;
+import br.ufsc.ine.agent.context.LangContext;
 import br.ufsc.ine.agent.context.ContextService;
 import br.ufsc.ine.utils.PrologEnvironment;
 
@@ -24,11 +24,11 @@ public class DesiresContextService  implements ContextService{
 	}
 
 	 
-	public void desires(List<Context> contexts) {
-		contexts.forEach(ctx -> {
+	public void desires(List<LangContext> langContexts) {
+		langContexts.forEach(ctx -> {
 			ctx.getClauses().forEach(clause -> {
 				try {
-					prologEnvironment.appendFact(clause);
+					this.addInitialFact(clause);
 				} catch (InvalidTheoryException e) {
 					e.printStackTrace();
 				}
@@ -64,6 +64,12 @@ public class DesiresContextService  implements ContextService{
 	@Override
 	public String getName() {
 		return "dc";
+	}
+
+	@Override
+	public void addInitialFact(String fact) throws InvalidTheoryException {
+		prologEnvironment.appendFact(fact);
+
 	}
 
 }

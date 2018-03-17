@@ -8,7 +8,7 @@ import alice.tuprolog.InvalidTheoryException;
 import alice.tuprolog.MalformedGoalException;
 import alice.tuprolog.SolveInfo;
 import alice.tuprolog.Theory;
-import br.ufsc.ine.agent.context.Context;
+import br.ufsc.ine.agent.context.LangContext;
 import br.ufsc.ine.agent.context.ContextService;
 import br.ufsc.ine.utils.PrologEnvironment;
 
@@ -16,7 +16,7 @@ public class BeliefsContextService implements ContextService {
 
 	private static BeliefsContextService instance = new BeliefsContextService();
 	private static PrologEnvironment prologEnvironment;
-	private List<Context> beliefs = new ArrayList<>();
+	private List<LangContext> beliefs = new ArrayList<>();
 
 	private BeliefsContextService() {
 		prologEnvironment = new PrologEnvironment();
@@ -28,19 +28,24 @@ public class BeliefsContextService implements ContextService {
 
 
 
-	public void beliefs(List<Context> beliefs) {
+	public void beliefs(List<LangContext> beliefs) {
 		this.beliefs = beliefs;
 		List<String> clauses = beliefs.stream().map(c -> c.getClauses()).flatMap(l -> l.stream())
 				.collect(Collectors.toList());
 
-		clauses.forEach(c -> {
-			appendFact(c);
+		clauses.forEach(clause -> {
+			try {
+				this.addInitialFact(clause);
+			} catch (InvalidTheoryException e) {
+				e.printStackTrace();
+			}
 		});
+
 	}
 
 
 
-	public List<Context> getBeliefs() {
+	public List<LangContext> getBeliefs() {
 		return beliefs;
 	}
 
@@ -66,7 +71,6 @@ public class BeliefsContextService implements ContextService {
 	@Override
 	public void appendFact(String c) {
 		try {
-			prologEnvironment = new PrologEnvironment();
 			prologEnvironment.appendFact(c);
 		} catch (InvalidTheoryException e) {
 			e.printStackTrace();
@@ -81,5 +85,10 @@ public class BeliefsContextService implements ContextService {
 	@Override
 	public String getName() {
 		return "bc";
+	}
+
+	@Override
+	public void addInitialFact(String fact) throws InvalidTheoryException {
+		prologEnvironment.appendFact(fact);
 	}
 }

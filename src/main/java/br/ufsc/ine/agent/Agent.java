@@ -3,7 +3,7 @@ package br.ufsc.ine.agent;
 import br.ufsc.ine.agent.bridgerules.BridgeRulesService;
 import br.ufsc.ine.agent.context.communication.Actuator;
 import br.ufsc.ine.agent.context.communication.CommunicationContextService;
-import br.ufsc.ine.agent.context.Context;
+import br.ufsc.ine.agent.context.LangContext;
 import br.ufsc.ine.agent.context.beliefs.BeliefsContextService;
 import br.ufsc.ine.agent.context.desires.DesiresContextService;
 import br.ufsc.ine.agent.context.plans.PlansContextService;
@@ -11,12 +11,10 @@ import br.ufsc.ine.parser.AgentWalker;
 import br.ufsc.ine.agent.context.communication.Sensor;
 import rx.Observable;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,18 +50,19 @@ public class Agent {
         long endTime = System.nanoTime();
         long duration = (endTime - startTime)/1000000;
 
-        String result = cycles+";"+duration;
-        writeResult(result);
+        String result = cycles+";"+duration+"\n";
+
+       // writeResult(result);
 
     }
 
+
+
+
     private  static  void writeResult(String result)  {
         try {
-            Path path = Paths.get("/home/valdirluiz/testes-stress/result");
-            try (BufferedWriter writer = Files.newBufferedWriter(path))
-            {
-                writer.write(result+"\n");
-            }
+            Files.write(Paths.get("/home/valdirluiz/testes-stress/result1"), result.getBytes(), StandardOpenOption.APPEND);
+
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -71,7 +70,6 @@ public class Agent {
     }
 
     private String getSense(String literal) {
-        System.out.println("sense("+literal.substring(0, literal.length()-1)+").");
         return "sense("+literal.substring(0, literal.length()-1)+").";
     }
 
@@ -84,8 +82,8 @@ public class Agent {
 
     private void initAgent(AgentWalker walker) {
 
-        List<Context> desires = getContext(walker, DESIRES);
-        List<Context> beliefs = getContext(walker, BELIEFS);
+        List<LangContext> desires = getContext(walker, DESIRES);
+        List<LangContext> beliefs = getContext(walker, BELIEFS);
 
         walker.getLangActuators().forEach(a ->{
             try{
@@ -120,8 +118,8 @@ public class Agent {
 
     }
 
-    private List<Context> getContext(AgentWalker walker, String context) {
-        return walker.getContexts().stream().filter(c -> c.getName().equals(context)).collect(Collectors.toList());
+    private List<LangContext> getContext(AgentWalker walker, String context) {
+        return walker.getLangContexts().stream().filter(c -> c.getName().equals(context)).collect(Collectors.toList());
     }
 
 

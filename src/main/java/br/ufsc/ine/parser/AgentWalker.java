@@ -2,7 +2,6 @@ package br.ufsc.ine.parser;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import agent.AgentBaseListener;
 import agent.AgentParser;
@@ -11,7 +10,7 @@ import agent.AgentParser.FolFormulaContext;
 import agent.AgentParser.FormulasContext;
 import agent.AgentParser.PropFormulaContext;
 import br.ufsc.ine.agent.context.communication.LangActuator;
-import br.ufsc.ine.agent.context.Context;
+import br.ufsc.ine.agent.context.LangContext;
 import br.ufsc.ine.agent.context.plans.Action;
 import br.ufsc.ine.agent.context.plans.Plan;
 import br.ufsc.ine.agent.context.communication.LangSensor;
@@ -22,12 +21,12 @@ public class AgentWalker extends AgentBaseListener {
 	private Plan plan;
 	private Action action;
 
-	private List<Context> contexts = new ArrayList<>();
+	private List<LangContext> langContexts = new ArrayList<>();
 
 	private List<LangSensor> langSensors = new ArrayList<>();
 	private List<LangActuator> langActuators = new ArrayList<>();
 
-	private Context lastContext;
+	private LangContext lastLangContext;
 	private LangSensor lastSensor;
 	private LangActuator lastActuator;
 
@@ -71,8 +70,8 @@ public class AgentWalker extends AgentBaseListener {
 
 	@Override
 	public void enterLogicalContextName(LogicalContextNameContext ctx) {
-		this.lastContext = new Context();
-		this.lastContext.setName(ctx.getText());
+		this.lastLangContext = new LangContext();
+		this.lastLangContext.setName(ctx.getText());
 		super.enterLogicalContextName(ctx);
 	}
 
@@ -89,9 +88,9 @@ public class AgentWalker extends AgentBaseListener {
 			builder.append("(");
 			builder.append(gradedValue);
 			builder.append(").");
-			this.lastContext.addClause(builder.toString());
+			this.lastLangContext.addClause(builder.toString());
 		}
-		this.lastContext.addClause(ctx.getText());
+		this.lastLangContext.addClause(ctx.getText());
 		super.enterPropFormula(ctx);
 	}
 
@@ -106,16 +105,16 @@ public class AgentWalker extends AgentBaseListener {
 			builder.append(",");
 			builder.append(gradedValue);
 			builder.append(").");
-			this.lastContext.addClause(builder.toString());
+			this.lastLangContext.addClause(builder.toString());
 		} else{
-			this.lastContext.addClause(ctx.getText());
+			this.lastLangContext.addClause(ctx.getText());
 		}
 		super.enterFolFormula(ctx);
 	}
 
 	@Override
 	public void enterFormulas(FormulasContext ctx) {
-		this.contexts.add(lastContext);
+		this.langContexts.add(lastLangContext);
 		super.enterFormulas(ctx);
 	}
 
@@ -168,8 +167,8 @@ public class AgentWalker extends AgentBaseListener {
 
 
 
-	public List<Context> getContexts() {
-		return contexts;
+	public List<LangContext> getLangContexts() {
+		return langContexts;
 	}
 
 	public List<LangSensor> getLangSensors() {

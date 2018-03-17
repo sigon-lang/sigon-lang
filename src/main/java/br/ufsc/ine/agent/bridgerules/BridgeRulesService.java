@@ -47,6 +47,48 @@ public class BridgeRulesService {
 
         // 4
         BridgeRule r4 =  BridgeRule.builder()
+                .head(Head.builder().context(beliefsContext).clause("isPossible(X).").build())
+                .body(Body.builder().context(desiresContext).clause(VARIABLE).build())
+                .build();
+
+        // 5
+        BridgeRule r5 =  BridgeRule.builder()
+                .head(Head.builder().not(true).context(intentionsContext).clause(VARIABLE).build())
+                .body(Body.builder().context(desiresContext).notClause(VARIABLE).build())
+                .build();
+
+        // 6
+        BridgeRule r6 =  BridgeRule.builder()
+                .head(Head.builder().context(desiresContext).clause(VARIABLE).build())
+                .body(Body.builder().context(intentionsContext).clause(VARIABLE).build())
+                .build();
+
+        List<BridgeRule> rules = new ArrayList<BridgeRule>( );
+        rules.add(r1);
+        rules.add(r3);
+        rules.add(r4);
+        rules.add(r5);
+        rules.add(r6);
+        return rules;
+    }
+
+    private List<BridgeRule> strongRealism(){
+        // 1
+        BridgeRule r1 =  BridgeRule.builder()
+                .head(Head.builder().context(beliefsContext).clause(VARIABLE).build())
+                .body(Body.builder().context(communicationContext).clause("sense("+VARIABLE+")").build())
+                .build();
+
+
+        // 3
+        BridgeRule r3 =  BridgeRule.builder()
+                .head(Head.builder().not(true).context(desiresContext).clause(VARIABLE).build())
+                .body(Body.builder().context(beliefsContext).notClause(VARIABLE).build())
+                .build();
+
+
+        // 4
+        BridgeRule r4 =  BridgeRule.builder()
                 .head(Head.builder().context(beliefsContext).clause(VARIABLE).build())
                 .body(Body.builder().context(desiresContext).clause(VARIABLE).build())
                 .build();
@@ -64,21 +106,17 @@ public class BridgeRulesService {
                 .build();
 
         List<BridgeRule> rules = new ArrayList<BridgeRule>( );
-       // rules.add(r1);
+        rules.add(r1);
         rules.add(r3);
-        //rules.add(r4);
-        //rules.add(r5);
-        //rules.add(r6);
+        rules.add(r4);
+        rules.add(r5);
+        rules.add(r6);
         return rules;
-    }
-
-    private List<BridgeRule> strongRealism(){
-        return null;
     }
 
     public void executeBdiRules() {
 
-        this.bridgeRules().stream().filter(r->!r.getHead().isNot()).forEach(r->{r.execute();});
+        this.bridgeRules().stream().filter(r->!r.getHead().isNot()).forEach(r->{  r.execute();});
 
         /*BeliefsContextService beliefsContext = BeliefsContextService.getInstance();
         CommunicationContextService communicationContext = CommunicationContextService.getInstance();

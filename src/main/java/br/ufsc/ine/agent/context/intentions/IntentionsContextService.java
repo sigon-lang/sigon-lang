@@ -7,7 +7,7 @@ import alice.tuprolog.InvalidTheoryException;
 import alice.tuprolog.MalformedGoalException;
 import alice.tuprolog.SolveInfo;
 import alice.tuprolog.Theory;
-import br.ufsc.ine.agent.context.Context;
+import br.ufsc.ine.agent.context.LangContext;
 import br.ufsc.ine.agent.context.ContextService;
 import br.ufsc.ine.agent.context.beliefs.BeliefsContextService;
 import br.ufsc.ine.utils.PrologEnvironment;
@@ -27,7 +27,7 @@ public class IntentionsContextService implements ContextService {
 		return instance;
 	}
 
-	public void checkIntentions(List<Context> desires) {
+	public void checkIntentions(List<LangContext> desires) {
 
 		List<String> clauses = desires.stream().map(c -> c.getClauses()).flatMap(l -> l.stream())
 				.collect(Collectors.toList());
@@ -73,5 +73,10 @@ public class IntentionsContextService implements ContextService {
 	@Override
 	public String getName() {
 		return "ic";
+	}
+
+	@Override
+	public void addInitialFact(String fact) {
+
 	}
 }

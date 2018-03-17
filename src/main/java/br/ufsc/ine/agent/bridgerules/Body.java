@@ -39,7 +39,8 @@ public class Body {
                 if (solution.toString().contains("|")) {
                     String[] result = solution.toString().substring(1, solution.toString().length() - 1).split("\\|");
                     for (String s : result) {
-                        variableFacts.add(s.replaceAll("_([0-9])*", "_") + ".");
+                        String item =s.replaceAll("_([0-9])*", "_") + ".";
+                        variableFacts.add(item);
                     }
                 } else {
                     variableFacts.add(solution.toString().replaceAll("_([0-9])*", "_")+ ".");
@@ -47,7 +48,7 @@ public class Body {
             }
             return solve.isSuccess();
         } catch (alice.tuprolog.NoSolutionException ne){
-            System.out.println("No Solution of Bridge Rule");
+
             return false;
         } catch (Exception e){
             e.printStackTrace();
@@ -57,12 +58,23 @@ public class Body {
 
 
     private Theory defineBodyTheory() throws InvalidTheoryException {
+
         StringBuilder builder = new StringBuilder();
-        String[] contextSplit = context.getTheory().toString().replaceAll("\\n","").replaceAll("_([0-9])*", "_").trim().split("/.");
-        for (String s : contextSplit) {
-            if(!s.isEmpty())
-                builder.append(context.getName()+"("+s.substring(0,s.length()-1)+"). \n");
+        String[] contextSplit = context.getTheory().toString()
+                //.replaceAll("_([0-9])*", "_").trim()
+                .replaceAll("\\n", ";").split(";;");
+
+
+
+        for (String s :contextSplit) {
+            if (!s.isEmpty()){
+                String result = s.replaceAll("_([0-9])*", "_").trim();
+                builder.append(context.getName() + "(" + result.substring(0, result.length() - 1) + "). \n");
+            }
         }
+
+
+
         Theory contextTheory =new Theory(builder.toString());
         if(this.getAndOrClause().isPresent()) {
             builder = new StringBuilder();

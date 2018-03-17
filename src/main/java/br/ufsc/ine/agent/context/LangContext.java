@@ -3,7 +3,7 @@ package br.ufsc.ine.agent.context;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Context {
+public class LangContext {
 
 	private String name;
 	private List<String> clauses = new ArrayList<>();

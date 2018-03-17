@@ -67,5 +67,10 @@ public class CommunicationContextService implements ContextService{
     public void actuators(List<Actuator> actuators) {
         this.actuators = actuators;
     }
+
+    @Override
+    public void addInitialFact(String fact) {
+
+    }
 }
 
