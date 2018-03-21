@@ -34,12 +34,11 @@ public class Body {
             if(head!=null && !head.isVariable()){
                 variableFacts.add(head.getClause());
             } else {
-                Term solution = solve.getTerm(this.head.getClause().contains(".") ? this.head.getClause().substring(0, this.head.getClause().length() - 1)
-                        : this.head.getClause());
+                Term solution = solve.getTerm(this.head.getTerm());
                 if (solution.toString().contains("|")) {
                     String[] result = solution.toString().substring(1, solution.toString().length() - 1).split("\\|");
                     for (String s : result) {
-                        String item =s.replaceAll("_([0-9])*", "_") + ".";
+                        String item = s.replaceAll("_([0-9])*", "_") + ".";
                         variableFacts.add(item);
                     }
                 } else {

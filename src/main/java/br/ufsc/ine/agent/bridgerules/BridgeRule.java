@@ -13,6 +13,7 @@ public class BridgeRule {
 
 
     public boolean verify(){
+        this.body.setHead(this.head);
         return this.body.verify();
     }
 

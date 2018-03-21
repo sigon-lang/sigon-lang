@@ -1,6 +1,7 @@
 package br.ufsc.ine.agent.context.beliefs;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,10 +53,7 @@ public class BeliefsContextService implements ContextService {
 
 
 
-	public void updateBelief(String literal) throws InvalidTheoryException {
-		prologEnvironment.appendFact(literal);
 
-	}
 
 	@Override
 	public boolean verify(String fact) {
@@ -71,8 +69,28 @@ public class BeliefsContextService implements ContextService {
 	@Override
 	public void appendFact(String c) {
 		try {
-			prologEnvironment.appendFact(c);
-		} catch (InvalidTheoryException e) {
+			//TODO: fazer atualizacao de crenças
+
+			boolean update = false;
+			String toTest = null;
+			if(c.trim().endsWith(").")){
+				StringBuilder builder = new StringBuilder();
+				String toReplace = c.substring(c.indexOf("(")+1, c.lastIndexOf(")"));
+				Arrays.stream(toReplace.split(",")).map( i-> "_,").forEach(builder::append);
+				StringBuilder test = new StringBuilder();
+				test.append(c.substring(0, c.indexOf("(")));
+				test.append("(");
+				test.append(builder.toString().substring(0,builder.toString().length()-1));
+				test.append(").");
+				toTest = test.toString();
+				update = this.verify(toTest);
+			}
+            if(update){
+                prologEnvironment.updateFact(c, toTest);
+            } else {
+                prologEnvironment.appendFact(c);
+            }
+            } catch (InvalidTheoryException e) {
 			e.printStackTrace();
 		}
 	}

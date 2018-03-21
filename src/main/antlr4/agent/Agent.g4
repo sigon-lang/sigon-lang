@@ -173,8 +173,16 @@ propClause
 	;
 
 folClause
-	: ('not')? constant '(' (numeral | constant | variable | '_') (',' (numeral | constant | variable | '_') )* ')' (annotation)?
+	: ('not')? constant '(' (term) (',' (term) )* ')' (annotation)?
 	;
+
+term
+    : (numeral | constant | variable | '_') (operator (numeral | constant | variable | '_') )?
+    ;
+
+operator
+    : '<' | '=<' | '>' | '>=' | '-' | '+'
+    ;
 
 annotation
      : (preAction| gradedValue)

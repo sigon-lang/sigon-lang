@@ -1,29 +1,47 @@
 package br.ufsc.ine.utils;
 
-import alice.tuprolog.InvalidTheoryException;
-import alice.tuprolog.MalformedGoalException;
-import alice.tuprolog.Prolog;
-import alice.tuprolog.SolveInfo;
-import alice.tuprolog.Theory;
+import alice.tuprolog.*;
+
+import java.util.Arrays;
+import java.util.Iterator;
 
 public class PrologEnvironment {
 
-	private static final String SPACE = " ";
-	private StringBuffer stringBuffer;
+    private String SPACE = " ";
 	private Prolog engine;
 	private Theory theory;
 
 	public PrologEnvironment() {
 		this.engine = new Prolog();
-		this.stringBuffer = new StringBuffer();
 	}
 
 	public void appendFact(String fact) throws InvalidTheoryException {
-		this.stringBuffer.append(fact);
-		this.stringBuffer.append(SPACE);
-		this.theory = new Theory(this.stringBuffer.toString());
+	 	if(this.theory==null) {
+			this.theory = new Theory(fact+SPACE);
+		} else{
+			this.theory.append(new Theory(fact+SPACE));
+		}
 		this.engine.setTheory(theory);
 	}
+
+	public void updateFact(String fact, String toTest) throws InvalidTheoryException {
+        StringBuilder newTheory = new StringBuilder();
+        Iterator<? extends Term> iterator = this.theory.iterator(this.engine);
+        while (iterator.hasNext()){
+            Term term = iterator.next();
+            boolean match = this.engine.match(term, Term.createTerm( toTest.substring(0, toTest.length()-1)));
+            if(match){
+                newTheory.append(  fact + SPACE );
+            } else {
+                newTheory.append(  term.toString().endsWith(".") ?  (term.toString()+ SPACE ) : (term.toString()+"."+ SPACE ) );
+            }
+        }
+        this.theory = new Theory(newTheory.toString());
+		this.engine.setTheory(theory);
+	}
+
+
+
 
 	public SolveInfo solveGoal(String goal) throws MalformedGoalException {
 		SolveInfo info = engine.solve(goal);

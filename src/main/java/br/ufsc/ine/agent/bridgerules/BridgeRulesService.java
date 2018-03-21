@@ -8,7 +8,6 @@ import br.ufsc.ine.agent.context.intentions.IntentionsContextService;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class BridgeRulesService {
@@ -45,9 +44,9 @@ public class BridgeRulesService {
                 .build();
 
 
-        // 4
+        // 4 - NAO USAR
         BridgeRule r4 =  BridgeRule.builder()
-                .head(Head.builder().context(beliefsContext).clause("isPossible(X).").build())
+                .head(Head.builder().context(beliefsContext).clause(VARIABLE).build())
                 .body(Body.builder().context(desiresContext).clause(VARIABLE).build())
                 .build();
 
@@ -66,7 +65,7 @@ public class BridgeRulesService {
         List<BridgeRule> rules = new ArrayList<BridgeRule>( );
         rules.add(r1);
         rules.add(r3);
-        rules.add(r4);
+        //rules.add(r4);
         rules.add(r5);
         rules.add(r6);
         return rules;

@@ -39,9 +39,16 @@ public class ContextAppendAspect {
         boolean block = false;
         if(!rules.isEmpty()){
             for (BridgeRule rule: rules){
+
+
                 rule.getHead().setClause(fact.get().toString());
+
+
                 //TODO: verificar como fazer para buscas mais complexas
                 //TODO: deixar recursivo para and e or
+
+
+
                 if(rule.getBody().getClause()!=null){
                     String clause=  fact.get().toString();
                     clause = clause.substring(0, clause.length()-1);
@@ -52,6 +59,7 @@ public class ContextAppendAspect {
                     clause = clause.substring(0, clause.length()-1);
                     rule.getBody().setNotClause(clause);
                 }
+
                 Head head  = rule.getHead();
                 rule.getBody().setHead(head);
                 block = rule.verify();
