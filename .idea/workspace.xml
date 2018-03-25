@@ -2,18 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="57575d36-eb2a-4c3f-8160-6f9c983dd563" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/br/ufsc/ine/br/ufsc/ine/agent/context/beliefs/BeliefsContextServiceTest.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/bridgerules/nativerules.br" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/antlr4/agent/Agent.g4" afterPath="$PROJECT_DIR$/src/main/antlr4/agent/Agent.g4" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/bridgerules/Body.java" afterPath="$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/bridgerules/Body.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/bridgerules/BridgeRule.java" afterPath="$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/bridgerules/BridgeRule.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/bridgerules/BridgeRulesService.java" afterPath="$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/bridgerules/BridgeRulesService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/bridgerules/Head.java" afterPath="$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/bridgerules/Head.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/context/ContextAppendAspect.java" afterPath="$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/context/ContextAppendAspect.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/context/beliefs/BeliefsContextService.java" afterPath="$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/context/beliefs/BeliefsContextService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/br/ufsc/ine/utils/PrologEnvironment.java" afterPath="$PROJECT_DIR$/src/main/java/br/ufsc/ine/utils/PrologEnvironment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/br/ufsc/ine/TestPlan.java" afterPath="$PROJECT_DIR$/src/test/java/br/ufsc/ine/TestPlan.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/br/ufsc/ine/agent/bridgerules/StrongRealismTest.java" afterPath="$PROJECT_DIR$/src/test/java/br/ufsc/ine/agent/bridgerules/StrongRealismTest.java" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
@@ -34,18 +24,48 @@
       <file leaf-file-name="BeliefsContextService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/context/beliefs/BeliefsContextService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="149">
+            <state relative-caret-position="1035">
               <caret line="86" column="13" lean-forward="false" selection-start-line="86" selection-start-column="13" selection-end-line="86" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ContextAppendAspect.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ContextAppendAspect.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/context/ContextAppendAspect.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="43" column="16" lean-forward="false" selection-start-line="43" selection-start-column="16" selection-end-line="43" selection-end-column="16" />
+            <state relative-caret-position="165">
+              <caret line="22" column="8" lean-forward="false" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StrongRealismTest.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/java/br/ufsc/ine/agent/bridgerules/StrongRealismTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="33" column="88" lean-forward="false" selection-start-line="33" selection-start-column="67" selection-end-line="33" selection-end-column="88" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CommunicationContextService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/context/communication/CommunicationContextService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="465">
+              <caret line="43" column="37" lean-forward="false" selection-start-line="43" selection-start-column="32" selection-end-line="43" selection-end-column="37" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Agent.g4" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/antlr4/agent/Agent.g4">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="795">
+              <caret line="53" column="67" lean-forward="false" selection-start-line="53" selection-start-column="54" selection-end-line="53" selection-end-column="67" />
               <folding />
             </state>
           </provider>
@@ -54,8 +74,8 @@
       <file leaf-file-name="BeliefsContextServiceTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/br/ufsc/ine/br/ufsc/ine/agent/context/beliefs/BeliefsContextServiceTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="9" lean-forward="true" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
+            <state relative-caret-position="90">
+              <caret line="7" column="9" lean-forward="false" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -99,7 +119,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>or</find>
       <find>Strin</find>
       <find>expression</find>
       <find>pac</find>
@@ -129,6 +148,7 @@
       <find>System.ou</find>
       <find>plann</find>
       <find>head</find>
+      <find>preC</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -188,11 +208,11 @@
         <option value="$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/bridgerules/BridgeRulesService.java" />
         <option value="$PROJECT_DIR$/src/main/antlr4/agent/Agent.g4" />
         <option value="$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/bridgerules/BridgeRule.java" />
-        <option value="$PROJECT_DIR$/src/test/java/br/ufsc/ine/agent/bridgerules/StrongRealismTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/br/ufsc/ine/utils/PrologEnvironment.java" />
         <option value="$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/context/beliefs/BeliefsContextService.java" />
         <option value="$PROJECT_DIR$/src/test/java/br/ufsc/ine/br/ufsc/ine/agent/context/beliefs/BeliefsContextServiceTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/context/ContextAppendAspect.java" />
+        <option value="$PROJECT_DIR$/src/test/java/br/ufsc/ine/agent/bridgerules/StrongRealismTest.java" />
       </list>
     </option>
   </component>
@@ -251,6 +271,21 @@
               <item name="agent-project" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="antlr4" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="agent-project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="agent-project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="antlr4" type="462c0819:PsiDirectoryNode" />
+              <item name="agent" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="agent-project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="agent-project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -281,6 +316,15 @@
               <item name="test" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="ine" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="agent-project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="agent-project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="ine" type="462c0819:PsiDirectoryNode" />
+              <item name="bridgerules" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -319,7 +363,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.BeliefsContextServiceTest.updateBelief">
+  <component name="RunManager" selected="JUnit.StrongRealismTest.testaRegraParaStrongRealism">
     <configuration name="BeliefsContextServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -414,19 +458,19 @@
       <envs />
       <patterns />
     </configuration>
-    <configuration name="TestPlan.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="StrongRealismTest.testaRegraParaStrongRealism" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
-          <option name="PATTERN" value="br.ufsc.ine.*" />
+          <option name="PATTERN" value="br.ufsc.ine.agent.bridgerules.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
       <module name="agent-project" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="br.ufsc.ine" />
-      <option name="MAIN_CLASS_NAME" value="br.ufsc.ine.TestPlan" />
-      <option name="METHOD_NAME" value="test" />
+      <option name="PACKAGE_NAME" value="br.ufsc.ine.agent.bridgerules" />
+      <option name="MAIN_CLASS_NAME" value="br.ufsc.ine.agent.bridgerules.StrongRealismTest" />
+      <option name="METHOD_NAME" value="testaRegraParaStrongRealism" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -522,18 +566,18 @@
     </configuration>
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="JUnit.StrongRealismTest.testStrongRealism" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.TestPlan.test" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.BeliefsContextServiceTest.updateBelief" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.BeliefsContextServiceTest" />
-      <item index="4" class="java.lang.String" itemvalue="Application.PrologEnvironment" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.BeliefsContextServiceTest.updateBelief" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.BeliefsContextServiceTest" />
+      <item index="3" class="java.lang.String" itemvalue="Application.PrologEnvironment" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.StrongRealismTest.testaRegraParaStrongRealism" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.BeliefsContextServiceTest.updateBelief" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.BeliefsContextServiceTest" />
-        <item index="2" class="java.lang.String" itemvalue="Application.PrologEnvironment" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.StrongRealismTest.testStrongRealism" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.TestPlan.test" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.StrongRealismTest.testaRegraParaStrongRealism" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.StrongRealismTest.testStrongRealism" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.BeliefsContextServiceTest.updateBelief" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.BeliefsContextServiceTest" />
+        <item index="4" class="java.lang.String" itemvalue="Application.PrologEnvironment" />
       </list>
     </recent_temporary>
   </component>
@@ -554,35 +598,35 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="BeliefsContextServiceTest - 2018.03.20 at 22h 09m 33s.xml">
-      <configuration name="BeliefsContextServiceTest" configurationId="JUnit" />
+    <history-entry file="StrongRealismTest_testStrongRealism - 2018.03.21 at 19h 36m 45s.xml">
+      <configuration name="StrongRealismTest.testStrongRealism" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="BeliefsContextServiceTest - 2018.03.20 at 22h 09m 46s.xml">
-      <configuration name="BeliefsContextServiceTest" configurationId="JUnit" />
+    <history-entry file="StrongRealismTest_testStrongRealism - 2018.03.21 at 19h 37m 05s.xml">
+      <configuration name="StrongRealismTest.testStrongRealism" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="BeliefsContextServiceTest - 2018.03.20 at 22h 11m 41s.xml">
-      <configuration name="BeliefsContextServiceTest" configurationId="JUnit" />
+    <history-entry file="StrongRealismTest_testStrongRealism - 2018.03.21 at 19h 39m 49s.xml">
+      <configuration name="StrongRealismTest.testStrongRealism" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="BeliefsContextServiceTest - 2018.03.20 at 22h 13m 26s.xml">
-      <configuration name="BeliefsContextServiceTest" configurationId="JUnit" />
+    <history-entry file="StrongRealismTest_testStrongRealism - 2018.03.21 at 19h 40m 37s.xml">
+      <configuration name="StrongRealismTest.testStrongRealism" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="BeliefsContextServiceTest - 2018.03.20 at 22h 16m 05s.xml">
-      <configuration name="BeliefsContextServiceTest" configurationId="JUnit" />
+    <history-entry file="StrongRealismTest_testStrongRealism - 2018.03.21 at 20h 05m 47s.xml">
+      <configuration name="StrongRealismTest.testStrongRealism" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="BeliefsContextServiceTest_updateBelief - 2018.03.20 at 22h 11m 10s.xml">
-      <configuration name="BeliefsContextServiceTest.updateBelief" configurationId="JUnit" />
+    <history-entry file="StrongRealismTest_testStrongRealism - 2018.03.21 at 20h 06m 31s.xml">
+      <configuration name="StrongRealismTest.testStrongRealism" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="BeliefsContextServiceTest_updateBelief - 2018.03.20 at 22h 11m 57s.xml">
-      <configuration name="BeliefsContextServiceTest.updateBelief" configurationId="JUnit" />
+    <history-entry file="StrongRealismTest_testStrongRealism - 2018.03.21 at 20h 06m 42s.xml">
+      <configuration name="StrongRealismTest.testStrongRealism" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="BeliefsContextServiceTest_updateBelief - 2018.03.20 at 22h 13m 46s.xml">
-      <configuration name="BeliefsContextServiceTest.updateBelief" configurationId="JUnit" />
+    <history-entry file="StrongRealismTest_testaRegraParaStrongRealism - 2018.03.21 at 20h 08m 19s.xml">
+      <configuration name="StrongRealismTest.testaRegraParaStrongRealism" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="BeliefsContextServiceTest_updateBelief - 2018.03.20 at 22h 14m 27s.xml">
-      <configuration name="BeliefsContextServiceTest.updateBelief" configurationId="JUnit" />
+    <history-entry file="StrongRealismTest_testaRegraParaStrongRealism - 2018.03.21 at 20h 08m 32s.xml">
+      <configuration name="StrongRealismTest.testaRegraParaStrongRealism" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="BeliefsContextServiceTest_updateBelief - 2018.03.20 at 22h 16m 52s.xml">
-      <configuration name="BeliefsContextServiceTest.updateBelief" configurationId="JUnit" />
+    <history-entry file="StrongRealismTest_testaRegraParaStrongRealism - 2018.03.21 at 20h 08m 47s.xml">
+      <configuration name="StrongRealismTest.testaRegraParaStrongRealism" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
@@ -592,33 +636,65 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Tool Output" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="FindBugs-IDEA" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3279483" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3271028" sideWeight="0.5058565" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33764136" sideWeight="0.4941435" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5298869" sideWeight="0.4941435" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27272728" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27272728" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="ANTLR Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35669783" sideWeight="0.8477306" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3279483" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3279483" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329429" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32866043" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Tool Output" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="FindBugs-IDEA" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3271028" sideWeight="0.5058565" order="10" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="ANTLR Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35669783" sideWeight="0.8477306" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3279483" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3279483" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.5298869" sideWeight="0.4941435" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329429" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27272728" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32866043" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -820,13 +896,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/context/communication/CommunicationContextService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="855">
-          <caret line="73" column="5" lean-forward="false" selection-start-line="73" selection-start-column="5" selection-end-line="73" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/context/LangContext.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -845,7 +914,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="114" column="47" lean-forward="false" selection-start-line="114" selection-start-column="47" selection-end-line="114" selection-end-column="47" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -853,6 +921,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="585">
           <caret line="52" column="84" lean-forward="false" selection-start-line="52" selection-start-column="67" selection-end-line="52" selection-end-column="84" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -868,13 +937,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="9" column="26" lean-forward="false" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/antlr4/agent/Agent.g4">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="183" column="41" lean-forward="false" selection-start-line="183" selection-start-column="41" selection-end-line="183" selection-end-column="41" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -934,13 +997,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/br/ufsc/ine/agent/bridgerules/StrongRealismTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/bridgerules/BridgeRule.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -978,8 +1034,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/br/ufsc/ine/br/ufsc/ine/agent/context/beliefs/BeliefsContextServiceTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="9" lean-forward="true" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
+        <state relative-caret-position="90">
+          <caret line="7" column="9" lean-forward="false" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -988,16 +1044,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/context/beliefs/BeliefsContextService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
+        <state relative-caret-position="1035">
           <caret line="86" column="13" lean-forward="false" selection-start-line="86" selection-start-column="13" selection-end-line="86" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/antlr4/agent/Agent.g4">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="795">
+          <caret line="53" column="67" lean-forward="false" selection-start-line="53" selection-start-column="54" selection-end-line="53" selection-end-column="67" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/context/ContextAppendAspect.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="43" column="16" lean-forward="false" selection-start-line="43" selection-start-column="16" selection-end-line="43" selection-end-column="16" />
+        <state relative-caret-position="165">
+          <caret line="22" column="8" lean-forward="false" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/context/communication/CommunicationContextService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="43" column="37" lean-forward="false" selection-start-line="43" selection-start-column="32" selection-end-line="43" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/br/ufsc/ine/agent/bridgerules/StrongRealismTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="33" column="88" lean-forward="false" selection-start-line="33" selection-start-column="67" selection-end-line="33" selection-end-column="88" />
           <folding />
         </state>
       </provider>

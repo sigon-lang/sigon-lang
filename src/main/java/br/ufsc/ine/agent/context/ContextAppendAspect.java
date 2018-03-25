@@ -19,7 +19,7 @@ public class ContextAppendAspect {
 
 
 
-    @Around("execution(* br.ufsc.ine.agent.context.*.appendFact(..))")
+   // @Around("execution(* br.ufsc.ine.agent.context.*.appendFact(..))")
     public void appendFactAround(ProceedingJoinPoint joinPoint) throws Throwable {
 
         Optional<Object> fact = Arrays.stream(joinPoint.getArgs()).findFirst();

@@ -22,11 +22,51 @@ public class StrongRealismTest {
     IntentionsContextService intentionsContext = IntentionsContextService.getInstance();
     PlansContextService plansContext = PlansContextService.getInstance();
 
+
+    @Test
+    public void testaRegraParaStrongRealism(){
+        BridgeRulesService.getInstance();
+        CommunicationContextService.getInstance().appendFact("sense(s(2)).");
+        PlansContextService.getInstance().appendFact("preconditions_related(s(_)).");
+
+        BridgeRule.builder()
+                .head(Head.builder().context(beliefsContext).clause("X").build())
+                .body(Body.builder().context(plansContext).clause("preconditions_related(X)")
+                        .and(Body.builder().context(communicationContext).clause("sense(X)").build())
+                        .build())
+                .build().execute();
+
+        // add s(2). pois esta relacionado a uma pré condicao de um plano
+        System.out.println(" Contexto de crenças: "+ BeliefsContextService.getInstance().getTheory().toString());
+    }
+
+
+
+
+
+
+
+
     //TODO: add busca em lista ou verificar pelo 'somethingToBeTrue'
     @Test
     public void testStrongRealism(){
 
-        String plan = "plan(position(10,10), " +
+
+
+        BridgeRulesService.getInstance();
+        CommunicationContextService.getInstance().appendFact("sense(p(2)).");
+        PlansContextService.getInstance().appendFact("preconditions_related(s(_)).");
+
+        BridgeRule.builder()
+                .head(Head.builder().context(beliefsContext).clause("X").build())
+                .body(Body.builder().context(plansContext).clause("preconditions_related(X)")
+                        .and(Body.builder().context(communicationContext).clause("sense(X)").build())
+                        .build())
+                .build().execute();
+
+        System.out.println(" Contexto de crenças"+ BeliefsContextService.getInstance().getTheory().toString());
+
+        /*String plan = "plan(position(10,10), " +
                 "[action(moveFront(_), \\+ position(10,_), " +
                 "position(_,_))], position(_,_), position(_,_)).";
         plansContext.appendFact(plan);
@@ -40,6 +80,7 @@ public class StrongRealismTest {
                         .context(PLANS_CONTEXT_SERVICE).build()).build().verify();
 
         System.out.println(verify);
+        */
 
 
     }
