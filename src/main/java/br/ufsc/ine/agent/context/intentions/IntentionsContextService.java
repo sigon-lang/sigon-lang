@@ -36,7 +36,7 @@ public class IntentionsContextService implements ContextService {
 			if (!BeliefsContextService.getInstance().verify(d)) {
 				try {
 					prologEnvironment.appendFact(d);
-					System.out.println(d);
+
 				} catch (InvalidTheoryException e) {
 					e.printStackTrace();
 				}

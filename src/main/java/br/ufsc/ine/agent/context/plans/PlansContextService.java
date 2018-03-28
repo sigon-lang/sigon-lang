@@ -13,6 +13,7 @@ import br.ufsc.ine.agent.context.communication.Actuator;
 import br.ufsc.ine.agent.context.communication.CommunicationContextService;
 import br.ufsc.ine.utils.PrologEnvironment;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -109,9 +110,25 @@ public class PlansContextService implements ContextService{
 	@Override
 	public void appendFact(String c) {
 		try {
-		    //// TODO: 3/3/18 ver uma forma para melhorar isso, ao dar new add teoria de plans 
-            prologEnvironment = new PrologEnvironment();
-			prologEnvironment.appendFact(c);
+			boolean update = false;
+			String toTest = null;
+			if(c.trim().endsWith(").")){
+				StringBuilder builder = new StringBuilder();
+				String toReplace = c.substring(c.indexOf("(")+1, c.lastIndexOf(")"));
+				Arrays.stream(toReplace.split(",")).map(i-> "_,").forEach(builder::append);
+				StringBuilder test = new StringBuilder();
+				test.append(c.substring(0, c.indexOf("(")));
+				test.append("(");
+				test.append(builder.toString().substring(0,builder.toString().length()-1));
+				test.append(").");
+				toTest = test.toString();
+				update = this.verify(toTest);
+			}
+			if(update){
+				prologEnvironment.updateFact(c, toTest);
+			} else {
+				prologEnvironment.appendFact(c);
+			}
 		} catch (InvalidTheoryException e) {
 			e.printStackTrace();
 		}
@@ -131,4 +148,8 @@ public class PlansContextService implements ContextService{
 	public String getName() {
 		return "pc";
 	}
+
+    public void plansPreConditions(List<String> plansPreConditions) {
+		plansPreConditions.forEach(this::appendFact);
+    }
 }

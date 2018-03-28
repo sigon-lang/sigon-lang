@@ -115,7 +115,7 @@ public class Agent {
         BeliefsContextService.getInstance().beliefs(beliefs);
         DesiresContextService.getInstance().desires(desires);
         PlansContextService.getInstance().plans(walker.getPlans());
-
+        PlansContextService.getInstance().plansPreConditions(walker.getPlansPreConditions());
     }
 
     private List<LangContext> getContext(AgentWalker walker, String context) {

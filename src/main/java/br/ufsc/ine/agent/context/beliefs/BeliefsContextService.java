@@ -69,8 +69,6 @@ public class BeliefsContextService implements ContextService {
 	@Override
 	public void appendFact(String c) {
 		try {
-			//TODO: fazer atualizacao de crenças
-
 			boolean update = false;
 			String toTest = null;
 			if(c.trim().endsWith(").")){

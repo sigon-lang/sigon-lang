@@ -20,7 +20,7 @@ public class Main {
 		//String filename = getLastArgument(args);
 
 //		String filename="/home/valdirluiz/works/agent-project/examples/annotation";
-		String filename="../examples/annotation";
+		String filename="/home/valdirluiz/works/agent-project/examples/ex1";
 
 		File file = new File(filename);
 		if (!file.exists()) {

@@ -1,6 +1,7 @@
 package br.ufsc.ine.parser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import agent.AgentBaseListener;
@@ -29,6 +30,8 @@ public class AgentWalker extends AgentBaseListener {
 	private LangContext lastLangContext;
 	private LangSensor lastSensor;
 	private LangActuator lastActuator;
+
+	private List<String> plansPreConditions = new ArrayList<>();
 
 	@Override
 	public void enterActuator(AgentParser.ActuatorContext ctx) {
@@ -166,6 +169,34 @@ public class AgentWalker extends AgentBaseListener {
 	}
 
 
+	@Override
+	public void enterPlan(AgentParser.PlanContext ctx) {
+		ctx.planPreconditions()
+				.conditions().listOfClauses().folClause()
+				.forEach( e->{
+					if(e.getText().contains("(") && e.getText().contains(")")){
+						StringBuilder builder = new StringBuilder();
+						String c  = e.getText();
+						String toReplace = c.substring(c.indexOf("(")+1, c.lastIndexOf(")"));
+						Arrays.stream(toReplace.split(",")).map(i-> "_,").forEach(builder::append);
+						StringBuilder test = new StringBuilder();
+						test.append(c.substring(0, c.indexOf("(")));
+						test.append("(");
+						test.append(builder.toString().substring(0,builder.toString().length()-1));
+						test.append(")");
+						plansPreConditions.add("preconditions_related("+test+").");
+
+					} else{
+						plansPreConditions.add(e.getText()+".");
+					}
+				});
+
+		super.enterPlan(ctx);
+	}
+
+	public List<String> getPlansPreConditions() {
+		return plansPreConditions;
+	}
 
 	public List<LangContext> getLangContexts() {
 		return langContexts;

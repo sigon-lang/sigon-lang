@@ -1,25 +1,15 @@
 
-communication:
-    sensor("positionSensor", "br.ufsc.ine.environment.PositionSensor").
-    actuator("moveUp", "br.ufsc.ine.environment.MoveUp").
-    actuator("moveFront", "br.ufsc.ine.environment.MoveFront").
 
-
-beliefs:
-	position(0,0).
-
-desires:
-	position(1,1).
 	
-planning:
+planner:
 	//plan(somethingToBeTrue, compoundaction, preconditions, postconditions)
 	plan(
-		position(1,1),
+		[position(1,1), position(1,2)],
 		[
 			action(moveFront(),  not position(_,20), position(_,_)),
 			action(moveUp(), not position(20,_), position(_,_))
 		]
 		,
-		position(_,_),
+		[position(1,1), position(1,2), test],
 		position(_,_)).
 	
