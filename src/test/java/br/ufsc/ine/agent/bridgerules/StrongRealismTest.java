@@ -25,7 +25,7 @@ public class StrongRealismTest {
 
     @Test
     public void testaRegraParaStrongRealism(){
-        BridgeRulesService.getInstance();
+       /* BridgeRulesService.getInstance();
         CommunicationContextService.getInstance().appendFact("sense(s(2)).");
         PlansContextService.getInstance().appendFact("preconditions_related(s(_)).");
 
@@ -38,6 +38,30 @@ public class StrongRealismTest {
 
         // add s(2). pois esta relacionado a uma pré condicao de um plano
         System.out.println(" Contexto de crenças: "+ BeliefsContextService.getInstance().getTheory().toString());
+
+        */
+
+
+
+
+        PlansContextService.getInstance().appendFact("plans(i(a),_,p(_),_).");
+        CommunicationContextService.getInstance().appendFact("sense(p(1)).");
+        desiresContext.appendFact("x(a).");
+
+        Body and  =  Body.builder()
+                .context(desiresContext).clause("Y")
+                .and(Body.builder().context(communicationContext).clause("sense(X)").build()).build();
+
+        BridgeRule r2 = BridgeRule.builder()
+                .head(Head.builder().context(beliefsContext).clause("X").build())
+                .body(Body.builder().context(plansContext).clause("plans(Y,_,X,_)")
+                        .and(and)
+                        .build())
+                .build();
+
+        r2.execute();
+        System.out.println(BeliefsContextService.getInstance().getTheory().toString());
+
     }
 
 

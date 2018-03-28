@@ -73,37 +73,49 @@ public class Body {
         }
 
 
-
+        //TODO: nao esta recursivo
         Theory contextTheory =new Theory(builder.toString());
-        if(this.getAndOrClause().isPresent()) {
-            builder = new StringBuilder();
-            if(this.and!=null){
-                String[] split = and.context.getTheory().toString().replaceAll("\\n","")
-                        .replaceAll("_([0-9])*", "_")
-                        .trim().split("/.");
-                for (String s : split) {
-                    if(!s.isEmpty())
-                        builder.append(and.context.getName()+"("+s.substring(0,s.length()-1)+"). \n");
-                }
-            } else if(this.or!=null){
-                String[] split = or.context.getTheory().toString().replaceAll("\\n","")
-                        .replaceAll("_([0-9])*", "_")
+        builder = new StringBuilder();
 
-                        .trim().split("/.");
-                for (String s : split) {
-                    if(!s.isEmpty())
-                        builder.append(or.context.getName()+"("+s.substring(0,s.length()-1)+"). \n");
-                }
-            }
+
+            addAndOr(builder, this);
             Theory andOrTheory =  new Theory(builder.toString());
             contextTheory.append(andOrTheory);
-        }
+
         return contextTheory;
     }
 
+    private void addAndOr(StringBuilder builder, Body  body) {
+        if(body.getAndOrClause().isPresent()) {
+            if (body.and != null) {
+                String[] split = body.and.context.getTheory().toString().replaceAll("\\n", "")
+                        .replaceAll("_([0-9])*", "_")
+                        .trim().split("/.");
+                for (String s : split) {
+                    if (!s.isEmpty())
+                        builder.append(body.and.context.getName() + "(" + s.substring(0, s.length() - 1) + "). \n");
+                }
 
+                 if (body.and.getAndOrClause().isPresent()){
+                    addAndOr(builder, body.and);
+                 }
 
+            } else if (body.or != null) {
+                String[] split = body.or.context.getTheory().toString().replaceAll("\\n", "")
+                        .replaceAll("_([0-9])*", "_")
 
+                        .trim().split("/.");
+                for (String s : split) {
+                    if (!s.isEmpty())
+                        builder.append(body.or.context.getName() + "(" + s.substring(0, s.length() - 1) + "). \n");
+                }
+
+                if (body.or.getAndOrClause().isPresent()){
+                    addAndOr(builder, body.or);
+                }
+            }
+        }
+    }
 
 
     public List<String> getVariableFacts() {

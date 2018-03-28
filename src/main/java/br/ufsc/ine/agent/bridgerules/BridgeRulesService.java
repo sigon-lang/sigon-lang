@@ -41,9 +41,11 @@ public class BridgeRulesService {
 
         BridgeRule r2 = BridgeRule.builder()
                 .head(Head.builder().context(beliefsContext).clause("X").build())
-                .body(Body.builder().context(plansContext).clause("preconditions_related(X)")
+                .body(Body.builder().context(desiresContext).clause("Y")
                         .and(Body.builder().context(communicationContext).clause("sense(X)").build())
+                        .and(Body.builder().context(communicationContext).clause(" plans(Y, _, X, _)").build())
                         .build())
+
                 .build();
 
         // 5
