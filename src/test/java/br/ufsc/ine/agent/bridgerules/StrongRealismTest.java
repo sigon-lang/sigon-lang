@@ -25,38 +25,28 @@ public class StrongRealismTest {
 
     @Test
     public void testaRegraParaStrongRealism(){
-       /* BridgeRulesService.getInstance();
-        CommunicationContextService.getInstance().appendFact("sense(s(2)).");
-        PlansContextService.getInstance().appendFact("preconditions_related(s(_)).");
-
-        BridgeRule.builder()
-                .head(Head.builder().context(beliefsContext).clause("X").build())
-                .body(Body.builder().context(plansContext).clause("preconditions_related(X)")
-                        .and(Body.builder().context(communicationContext).clause("sense(X)").build())
-                        .build())
-                .build().execute();
-
-        // add s(2). pois esta relacionado a uma pré condicao de um plano
-        System.out.println(" Contexto de crenças: "+ BeliefsContextService.getInstance().getTheory().toString());
-
-        */
 
 
-
-
-        PlansContextService.getInstance().appendFact("plans(i(a),_,p(_),_).");
+        PlansContextService.getInstance().appendFact("plans(test,_,[p(_)],_).");
         CommunicationContextService.getInstance().appendFact("sense(p(1)).");
-        desiresContext.appendFact("x(a).");
+        desiresContext.appendFact("test.");
 
-        Body and  =  Body.builder()
-                .context(desiresContext).clause("Y")
-                .and(Body.builder().context(communicationContext).clause("sense(X)").build()).build();
+        Body.builder().context(plansContext).clause("member(X, Z)").build();
+
+        Body communication = Body.builder().context(communicationContext).clause("sense(X)").build();
+        Body plan = Body.builder().context(plansContext).clause("plans(Y,_,Z,_)").build();
+        Body planMember = Body.builder().context(plansContext).clause("member(X, Z)").build();
+        Body desires = Body.builder().context(desiresContext).clause("Y").build();
+
+
+        communication.setAnd(plan);
+        plan.setAnd(planMember);
+        planMember.setAnd(desires);
+
 
         BridgeRule r2 = BridgeRule.builder()
                 .head(Head.builder().context(beliefsContext).clause("X").build())
-                .body(Body.builder().context(plansContext).clause("plans(Y,_,X,_)")
-                        .and(and)
-                        .build())
+                .body(communication)
                 .build();
 
         r2.execute();
@@ -71,49 +61,6 @@ public class StrongRealismTest {
 
 
 
-    //TODO: add busca em lista ou verificar pelo 'somethingToBeTrue'
-    @Test
-    public void testStrongRealism(){
 
 
-
-        BridgeRulesService.getInstance();
-        CommunicationContextService.getInstance().appendFact("sense(p(2)).");
-        PlansContextService.getInstance().appendFact("preconditions_related(s(_)).");
-
-        BridgeRule.builder()
-                .head(Head.builder().context(beliefsContext).clause("X").build())
-                .body(Body.builder().context(plansContext).clause("preconditions_related(X)")
-                        .and(Body.builder().context(communicationContext).clause("sense(X)").build())
-                        .build())
-                .build().execute();
-
-        System.out.println(" Contexto de crenças"+ BeliefsContextService.getInstance().getTheory().toString());
-
-        /*String plan = "plan(position(10,10), " +
-                "[action(moveFront(_), \\+ position(10,_), " +
-                "position(_,_))], position(_,_), position(_,_)).";
-        plansContext.appendFact(plan);
-
-        System.out.println(plansContext.getTheory().toString());
-
-        boolean verify = BridgeRule.builder()
-                .head(Head.builder().context(beliefsContext).clause("position(10, 10)").build())
-                .body(Body.builder().clause("plan(position(_,_), _, _, _).")
-
-                        .context(PLANS_CONTEXT_SERVICE).build()).build().verify();
-
-        System.out.println(verify);
-        */
-
-
-    }
-
-    @Test
-    public void test2() throws InvalidTheoryException {
-        BeliefsContextService.getInstance().addInitialFact("full(10).");
-        BeliefsContextService.getInstance().addInitialFact("full(N-1).");
-        System.out.println( BeliefsContextService.getInstance().getTheory());
-        System.out.println(BeliefsContextService.getInstance().verify("full(10)."));
-    }
 }

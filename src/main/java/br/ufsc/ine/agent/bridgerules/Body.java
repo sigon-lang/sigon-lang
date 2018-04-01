@@ -4,11 +4,15 @@ import alice.tuprolog.*;
 import br.ufsc.ine.agent.context.ContextService;
 import lombok.Builder;
 import lombok.Data;
+import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.*;
 
 @Builder
 @Data
+
 public class Body {
 
     public static final String END = ".";
@@ -28,28 +32,32 @@ public class Body {
             Theory contextTheory = defineBodyTheory();
             Prolog prolog = new Prolog();
             prolog.setTheory(contextTheory);
+
+
             String toTest = this.toString().endsWith(".") ? this.toString() : this.toString()+ END;
             SolveInfo solve = prolog.solve( toTest );
 
-            if(head!=null && !head.isVariable()){
-                variableFacts.add(head.getClause());
-            } else {
-                Term solution = solve.getTerm(this.head.getTerm());
-                if (solution.toString().contains("|")) {
-                    String[] result = solution.toString().substring(1, solution.toString().length() - 1).split("\\|");
-                    for (String s : result) {
-                        String item = s.replaceAll("_([0-9])*", "_") + ".";
-                        variableFacts.add(item);
-                    }
+            try{
+                if(head!=null && !head.isVariable()){
+                    variableFacts.add(head.getClause());
                 } else {
-                    variableFacts.add(solution.toString().replaceAll("_([0-9])*", "_")+ ".");
+                    Term solution = solve.getTerm(this.head.getTerm());
+                    if (solution.toString().contains("|")) {
+                        String[] result = solution.toString().substring(1, solution.toString().length() - 1).split("\\|");
+                        for (String s : result) {
+                            String item = s.replaceAll("_([0-9])*", "_") + ".";
+                            variableFacts.add(item);
+                        }
+                    } else {
+                        variableFacts.add(solution.toString().replaceAll("_([0-9])*", "_")+ ".");
+                    }
                 }
-            }
-            return solve.isSuccess();
-        } catch (alice.tuprolog.NoSolutionException ne){
+            } catch (Exception e){
 
-            return false;
-        } catch (Exception e){
+            }
+
+            return solve.isSuccess();
+        }  catch (Exception e){
             e.printStackTrace();
             return false;
         }
@@ -122,6 +130,22 @@ public class Body {
         return Collections.unmodifiableList(variableFacts);
     }
 
+
+    private void getBodyValue(StringBuilder builder, Body body){
+
+
+        if(body.notClause!=null){
+            builder.append("\\+");
+        }
+        builder.append(getContextClause(body));
+
+        if(body.and !=null || body.or!=null){
+            this.getBodyValue(builder, body);
+        }
+
+
+    }
+
     @Override
     public String toString(){
         StringBuilder builder = new StringBuilder();
@@ -154,12 +178,33 @@ public class Body {
 
     public String getContextClause(){
 
+        //TODO: add a clause member(X,Z) como para reservada e fazer expresão para o if
+        if(this.clause.startsWith("member(")){
+            return this.clause+".";
+        }
+
         if (this.clause != null) {
 
             return this.context.getName() + "("+ this.clause.replace(".", "") + ")";
         }
 
         return this.context.getName() + "("+  this.notClause.replace(".", "") + ")";
+
+    }
+
+    private String getContextClause(Body body){
+
+        //TODO: add a clause member(X,Z) como para reservada e fazer expresão para o if
+        if(body.clause.startsWith("member(")){
+            return this.clause+".";
+        }
+
+        if (body.clause != null) {
+
+            return body.context.getName() + "("+ body.clause.replace(".", "") + ")";
+        }
+
+        return body.context.getName() + "("+  body.notClause.replace(".", "") + ")";
 
     }
 

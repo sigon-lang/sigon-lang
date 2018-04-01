@@ -109,6 +109,7 @@ public class PlansContextService implements ContextService{
 
 	@Override
 	public void appendFact(String c) {
+
 		try {
 			boolean update = false;
 			String toTest = null;
@@ -135,8 +136,12 @@ public class PlansContextService implements ContextService{
 	}
 
 	@Override
-	public void addInitialFact(String fact) {
-
+	public void addInitialFact(String c) {
+		try {
+			prologEnvironment.appendFact(c);
+		} catch (InvalidTheoryException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
