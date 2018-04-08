@@ -31,7 +31,7 @@ public class AgentWalker extends AgentBaseListener {
 	private LangSensor lastSensor;
 	private LangActuator lastActuator;
 
-	private List<String> plansPreConditions = new ArrayList<>();
+	private List<String> plansClauses = new ArrayList<>();
 
 	@Override
 	public void enterActuator(AgentParser.ActuatorContext ctx) {
@@ -171,31 +171,39 @@ public class AgentWalker extends AgentBaseListener {
 
 	@Override
 	public void enterPlan(AgentParser.PlanContext ctx) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("plan(");
+		builder.append(ctx.somethingToBeTrue().getText());
+		builder.append(",_");
+		builder.append(",[");
+		StringBuilder list = new StringBuilder();
 		ctx.planPreconditions()
 				.conditions().listOfClauses().folClause()
 				.forEach( e->{
+
 					if(e.getText().contains("(") && e.getText().contains(")")){
-						StringBuilder builder = new StringBuilder();
+						StringBuilder builderPre = new StringBuilder();
 						String c  = e.getText();
 						String toReplace = c.substring(c.indexOf("(")+1, c.lastIndexOf(")"));
-						Arrays.stream(toReplace.split(",")).map(i-> "_,").forEach(builder::append);
+						Arrays.stream(toReplace.split(",")).map(i-> "_,").forEach(builderPre::append);
 						StringBuilder test = new StringBuilder();
 						test.append(c.substring(0, c.indexOf("(")));
 						test.append("(");
-						test.append(builder.toString().substring(0,builder.toString().length()-1));
+						test.append(builderPre.toString().substring(0,builderPre.toString().length()-1));
 						test.append(")");
-						plansPreConditions.add("preconditions_related("+test+").");
-
+						list.append(test+",");
 					} else{
-						plansPreConditions.add(e.getText()+".");
+						list.append(e.getText()+",");
 					}
 				});
-
+ 		builder.append(list.toString().substring(0, list.toString().length()-1));
+ 		builder.append("],_).");
+		plansClauses.add(builder.toString());
 		super.enterPlan(ctx);
 	}
 
-	public List<String> getPlansPreConditions() {
-		return plansPreConditions;
+	public List<String> getPlansClauses() {
+		return plansClauses;
 	}
 
 	public List<LangContext> getLangContexts() {

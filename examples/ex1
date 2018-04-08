@@ -1,15 +1,13 @@
+communication:
 
-
-	
 planner:
 	//plan(somethingToBeTrue, compoundaction, preconditions, postconditions)
 	plan(
-		[position(1,1), position(1,2)],
+		position(10,10),
 		[
-			action(moveFront(),  not position(_,20), position(_,_)),
-			action(moveUp(), not position(20,_), position(_,_))
+			action(moveFront(),  not position(10,_), position(_,_))
+		   ,action(moveUp(),  position(10,_), position(_,_))
 		]
 		,
-		[position(1,1), position(1,2), test],
+		position(_,_),
 		position(_,_)).
-	

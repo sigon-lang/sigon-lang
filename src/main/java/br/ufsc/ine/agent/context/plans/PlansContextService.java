@@ -154,7 +154,7 @@ public class PlansContextService implements ContextService{
 		return "pc";
 	}
 
-    public void plansPreConditions(List<String> plansPreConditions) {
-		plansPreConditions.forEach(this::appendFact);
+    public void plansClauses(List<String> clauses) {
+		clauses.forEach(this::appendFact);
     }
 }

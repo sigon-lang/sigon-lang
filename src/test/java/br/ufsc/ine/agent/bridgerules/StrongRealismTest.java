@@ -19,38 +19,35 @@ public class StrongRealismTest {
     BeliefsContextService beliefsContext = BeliefsContextService.getInstance();
     DesiresContextService desiresContext = DesiresContextService.getInstance();
     CommunicationContextService communicationContext = CommunicationContextService.getInstance();
-    IntentionsContextService intentionsContext = IntentionsContextService.getInstance();
     PlansContextService plansContext = PlansContextService.getInstance();
-
 
     @Test
     public void testaRegraParaStrongRealism(){
 
-
-        PlansContextService.getInstance().appendFact("plans(test,_,[p(_)],_).");
-        CommunicationContextService.getInstance().appendFact("sense(p(1)).");
+        plansContext .getInstance().appendFact("plans(test,_,[p(_),x(_)],_).");
+        communicationContext.appendFact("sense(p(1)).");
         desiresContext.appendFact("test.");
 
-        Body.builder().context(plansContext).clause("member(X, Z)").build();
 
-        Body communication = Body.builder().context(communicationContext).clause("sense(X)").build();
+        Body body = Body.builder().context(communicationContext).clause("sense(X)").build();
         Body plan = Body.builder().context(plansContext).clause("plans(Y,_,Z,_)").build();
         Body planMember = Body.builder().context(plansContext).clause("member(X, Z)").build();
         Body desires = Body.builder().context(desiresContext).clause("Y").build();
 
 
-        communication.setAnd(plan);
+        body.setAnd(plan);
         plan.setAnd(planMember);
         planMember.setAnd(desires);
 
 
         BridgeRule r2 = BridgeRule.builder()
                 .head(Head.builder().context(beliefsContext).clause("X").build())
-                .body(communication)
+                .body(body)
                 .build();
 
         r2.execute();
-        System.out.println(BeliefsContextService.getInstance().getTheory().toString());
+
+        System.out.println(beliefsContext.getTheory().toString());
 
     }
 
