@@ -158,22 +158,21 @@ contextName:
 
 head
 	:
-('!' ('not')?  contextName ) ('not')? (propClause | folClause | variable)
+('!' negation?  contextName )  (propClause | folClause | negation? variable)
 ;
 
 body
-	:
-contextName   (('not'? (propClause | folClause | variable))
-| plan) (('and'|'or')  contextName   (('not'? (propClause | folClause | variable)) | plan))*
+	: negation? contextName   ((propClause | folClause | negation? variable) | plan)
+(('and'|'or') negation?  contextName   ((propClause | folClause | negation? variable) | plan))*
 	;
 
 
 propClause
-	: ('not')? constant (annotation)?
+	: negation? constant (annotation)?
 	;
 
 folClause
-	: ('not')? constant '(' (term) (',' (term) )* ')' (annotation)?
+	: negation? constant '(' (term) (',' (term) )* ')' (annotation)?
 	;
 
 term
@@ -183,6 +182,9 @@ term
 operator
     : '<' | '=<' | '>' | '>=' | '-' | '+'
     ;
+
+negation
+	: 'not' | '~';
 
 annotation
      : (preAction| gradedValue)
