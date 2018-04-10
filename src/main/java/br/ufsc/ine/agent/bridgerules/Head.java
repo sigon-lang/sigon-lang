@@ -25,8 +25,11 @@ public class Head {
     @Builder.Default
     private boolean not = false;
 
+    //TODO: add verificacao para por ex p(X,Z) precisa ser tratado como variavel
     public boolean isVariable() {
-        return (this.clause!=null && Character.isUpperCase(this.clause.charAt(0)));
+       // System.out.println(this.clause.substring());
+        //return (this.clause!=null && Character.isUpperCase(this.clause.charAt(0)));
+        return true;
     }
 
     public String getTerm(){

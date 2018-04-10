@@ -12,7 +12,6 @@ import java.util.*;
 
 @Builder
 @Data
-
 public class Body {
 
     public static final String END = ".";
@@ -41,6 +40,7 @@ public class Body {
                 if(head!=null && !head.isVariable()){
                     variableFacts.add(head.getClause());
                 } else {
+                    //TODO: verificar como fazer para buscar p(Z, X) e adicionar algo do tipo p(Z, X);
                     Term solution = solve.getTerm(this.head.getTerm());
                     if (solution.toString().contains("|")) {
                         String[] result = solution.toString().substring(1, solution.toString().length() - 1).split("\\|");

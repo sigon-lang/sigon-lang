@@ -52,6 +52,18 @@ public class StrongRealismTest {
     }
 
 
+    @Test
+    public void testaRegras(){
+        communicationContext.appendFact("sense(breeze).");
+        beliefsContext.appendFact("pos(1,1).");
+
+        Head head =  Head.builder().context(beliefsContext).clause("breeze(X,Y)").build();
+        Body body = Body.builder().context(communicationContext).clause("sense(breeze)").and(Body.builder().context(beliefsContext).clause("pos(X,Y)").build()).build();
+        BridgeRule.builder().head(head).body(body).build().execute();
+
+        System.out.println(beliefsContext.getTheory().toString());
+    }
+
 
 
 
