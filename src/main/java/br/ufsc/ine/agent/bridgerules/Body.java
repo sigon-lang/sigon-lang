@@ -41,6 +41,29 @@ public class Body {
                 if(head!=null && !head.isVariable()){
                     variableFacts.add(head.getClause());
                 } else {
+
+                    if(head.getClause().contains("(") && head.getClause().contains(")")){
+                        String clauses = head.getClause().substring(head.getClause().indexOf("(")+1, head.getClause().indexOf(")"));
+                        String[] split = clauses.trim().split(",");
+                        StringBuilder builder = new StringBuilder();
+                        for (int i=0;i<split.length;i++){
+                            split[i] = split[i].replace(" ", "");
+                            if(Character.isUpperCase(split[i].charAt(0))){
+                                Term solution = solve.getTerm(split[i].trim());
+                                builder.append(solution.toString().replaceAll("_([0-9])*", "_"));
+                                if(i+1<split.length) {
+                                    builder.append(",");
+                                }
+                            } else{
+                                builder.append(split[i]);
+                            }
+                        }
+
+                        variableFacts.add(head.getClause().substring(0, head.getClause().indexOf("(")+1)+builder+").");
+                        return solve.isSuccess();
+                    }
+
+
                     Term solution = solve.getTerm(this.head.getTerm());
                     if (solution.toString().contains("|")) {
                         String[] result = solution.toString().substring(1, solution.toString().length() - 1).split("\\|");
@@ -53,7 +76,7 @@ public class Body {
                     }
                 }
             } catch (Exception e){
-
+                    e.printStackTrace();
             }
 
             return solve.isSuccess();

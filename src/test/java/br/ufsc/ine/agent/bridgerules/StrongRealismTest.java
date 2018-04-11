@@ -51,6 +51,15 @@ public class StrongRealismTest {
 
     }
 
+    @Test
+    public void teste1(){
+        communicationContext.appendFact("sense(p(1,2)).");
+        Head head = Head.builder().context(beliefsContext).clause("test(X, Y)").build();
+        Body body = Body.builder().context(communicationContext).clause("sense(p(X,Y))").build();
+        BridgeRule.builder().head(head).body(body).build().execute();
+        System.out.println(beliefsContext.getTheory().toString());
+    }
+
 
 
 
