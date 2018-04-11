@@ -181,26 +181,30 @@ public class AgentWalker extends AgentBaseListener {
 		builder.append(",_");
 		builder.append(",[");
 		StringBuilder list = new StringBuilder();
-		ctx.planPreconditions()
-				.conditions().listOfClauses().folClause()
-				.forEach( e->{
+		if(ctx.planPreconditions()!=null) {
+			ctx.planPreconditions()
+					.conditions().listOfClauses().folClause()
+					.forEach(e -> {
 
-					if(e.getText().contains("(") && e.getText().contains(")")){
-						StringBuilder builderPre = new StringBuilder();
-						String c  = e.getText();
-						String toReplace = c.substring(c.indexOf("(")+1, c.lastIndexOf(")"));
-						Arrays.stream(toReplace.split(",")).map(i-> "_,").forEach(builderPre::append);
-						StringBuilder test = new StringBuilder();
-						test.append(c.substring(0, c.indexOf("(")));
-						test.append("(");
-						test.append(builderPre.toString().substring(0,builderPre.toString().length()-1));
-						test.append(")");
-						list.append(test+",");
-					} else{
-						list.append(e.getText()+",");
-					}
-				});
- 		builder.append(list.toString().substring(0, list.toString().length()-1));
+						if (e.getText().contains("(") && e.getText().contains(")")) {
+							StringBuilder builderPre = new StringBuilder();
+							String c = e.getText();
+							String toReplace = c.substring(c.indexOf("(") + 1, c.lastIndexOf(")"));
+							Arrays.stream(toReplace.split(",")).map(i -> "_,").forEach(builderPre::append);
+							StringBuilder test = new StringBuilder();
+							test.append(c.substring(0, c.indexOf("(")));
+							test.append("(");
+							test.append(builderPre.toString().substring(0, builderPre.toString().length() - 1));
+							test.append(")");
+							list.append(test + ",");
+						} else {
+							list.append(e.getText() + ",");
+						}
+					});
+			builder.append(list.toString().substring(0, list.toString().length() - 1));
+		} else{
+			builder.append("_");
+		}
  		builder.append("],_).");
 		plansClauses.add(builder.toString());
 		super.enterPlan(ctx);

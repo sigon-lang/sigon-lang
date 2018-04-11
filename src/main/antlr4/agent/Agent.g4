@@ -123,7 +123,7 @@ argumentList
 ;
 
 expression
-	: STRING
+	: constant | variable
 	;
 
 compoundAction
