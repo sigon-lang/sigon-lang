@@ -74,7 +74,7 @@ conditions
 
 //'action' '(' functionInvocation ',' preconditions ',' postconditions ')'
 action
-	: 'action' '(' functionInvocation (',' actionPreconditions ',' actionPostconditions)? (',' cost)?)'
+	: 'action' '(' functionInvocation (',' actionPreconditions ',' actionPostconditions)? (',' cost)? ')'
 	;
 	
 actionPreconditions
@@ -199,6 +199,8 @@ gradedValue
     ;
 cost
     : '0.' numeral
+    ;
+
 numeral
 	: DIGIT+
 	;
