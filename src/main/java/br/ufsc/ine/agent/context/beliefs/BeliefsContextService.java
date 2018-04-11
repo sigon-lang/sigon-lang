@@ -71,6 +71,7 @@ public class BeliefsContextService implements ContextService {
 		try {
 			boolean update = false;
 			String toTest = null;
+
 			if(c.trim().endsWith(").")){
 				StringBuilder builder = new StringBuilder();
 				String toReplace = c.substring(c.indexOf("(")+1, c.lastIndexOf(")"));
@@ -81,8 +82,14 @@ public class BeliefsContextService implements ContextService {
 				test.append(builder.toString().substring(0,builder.toString().length()-1));
 				test.append(").");
 				toTest = test.toString();
-				update = this.verify(toTest);
+
+					update = (c.startsWith("\\+") && this.verify("\\+" + toTest))
+							|| (!c.startsWith("\\+") && this.verify("\\+" + toTest))
+							|| this.verify(toTest.replace("\\+", ""));
+
+
 			}
+
             if(update){
                 prologEnvironment.updateFact(c, toTest);
             } else {

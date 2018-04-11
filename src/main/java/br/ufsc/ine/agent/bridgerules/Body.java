@@ -12,7 +12,6 @@ import java.util.*;
 
 @Builder
 @Data
-
 public class Body {
 
     public static final String END = ".";

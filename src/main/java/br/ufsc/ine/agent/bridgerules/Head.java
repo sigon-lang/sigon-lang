@@ -25,6 +25,7 @@ public class Head {
     @Builder.Default
     private boolean not = false;
 
+
     public boolean isVariable() {
 
         if(this.clause.contains("(") && this.clause.contains(")")){
@@ -38,6 +39,7 @@ public class Head {
         }
 
         return (this.clause!=null && Character.isUpperCase(this.clause.charAt(0)));
+
     }
 
     public String getTerm(){

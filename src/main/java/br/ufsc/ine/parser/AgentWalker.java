@@ -22,10 +22,14 @@ public class AgentWalker extends AgentBaseListener {
 	private Plan plan;
 	private Action action;
 
+	//TODO: usar objetos criados pelo ant e remover classes LangContext, LangSensor, LangActuator
 	private List<LangContext> langContexts = new ArrayList<>();
-
 	private List<LangSensor> langSensors = new ArrayList<>();
 	private List<LangActuator> langActuators = new ArrayList<>();
+
+
+	private List<AgentParser.BridgeRuleContext> bridgeRules  = new ArrayList<>();
+
 
 	private LangContext lastLangContext;
 	private LangSensor lastSensor;
@@ -200,6 +204,16 @@ public class AgentWalker extends AgentBaseListener {
  		builder.append("],_).");
 		plansClauses.add(builder.toString());
 		super.enterPlan(ctx);
+	}
+
+	@Override
+	public void enterBridgeRule(AgentParser.BridgeRuleContext ctx) {
+		this.bridgeRules.add(ctx);
+		super.enterBridgeRule(ctx);
+	}
+
+	public List<AgentParser.BridgeRuleContext> getBridgeRules() {
+		return bridgeRules;
 	}
 
 	public List<String> getPlansClauses() {
