@@ -51,9 +51,9 @@ customContextName
 	'_'(LCLETTER | UCLETTER)+ character*
 	;
  
-//'plan' '(' somethingToBeTrue ',' compoundaction ',' preconditions ',' postconditions ')'
+//'plan' '(' somethingToBeTrue ',' compoundaction ',' preconditions ',' postconditions ',' cost ')'
 plan
-	: 'plan' '(' somethingToBeTrue ',' compoundAction ',' planPreconditions ',' planPostconditions ')'
+	: 'plan' '(' somethingToBeTrue ',' compoundAction (',' planPreconditions ',' planPostconditions)? (',' cost)? ')'
 	;
 
 somethingToBeTrue
@@ -74,7 +74,7 @@ conditions
 
 //'action' '(' functionInvocation ',' preconditions ',' postconditions ')'
 action
-	: 'action' '(' functionInvocation ',' actionPreconditions ',' actionPostconditions ')'
+	: 'action' '(' functionInvocation (',' actionPreconditions ',' actionPostconditions)? (',' cost)?)'
 	;
 	
 actionPreconditions
@@ -197,7 +197,8 @@ preAction
 gradedValue
     : '->0.' numeral
     ;
-
+cost
+    : '0.' numeral
 numeral
 	: DIGIT+
 	;
