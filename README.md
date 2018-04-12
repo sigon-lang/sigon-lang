@@ -7,7 +7,7 @@ Para manter e desenvolver o projeto é necessário ter as seguintes tecnologias 
   - Java versão 8 ou superior 
   - Maven 3
   - Eclipse
-
+  - Lombok : https://projectlombok.org/
 Como como compilar o projeto:
 
 ```sh
