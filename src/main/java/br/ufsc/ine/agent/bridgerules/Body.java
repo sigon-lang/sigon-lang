@@ -4,15 +4,14 @@ import alice.tuprolog.*;
 import br.ufsc.ine.agent.context.ContextService;
 import lombok.Builder;
 import lombok.Data;
-import lombok.extern.java.Log;
-import lombok.extern.log4j.Log4j;
-import lombok.extern.log4j.Log4j2;
+
 
 import java.util.*;
 
 @Builder
 @Data
 public class Body {
+
 
     public static final String END = ".";
     private ContextService context;
@@ -75,7 +74,7 @@ public class Body {
                     }
                 }
             } catch (Exception e){
-                    e.printStackTrace();
+
             }
 
             return solve.isSuccess();
