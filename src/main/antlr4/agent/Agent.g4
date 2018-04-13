@@ -139,11 +139,11 @@ formulas
 	;
 	
 propFormula
-	: ((propClause  | (propClause ':-' propLogExpr ))'.')
+	: (propClause  (':-' propLogExpr )?)'.'
 	;
 	
 folFormula
-	: ((folClause | (folClause ':-' folLogExpr )) '.')
+	: (folClause ( ':-' folLogExpr )?) '.'
 	;
 		
 plansFormulas
@@ -214,16 +214,21 @@ variable
 	;
 
 propLogExpr
-	: propLogExpr (AND | OR) propLogExpr
-	| propClause
+	:  propClause propLogExprL
+	;
+	
+propLogExprL
+	: (AND | OR) propClause propLogExprL | 
 	;
 
 
 folLogExpr
-	: folLogExpr (AND | OR) folLogExpr
-	| folClause
+	:  folClause folLogExprL
 	;
-
+folLogExprL
+	: (AND | OR) folClause folLogExprL | 
+	;
+	
 
 character
     : LCLETTER | UCLETTER | DIGIT
