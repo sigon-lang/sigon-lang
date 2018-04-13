@@ -163,7 +163,7 @@ head
 
 body
 	: negation? contextName   ((propClause | folClause | negation? variable) | plan)
-(('and'|'or') negation?  contextName   ((propClause | folClause | negation? variable) | plan))*
+((AND | OR) negation?  contextName   ((propClause | folClause | negation? variable) | plan))*
 	;
 
 
@@ -218,7 +218,7 @@ propLogExpr
 	;
 	
 propLogExprL
-	: (AND | OR) propClause propLogExprL | 
+	: (AND | OR) propClause propLogExprL |
 	;
 
 
@@ -226,7 +226,7 @@ folLogExpr
 	:  folClause folLogExprL
 	;
 folLogExprL
-	: (AND | OR) folClause folLogExprL | 
+	: (AND | OR) folClause folLogExprL |
 	;
 	
 
@@ -242,11 +242,11 @@ character
 */
 
 AND
-   : 'and'
+   : '&'
    ;
 
 OR
-   : 'or'
+   : '|'
    ;
 
 
