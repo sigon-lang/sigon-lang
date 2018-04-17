@@ -20,9 +20,6 @@ public class PrologEnvironment {
 		fact = fact.replaceAll("&", ",");
 		fact = fact.replaceAll("\\|", ";");
 
-		if(!fact.endsWith(".")){
-			fact = fact +".";
-		}
 
 		if(this.theory==null) {
 			this.theory = new Theory(fact+SPACE);
