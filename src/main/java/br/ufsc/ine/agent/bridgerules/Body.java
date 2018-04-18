@@ -90,7 +90,8 @@ public class Body {
         StringBuilder builder = new StringBuilder();
         String[] contextSplit = context.getTheory().toString()
                 //.replaceAll("_([0-9])*", "_").trim()
-                .replaceAll("\\n", ";").split(";;");
+                .replaceAll("\\n\\n", "/")
+                .split("/");
 
 
 
