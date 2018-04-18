@@ -42,7 +42,7 @@ public class PlansContextService implements ContextService{
 	}
 
 	private boolean hasBelief(String clause){
-		System.out.println(BeliefsContextService.getInstance().getTheory().toString());
+
 		return Body.builder()
 				.head(Head.builder().clause(clause).build())
 				.context(BeliefsContextService.getInstance())

@@ -52,6 +52,18 @@ public class StrongRealismTest {
     }
 
     @Test
+    public void testaCrenca(){
+        BeliefsContextService.getInstance().appendFact("at(P) :- pos(P, X, Y) , pos(r1, X, Y).");
+        BeliefsContextService.getInstance().appendFact("pos(1, 3, 3).");
+        BeliefsContextService.getInstance().appendFact("pos(r1, 3, 3).");
+
+        BridgeRule.builder().head(Head.builder().clause("P").context(DesiresContextService.getInstance()).build())
+                .body(Body.builder().context(BeliefsContextService.getInstance()).clause("at(P)").build())
+        .build().execute();
+        System.out.println(DesiresContextService.getInstance().getTheory().toString());
+    }
+
+    @Test
     public void teste1(){
         communicationContext.appendFact("sense(p(1,2)).");
         Head head = Head.builder().context(beliefsContext).clause("test(X, Y)").build();
