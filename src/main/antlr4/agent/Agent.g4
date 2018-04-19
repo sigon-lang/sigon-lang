@@ -94,8 +94,9 @@ functionName
 	;
 
 sensor
-    : 'sensor('  sensorIdentifier  ',' sensorImplementation ')' '.'
+    : SENSOR '('  sensorIdentifier  ',' sensorImplementation ')' '.'
     ;
+
 
 sensorIdentifier
     : STRING
@@ -106,8 +107,9 @@ sensorImplementation
     ;
 
 actuator
-    : 'actuator(' actuatorIdentifier ',' actuatorImplementation ')' '.'
+    : ACTUATOR '(' actuatorIdentifier ',' actuatorImplementation ')' '.'
     ;
+
 
 actuatorIdentifier
     : STRING
@@ -274,7 +276,12 @@ PLANNER
 COMMUNICATION
 	: 'communication'
 	;
-
+SENSOR
+	: 'sensor'
+	;
+ACTUATOR
+	: 'actuator'
+	;
 
 
 LCLETTER
