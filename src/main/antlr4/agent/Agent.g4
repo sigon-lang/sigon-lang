@@ -26,10 +26,10 @@ logicalContext
 functionalContext
 	:
 	communicationContext | 
-	planningContext	
+	plannerContext	
 	;	
 
-planningContext
+plannerContext
 	:
 	PLANNER  ':' plansFormulas
 	;
