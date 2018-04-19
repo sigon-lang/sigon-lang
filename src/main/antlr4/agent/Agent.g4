@@ -284,6 +284,11 @@ ACTUATOR
 	;
 PLAN
 	: 'plan'
+	;
+ACTION
+	: 'action'
+	;
+
 
 LCLETTER
     : [a-z_];
