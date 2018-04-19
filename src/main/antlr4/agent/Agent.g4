@@ -53,7 +53,7 @@ customContextName
  
 //'plan' '(' somethingToBeTrue ',' compoundaction ',' preconditions ',' postconditions ',' cost ')'
 plan
-	: 'plan' '(' somethingToBeTrue ',' compoundAction (',' planPreconditions ',' planPostconditions)? (',' cost)? ')'
+	: PLAN '(' somethingToBeTrue ',' compoundAction (',' planPreconditions ',' planPostconditions)? (',' cost)? ')'
 	;
 
 somethingToBeTrue
@@ -282,7 +282,8 @@ SENSOR
 ACTUATOR
 	: 'actuator'
 	;
-
+PLAN
+	: 'plan'
 
 LCLETTER
     : [a-z_];
