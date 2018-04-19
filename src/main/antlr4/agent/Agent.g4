@@ -74,7 +74,7 @@ conditions
 
 //'action' '(' functionInvocation ',' preconditions ',' postconditions ')'
 action
-	: 'action' '(' functionInvocation (',' actionPreconditions ',' actionPostconditions)? (',' cost)? ')'
+	: ACTION '(' functionInvocation (',' actionPreconditions ',' actionPostconditions)? (',' cost)? ')'
 	;
 	
 actionPreconditions
