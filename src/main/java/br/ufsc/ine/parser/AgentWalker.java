@@ -201,11 +201,12 @@ public class AgentWalker extends AgentBaseListener {
 							list.append(e.getText() + ",");
 						}
 					});
-			builder.append(list.toString().substring(0, list.toString().length() - 1));
+			if(list!=null && list.length()!=0)
+				builder.append(list.toString().substring(0, list.toString().length() - 1));
 		} else{
 			builder.append("_");
 		}
- 		builder.append("],_).");
+		builder.append("],_).");
 		plansClauses.add(builder.toString());
 		super.enterPlan(ctx);
 	}
