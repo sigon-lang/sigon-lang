@@ -150,6 +150,7 @@ public class AgentWalker extends AgentBaseListener {
 	public void enterFunctionName(AgentParser.FunctionNameContext ctx) {
 		this.action = new Action();
 		this.action.setName(ctx.getText());
+		this.plan.getActions().add(action);
 		super.enterFunctionName(ctx);
 	}
 
@@ -165,10 +166,11 @@ public class AgentWalker extends AgentBaseListener {
 		super.enterActionPreconditions(ctx);
 	}
 
+
+
 	@Override
 	public void enterActionPostconditions(AgentParser.ActionPostconditionsContext ctx) {
-		action.getPosConditions().add(ctx.getText());
-		this.plan.getActions().add(action);
+		this.action.getPosConditions().add(ctx.getText());
 		super.enterActionPostconditions(ctx);
 	}
 
@@ -181,6 +183,7 @@ public class AgentWalker extends AgentBaseListener {
 		builder.append(",_");
 		builder.append(",[");
 		StringBuilder list = new StringBuilder();
+
 		if(ctx.planPreconditions()!=null) {
 			ctx.planPreconditions()
 					.conditions().listOfClauses().folClause()
@@ -206,6 +209,7 @@ public class AgentWalker extends AgentBaseListener {
 		} else{
 			builder.append("_");
 		}
+
 		builder.append("],_).");
 		plansClauses.add(builder.toString());
 		super.enterPlan(ctx);
