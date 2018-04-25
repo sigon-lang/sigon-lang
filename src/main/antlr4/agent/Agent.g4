@@ -131,9 +131,13 @@ expression
 compoundAction
 	: ('[' action (',' action)* ']') |'_' ;
 	
+clause
+	: propClause | folClause
+	;
+
 listOfClauses
-	: (propClause | ('[' propClause (',' propClause)* ']'))
-	| (folClause | ('[' folClause (',' folClause)* ']'))
+	: clause
+	| ('[' clause (',' clause)* ']') 
 	;
 
 formulas
@@ -160,12 +164,12 @@ contextName:
 
 head
 	:
-('!' negation?  contextName )  (propClause | folClause | negation? variable)
+('!' negation?  contextName )  (clause | negation? variable)
 ;
 
 body
-	: negation? contextName   ((propClause | folClause | negation? variable) | plan)
-((AND | OR) negation?  contextName   ((propClause | folClause | negation? variable) | plan))*
+	: negation? contextName   ((clause | negation? variable) | plan)
+((AND | OR) negation?  contextName   ((clause | negation? variable) | plan))*
 	;
 
 
