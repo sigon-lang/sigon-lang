@@ -88,11 +88,22 @@ public class StrongRealismTest {
 
     @Test
     public void testaRegrasNegacao(){
-        beliefsContext.appendFact("pos(1,1).");
+        //beliefsContext.appendFact("pos(1,1).");
       // beliefsContext.appendFact("\\+ sense(breeze).");
-       beliefsContext.appendFact("sense(breeze).");
-       beliefsContext.appendFact("\\+ sense(breeze).");
+      // beliefsContext.appendFact("sense(breeze).");
+       //beliefsContext.appendFact("\\+ sense(breeze).");
 
+        //beliefsContext.appendFact("teste.");
+       // beliefsContext.appendFact("position(0,0).");
+
+        //beliefsContext.appendFact("\\+ garbage.");
+        //beliefsContext.appendFact("garbage.");
+        //beliefsContext.appendFact("\\+ garbage.");
+
+       // beliefsContext.appendFact("-test.");
+
+       // beliefsContext.appendFact("teste.");
+        //beliefsContext.appendFact("\\+ teste.");
 
      ///   beliefsContext.appendFact("pos(1,1).");
 

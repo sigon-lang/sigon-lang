@@ -68,4 +68,26 @@ public class PrologEnvironment {
 		return engine;
 	}
 
+	public void removeFact(String fact) throws InvalidTheoryException {
+		StringBuilder newTheory = new StringBuilder();
+		if(this.theory==null){
+			this.theory = new Theory("");
+		}
+		Iterator<? extends Term> iterator = this.theory.iterator(this.engine);
+		while (iterator.hasNext()){
+			Term term = iterator.next();
+			String test = null;
+			if (fact.endsWith(".")){
+				test = fact.substring(0, fact.length()-1);
+			} else{
+				test = fact;
+			}
+			if(!term.toString().equals(test)){
+				newTheory.append(  term.toString().endsWith(".") ?  (term.toString()+ SPACE ) : (term.toString()+"."+ SPACE ) );
+			}
+
+		}
+		this.theory = new Theory(newTheory.toString());
+		this.engine.setTheory(theory);
+	}
 }

@@ -69,6 +69,18 @@ public class BeliefsContextService implements ContextService {
 
 	@Override
 	public void appendFact(String c) {
+
+		if(c.startsWith("minus_")){
+			c = c.replace("minus_", "");
+			try {
+				prologEnvironment.removeFact(c);
+				return;
+			} catch (Exception e){
+				e.printStackTrace();
+			}
+
+		}
+
 		try {
 			boolean update = false;
 			String toTest = null;
@@ -84,11 +96,20 @@ public class BeliefsContextService implements ContextService {
 				test.append(").");
 				toTest = test.toString();
 
-					update = (c.startsWith("\\+") && this.verify("\\+" + toTest))
+				update = (c.startsWith("\\+") && this.verify("\\+" + toTest))
 							|| (!c.startsWith("\\+") && this.verify("\\+" + toTest))
 							|| this.verify(toTest.replace("\\+", ""));
 
 
+			} else if(!c.trim().endsWith(").") && (c.startsWith("\\+") || this.verify("\\+" + c))  ){
+				if(!c.startsWith("\\+") && !this.verify(c)){
+					update = false;
+				} else {
+					toTest = c;
+					update = true;
+				}
+			} else if(!c.startsWith("\\+") && verify(c)){
+				return;
 			}
 
             if(update){

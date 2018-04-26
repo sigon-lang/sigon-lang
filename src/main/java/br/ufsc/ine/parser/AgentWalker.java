@@ -136,7 +136,9 @@ public class AgentWalker extends AgentBaseListener {
 
 	@Override
 	public void enterPlanPreconditions(AgentParser.PlanPreconditionsContext ctx) {
-		this.plan.getPreConditions().add(ctx.getText());
+		ctx.conditions().listOfClauses().clause().forEach(c -> {
+			this.plan.getPreConditions().add(c.getText());
+		});
 		super.enterPlanPreconditions(ctx);
 	}
 
@@ -185,8 +187,9 @@ public class AgentWalker extends AgentBaseListener {
 		StringBuilder list = new StringBuilder();
 
 		if(ctx.planPreconditions()!=null) {
+
 			ctx.planPreconditions()
-					.conditions().listOfClauses().folClause()
+					.conditions().listOfClauses().clause()
 					.forEach(e -> {
 
 						if (e.getText().contains("(") && e.getText().contains(")")) {
