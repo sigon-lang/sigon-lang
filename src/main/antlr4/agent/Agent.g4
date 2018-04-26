@@ -53,8 +53,10 @@ customContextName
  
 //'plan' '(' somethingToBeTrue ',' compoundaction ',' preconditions ',' postconditions ',' cost ')'
 plan
-	: PLAN '(' somethingToBeTrue ',' compoundAction (',' planPreconditions ',' planPostconditions)? (',' cost)? ')'
+	: PLAN '(' somethingToBeTrue ',' compoundAction (',' planPreconditions ',' internalOperator? planPostconditions)? (',' cost)? ')'
 	;
+
+
 
 somethingToBeTrue
 	: listOfClauses
@@ -74,7 +76,7 @@ conditions
 
 //'action' '(' functionInvocation ',' preconditions ',' postconditions ')'
 action
-	: ACTION '(' functionInvocation (',' actionPreconditions ',' actionPostconditions)? (',' cost)? ')'
+	: ACTION '(' functionInvocation (',' actionPreconditions ',' internalOperator? actionPostconditions)? (',' cost)? ')'
 	;
 	
 actionPreconditions
@@ -119,7 +121,23 @@ actuatorImplementation
     : STRING
     ;
 
+internalOperator
+	: beliefAdition | beliefRemotion | desireAdition | desireAdition
+	;
 
+beliefAdition
+	: '+'
+	;
+beliefRemotion
+	: '-'
+	;
+
+desireAdition
+	: '+!'
+	;
+desireRemotion
+	: '-!'
+	;
 argumentList
 	:	expression (',' expression)*
 ;
