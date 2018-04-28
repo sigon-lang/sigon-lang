@@ -32,40 +32,69 @@ public class BridgeRulesService {
 
     public List<BridgeRule> bridgeRules(){
 
-        // 1
-        BridgeRule r1 =  BridgeRule.builder()
+
+        Body body = Body.builder().context(communicationContext).clause("sense(X)").build();
+        Body plan = Body.builder().context(plansContext).clause("plan(Y,_,Z,_)").build();
+        Body planMember = Body.builder().context(plansContext).clause("member(X, Z)").build();
+        Body desires = Body.builder().context(desiresContext).clause("Y").build();
+        body.setAnd(planMember);
+        plan.setAnd(planMember);
+        planMember.setAnd(desires);
+        BridgeRule r1 = BridgeRule.builder()
                 .head(Head.builder().context(beliefsContext).clause("X").build())
-                .body(Body.builder().context(communicationContext).clause("sense(X)").build())
-                .build();
-
-
-        BridgeRule r2 = BridgeRule.builder()
-                .head(Head.builder().context(beliefsContext).clause("X").build())
-                .body(Body.builder().context(desiresContext).clause("Y")
-                        .and(Body.builder().context(communicationContext).clause(" plans(Y, _, X, _)").build())
-                        .and(Body.builder().context(communicationContext).clause("sense(X)").build())
-                        .build())
-
+                .body(body)
                 .build();
 
         // 5
-        BridgeRule r5 =  BridgeRule.builder()
+        BridgeRule r2 =  BridgeRule.builder()
                 .head(Head.builder().not(true).context(intentionsContext).clause("X").build())
                 .body(Body.builder().context(desiresContext).notClause("X").build())
                 .build();
 
         // 6
-        BridgeRule r6 =  BridgeRule.builder()
-                .head(Head.builder().context(desiresContext).clause(VARIABLE).build())
-                .body(Body.builder().context(intentionsContext).clause(VARIABLE).build())
+        BridgeRule r3 =  BridgeRule.builder()
+                .head(Head.builder().context(intentionsContext).clause("X").build())
+                .body(Body.builder().context(desiresContext).clause("X")
+                        .and(Body.builder().context(beliefsContext)
+                                .notClause("X").build()).build())
                 .build();
 
         List<BridgeRule> rules = new ArrayList<BridgeRule>( );
         rules.add(r1);
         rules.add(r2);
-        rules.add(r5);
-        rules.add(r6);
+        rules.add(r3);
         return rules;
+    }
+
+    private BridgeRule getBridgeRule1StrongRealism() {
+        Body body = Body.builder().context(communicationContext).clause("sense(X)").build();
+        Body plan = Body.builder().context(plansContext).clause("plan(Y,_,Z,_)").build();
+        Body planMember = Body.builder().context(plansContext).clause("member(X, Z)").build();
+        Body desires = Body.builder().context(desiresContext).clause("Y").build();
+
+        body.setAnd(plan);
+        plan.setAnd(planMember);
+        planMember.setAnd(desires);
+
+        return BridgeRule.builder()
+                .head(Head.builder().context(beliefsContext).clause("X").build())
+                .body(body)
+                .build();
+
+    }
+
+    private BridgeRule getBridgeRule2StrongRealism() {
+        Body body = Body.builder().context(communicationContext).clause("sense(X)").build();
+        Body plan = Body.builder().context(plansContext).clause("plan(Y,_,Z,_)").build();
+        Body planMember = Body.builder().context(plansContext).clause("member(X, Z)").build();
+        Body desires = Body.builder().context(desiresContext).clause("Y").build();
+        body.setAnd(plan);
+        plan.setAnd(planMember);
+        planMember.setAnd(desires);
+        return BridgeRule.builder()
+                .head(Head.builder().context(beliefsContext).clause("X").build())
+                .body(body)
+                .build();
     }
 
 

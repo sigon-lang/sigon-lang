@@ -45,6 +45,7 @@ public class Agent {
         if(literal.startsWith("-")){
             literal = literal.replace("-","minus_").trim();
         } else if(literal.startsWith("not")){
+            literal = literal.replace(" ", "");
             literal = literal.replace("not","\\+").trim();
         }
         cycles++;

@@ -108,9 +108,9 @@ public class Body {
         builder = new StringBuilder();
 
 
-            addAndOr(builder, this);
-            Theory andOrTheory =  new Theory(builder.toString());
-            contextTheory.append(andOrTheory);
+        addAndOr(builder, this);
+        Theory andOrTheory =  new Theory(builder.toString());
+        contextTheory.append(andOrTheory);
 
         return contextTheory;
     }
@@ -126,9 +126,9 @@ public class Body {
                         builder.append(body.and.context.getName() + "(" + s.substring(0, s.length() - 1) + "). \n");
                 }
 
-                 if (body.and.getAndOrClause().isPresent()){
+                if (body.and.getAndOrClause().isPresent()){
                     addAndOr(builder, body.and);
-                 }
+                }
 
             } else if (body.or != null) {
                 String[] split = body.or.context.getTheory().toString().replaceAll("\\n", "")
@@ -200,12 +200,10 @@ public class Body {
 
     public String getContextClause(){
 
-        //TODO: add a clause member(X,Z) como para reservada e fazer expresão para o if
-        if(this.clause.startsWith("member(")){
-            return this.clause+".";
-        }
-
         if (this.clause != null) {
+            if(this.clause.startsWith("member(")){
+                return this.clause+".";
+            }
 
             return this.context.getName() + "("+ this.clause.replace(".", "") + ")";
         }
@@ -214,16 +212,16 @@ public class Body {
 
     }
 
-    private String getContextClause(Body body){
+    private String getContextClause(Body body) {
 
-        //TODO: add a clause member(X,Z) como para reservada e fazer expresão para o if
-        if(body.clause.startsWith("member(")){
-            return this.clause+".";
-        }
+        if (clause != null){
+            if (body.clause.startsWith("member(")) {
+                return this.clause + ".";
+            }
 
-        if (body.clause != null) {
-
-            return body.context.getName() + "("+ body.clause.replace(".", "") + ")";
+            if (body.clause != null) {
+                return body.context.getName() + "(" + body.clause.replace(".", "") + ")";
+            }
         }
 
         return body.context.getName() + "("+  body.notClause.replace(".", "") + ")";

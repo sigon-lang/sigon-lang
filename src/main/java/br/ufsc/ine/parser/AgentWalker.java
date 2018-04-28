@@ -191,7 +191,7 @@ public class AgentWalker extends AgentBaseListener {
 			ctx.planPreconditions()
 					.conditions().listOfClauses().clause()
 					.forEach(e -> {
-
+						String clause = null;
 						if (e.getText().contains("(") && e.getText().contains(")")) {
 							StringBuilder builderPre = new StringBuilder();
 							String c = e.getText();
@@ -202,10 +202,27 @@ public class AgentWalker extends AgentBaseListener {
 							test.append("(");
 							test.append(builderPre.toString().substring(0, builderPre.toString().length() - 1));
 							test.append(")");
-							list.append(test + ",");
+							clause =  test + ",";
 						} else {
-							list.append(e.getText() + ",");
+							clause = e.getText() + ",";
 						}
+
+						if(clause.length()>=3) {
+							if (clause.substring(0,3).equals("not")) {
+								list.append("\\+"+clause.substring(3));
+								list.append(clause.replaceAll("not", ""));
+							}
+
+							if (!clause.substring(0,3).equals("not")) {
+								list.append(clause);
+								list.append("\\+" + clause);
+							}
+						} else {
+							list.append(clause);
+						}
+
+
+
 					});
 			if(list!=null && list.length()!=0)
 				builder.append(list.toString().substring(0, list.toString().length() - 1));
