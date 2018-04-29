@@ -47,13 +47,14 @@ public class StrongRealismTest {
     @Test
     public void testaRegraParaStrongRealism(){
 
-        plansContext .getInstance().appendFact("plans(test,_,[p(_),x(_)],_).");
-        communicationContext.appendFact("sense(p(1)).");
+        plansContext .getInstance().appendFact("plan(test,_,[clear,x(_)],_).");
+        plansContext .getInstance().appendFact("plan(test,_,[test,x(_)],_).");
+        communicationContext.appendFact("sense(clear).");
         desiresContext.appendFact("test.");
 
 
         Body body = Body.builder().context(communicationContext).clause("sense(X)").build();
-        Body plan = Body.builder().context(plansContext).clause("plans(Y,_,Z,_)").build();
+        Body plan = Body.builder().context(plansContext).clause("plan(Y,_,Z,_)").build();
         Body planMember = Body.builder().context(plansContext).clause("member(X, Z)").build();
         Body desires = Body.builder().context(desiresContext).clause("Y").build();
         body.setAnd(plan);
@@ -88,12 +89,22 @@ public class StrongRealismTest {
     }
 
 
+    @Test
+    public void atualizacaoCrencas(){
+
+        BeliefsContextService.getInstance().appendFact("\\+clear.");
+        BeliefsContextService.getInstance().appendFact("clear.");
+        BeliefsContextService.getInstance().appendFact("garbage.");
+
+        System.out.println(BeliefsContextService.getInstance().getTheory());
+    }
+
 
     @Test
     public void testaRegraParaStrongRealism2(){
 
         plansContext .getInstance().appendFact("plan(check(slots),_,[(\\+ garbage),garbage,(\\+ clear),clear],_).");
-        plansContext.appendFact("plan(check(slots),_,[garbage,(\\+ garbage)],_).");
+        //plansContext.appendFact("plan(check(slots),_,[garbage,(\\+ garbage)],_).");
         communicationContext.appendFact("sense(garbage).");
         desiresContext.appendFact("check(slots).");
 
@@ -102,33 +113,17 @@ public class StrongRealismTest {
         Body plan = Body.builder().context(plansContext).clause("plan(Y,_,Z,_)").build();
         Body planMember = Body.builder().context(plansContext).clause("member(X, Z)").build();
         Body desires = Body.builder().context(desiresContext).clause("Y").build();
-        body.setAnd(planMember);
+        body.setAnd(plan);
         plan.setAnd(planMember);
         planMember.setAnd(desires);
-        BridgeRule r1 = BridgeRule.builder()
+        BridgeRule r2 = BridgeRule.builder()
                 .head(Head.builder().context(beliefsContext).clause("X").build())
                 .body(body)
                 .build();
 
+        r2.execute();
 
-
-        BridgeRule r2 =  BridgeRule.builder()
-                .head(Head.builder().not(true).context(intentionsContextService ).clause("X").build())
-                .body(Body.builder().context(desiresContext).notClause("X").build())
-                .build();
-
-
-        // 6
-        BridgeRule r3 =  BridgeRule.builder()
-                .head(Head.builder().context(intentionsContextService).clause("X").build())
-                .body(Body.builder().context(desiresContext).clause("X")
-                        .and(Body.builder().context(beliefsContext)
-                                .notClause("X").build()).build())
-                .build();
-
-        r3.execute();
-
-        System.out.println(intentionsContextService.getTheory().toString());
+        System.out.println(beliefsContext.getTheory().toString());
 
     }
 

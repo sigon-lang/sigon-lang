@@ -31,26 +31,33 @@ public class PrologEnvironment {
 
 	public void updateFact(String fact, String toTest) throws InvalidTheoryException {
 		StringBuilder newTheory = new StringBuilder();
-		if(this.theory==null){
+		if (this.theory == null) {
 			this.theory = new Theory(fact);
 		}
 		Iterator<? extends Term> iterator = this.theory.iterator(this.engine);
-		while (iterator.hasNext()){
+		boolean insert = false;
+		while (iterator.hasNext()) {
 			Term term = iterator.next();
 
-			if(toTest.startsWith("\\+")){
+			if (toTest.startsWith("\\+")) {
 				toTest = toTest.replace("\\+", "").trim();
 
 			}
-			boolean match = this.engine.match(term, Term.createTerm( toTest.substring(0, toTest.length()-1)))
-					|| this.engine.match(term, Term.createTerm( "\\+"+toTest.substring(0, toTest.length()-1)));
+			boolean match = this.engine.match(term, Term.createTerm(toTest.substring(0, toTest.length() - 1)))
+					|| this.engine.match(term, Term.createTerm("\\+" + toTest.substring(0, toTest.length() - 1)));
 
-			if(match){
-				newTheory.append(  fact + SPACE );
+			if (match) {
+				insert = true;
+				newTheory.append(fact + SPACE);
 			} else {
-				newTheory.append(  term.toString().endsWith(".") ?  (term.toString()+ SPACE ) : (term.toString()+"."+ SPACE ) );
+				newTheory.append(term.toString().endsWith(".") ? (term.toString() + SPACE) : (term.toString() + "." + SPACE));
 			}
 		}
+
+		if (!insert){
+			newTheory.append(fact + SPACE);
+		}
+
 		this.theory = new Theory(newTheory.toString());
 		this.engine.setTheory(theory);
 	}

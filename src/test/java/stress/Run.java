@@ -12,8 +12,11 @@ import org.junit.Test;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Random;
 import java.util.stream.Stream;
 
@@ -76,6 +79,12 @@ public class Run {
         }
     }
 
+    @Test
+    public void getVmParameters(){
+        RuntimeMXBean runtimeMxBean = ManagementFactory.getRuntimeMXBean();
+        List<String> arguments = runtimeMxBean.getInputArguments();
+        arguments.forEach(System.out::println);
+    }
 
     @Test
     public void testRule2(){

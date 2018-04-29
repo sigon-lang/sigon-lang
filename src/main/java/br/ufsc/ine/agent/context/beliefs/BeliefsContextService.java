@@ -97,27 +97,29 @@ public class BeliefsContextService implements ContextService {
 				toTest = test.toString();
 
 				update = (c.startsWith("\\+") && this.verify("\\+" + toTest))
-							|| (!c.startsWith("\\+") && this.verify("\\+" + toTest))
-							|| this.verify(toTest.replace("\\+", ""));
+						|| (!c.startsWith("\\+") && this.verify("\\+" + toTest))
+						|| this.verify(toTest.replace("\\+", ""));
 
 
 			} else if(!c.trim().endsWith(").") && (c.startsWith("\\+") || this.verify("\\+" + c))  ){
-				if(!c.startsWith("\\+") && !this.verify(c)){
-					update = false;
-				} else {
+				if(!c.startsWith("\\+") && verify("\\+"+c)){
 					toTest = c;
 					update = true;
+				} else if(c.startsWith("\\+")) {
+					String test = c.substring(2);
+					if(this.verify(test)){
+						toTest = test;
+						update = true;
+					}
 				}
-			} else if(!c.startsWith("\\+") && verify(c)){
-				return;
 			}
 
-            if(update){
-                prologEnvironment.updateFact(c, toTest);
-            } else {
-                prologEnvironment.appendFact(c);
-            }
-            } catch (InvalidTheoryException e) {
+			if(update){
+				prologEnvironment.updateFact(c, toTest);
+			} else {
+				prologEnvironment.appendFact(c);
+			}
+		} catch (InvalidTheoryException e) {
 			e.printStackTrace();
 		}
 	}
