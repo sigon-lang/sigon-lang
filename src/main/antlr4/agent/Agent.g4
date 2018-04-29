@@ -276,7 +276,7 @@ OR
 
 STRING
 	:
-    '"' (~["\\\r\n] | '\"')* '"';
+    '"' (~["\\\r\n] | '"')* '"';
 
 
 
@@ -326,9 +326,8 @@ WS
 ;
 
 
-BlockComment
-    :   '/*' .* '*/'
-        -> skip
+BlockComment 
+    : '/*' .*? '*/' -> skip
     ;
 
 LineComment
