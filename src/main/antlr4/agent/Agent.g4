@@ -43,7 +43,7 @@ logicalContextName
 ;
 
 primitiveContextName
-	: (BELIEFS | DESIRES | INTENTIONS)
+	: BELIEFS | DESIRES | INTENTIONS
 	;
 
 customContextName
@@ -211,7 +211,7 @@ negation
 	: 'not' | '~';
 
 annotation
-     : (preAction| gradedValue)
+     : (preAction gradedValue ? ) | gradedValue
      ;
 
 preAction
