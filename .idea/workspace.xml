@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="57575d36-eb2a-4c3f-8160-6f9c983dd563" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/context/custom/CustomContext.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/stress/Prepare.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/stress/Run.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.classpath" afterPath="$PROJECT_DIR$/.classpath" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/Agent.java" afterPath="$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/Agent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/bridgerules/Body.java" afterPath="$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/bridgerules/Body.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/bridgerules/BridgeRulesService.java" afterPath="$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/bridgerules/BridgeRulesService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/br/ufsc/ine/parser/AgentWalker.java" afterPath="$PROJECT_DIR$/src/main/java/br/ufsc/ine/parser/AgentWalker.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/br/ufsc/ine/agent/bridgerules/StrongRealismTest.java" afterPath="$PROJECT_DIR$/src/test/java/br/ufsc/ine/agent/bridgerules/StrongRealismTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/stress/Run.java" afterPath="$PROJECT_DIR$/src/test/java/stress/Run.java" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -31,21 +22,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="StrongRealismTest.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/test/java/br/ufsc/ine/agent/bridgerules/StrongRealismTest.java">
+      <file leaf-file-name="Run.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/java/stress/Run.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="76">
-              <caret line="92" column="28" lean-forward="false" selection-start-line="92" selection-start-column="28" selection-end-line="92" selection-end-column="28" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BridgeRule.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/bridgerules/BridgeRule.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="235">
-              <caret line="21" column="23" lean-forward="false" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
+            <state relative-caret-position="151">
+              <caret line="47" column="8" lean-forward="true" selection-start-line="47" selection-start-column="8" selection-end-line="47" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -54,18 +35,8 @@
       <file leaf-file-name="Body.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/bridgerules/Body.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2120">
-              <caret line="19" column="17" lean-forward="false" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BridgeRulesService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/bridgerules/BridgeRulesService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="316">
-              <caret line="64" column="8" lean-forward="false" selection-start-line="64" selection-start-column="8" selection-end-line="64" selection-end-column="8" />
+            <state relative-caret-position="45">
+              <caret line="30" column="22" lean-forward="false" selection-start-line="30" selection-start-column="22" selection-end-line="30" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -171,12 +142,12 @@
         <option value="$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/context/beliefs/BeliefsContextService.java" />
         <option value="$PROJECT_DIR$/src/test/java/stress/Prepare.java" />
         <option value="$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/context/custom/CustomContext.java" />
-        <option value="$PROJECT_DIR$/src/test/java/stress/Run.java" />
         <option value="$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/bridgerules/Body.java" />
         <option value="$PROJECT_DIR$/src/main/java/br/ufsc/ine/parser/AgentWalker.java" />
         <option value="$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/Agent.java" />
         <option value="$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/bridgerules/BridgeRulesService.java" />
         <option value="$PROJECT_DIR$/src/test/java/br/ufsc/ine/agent/bridgerules/StrongRealismTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/stress/Run.java" />
       </list>
     </option>
   </component>
@@ -356,7 +327,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.StrongRealismTest.testaRegraParaStrongRealism2">
+  <component name="RunManager" selected="Application.Run">
     <configuration name="Run" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -376,20 +347,20 @@
       <module name="agent-project" />
       <envs />
     </configuration>
-    <configuration name="StrongRealismTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="Run.testRule2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
-          <option name="PATTERN" value="br.ufsc.ine.agent.bridgerules.*" />
+          <option name="PATTERN" value="stress.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
       <module name="agent-project" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="br.ufsc.ine.agent.bridgerules" />
-      <option name="MAIN_CLASS_NAME" value="br.ufsc.ine.agent.bridgerules.StrongRealismTest" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="PACKAGE_NAME" value="stress" />
+      <option name="MAIN_CLASS_NAME" value="stress.Run" />
+      <option name="METHOD_NAME" value="testRule2" />
+      <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
@@ -559,18 +530,18 @@
     </configuration>
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Application.Run" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.StrongRealismTest" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.StrongRealismTest.testaRegraParaStrongRealism" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.StrongRealismTest.prologTest" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.StrongRealismTest.testaRegraParaStrongRealism2" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.StrongRealismTest.testaRegraParaStrongRealism" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.StrongRealismTest.prologTest" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.StrongRealismTest.testaRegraParaStrongRealism2" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.Run.testRule2" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.StrongRealismTest.testaRegraParaStrongRealism2" />
-        <item index="1" class="java.lang.String" itemvalue="Application.Run" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.StrongRealismTest.prologTest" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.StrongRealismTest.testaRegraParaStrongRealism" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.StrongRealismTest" />
+        <item index="0" class="java.lang.String" itemvalue="Application.Run" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.Run.testRule2" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.StrongRealismTest.testaRegraParaStrongRealism2" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.StrongRealismTest.prologTest" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.StrongRealismTest.testaRegraParaStrongRealism" />
       </list>
     </recent_temporary>
   </component>
@@ -596,11 +567,11 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="StrongRealismTest_testaRegraParaStrongRealism2 - 2018.04.28 at 14h 09m 24s.xml">
-      <configuration name="StrongRealismTest.testaRegraParaStrongRealism2" configurationId="JUnit" />
+    <history-entry file="Run_testRule2 - 2018.04.28 at 18h 28m 26s.xml">
+      <configuration name="Run.testRule2" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="StrongRealismTest_testaRegraParaStrongRealism2 - 2018.04.28 at 14h 10m 30s.xml">
-      <configuration name="StrongRealismTest.testaRegraParaStrongRealism2" configurationId="JUnit" />
+    <history-entry file="Run_testRule2 - 2018.04.28 at 18h 28m 41s.xml">
+      <configuration name="Run.testRule2" configurationId="JUnit" />
     </history-entry>
     <history-entry file="StrongRealismTest_testaRegraParaStrongRealism2 - 2018.04.28 at 14h 14m 08s.xml">
       <configuration name="StrongRealismTest.testaRegraParaStrongRealism2" configurationId="JUnit" />
@@ -641,12 +612,12 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3271028" sideWeight="0.5058565" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28756058" sideWeight="0.4941435" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28756058" sideWeight="0.4941435" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24242425" sideWeight="0.49029127" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24242425" sideWeight="0.49029127" order="0" side_tool="false" content_ui="combo" />
       <window_info id="ANTLR Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40710825" sideWeight="0.8477306" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -685,7 +656,7 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28756058" sideWeight="0.4941435" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28756058" sideWeight="0.4941435" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329429" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
@@ -726,12 +697,6 @@
           <option name="timeStamp" value="168" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/bridgerules/Body.java</url>
-          <line>30</line>
-          <properties />
-          <option name="timeStamp" value="171" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/context/beliefs/BeliefsContextService.java</url>
           <line>84</line>
           <properties />
@@ -749,11 +714,17 @@
           <properties />
           <option name="timeStamp" value="180" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/stress/Run.java</url>
+          <line>41</line>
+          <properties />
+          <option name="timeStamp" value="182" />
+        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="182" />
+      <option name="time" value="183" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="JUnit">
@@ -982,13 +953,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/context/plans/PlansContextService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-345">
-          <caret line="44" column="0" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/context/communication/CommunicationContextService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="129">
@@ -1057,32 +1021,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/stress/Run.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="42" column="25" lean-forward="false" selection-start-line="42" selection-start-column="25" selection-end-line="42" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/Agent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/bridgerules/Body.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2120">
-          <caret line="19" column="17" lean-forward="false" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/bridgerules/BridgeRulesService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="316">
@@ -1103,6 +1041,38 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
           <caret line="92" column="28" lean-forward="false" selection-start-line="92" selection-start-column="28" selection-end-line="92" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/Agent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="53" column="52" lean-forward="false" selection-start-line="53" selection-start-column="52" selection-end-line="53" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/context/plans/PlansContextService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="73" column="53" lean-forward="true" selection-start-line="73" selection-start-column="53" selection-end-line="73" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/br/ufsc/ine/agent/bridgerules/Body.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="30" column="22" lean-forward="false" selection-start-line="30" selection-start-column="22" selection-end-line="30" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/stress/Run.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="47" column="8" lean-forward="true" selection-start-line="47" selection-start-column="8" selection-end-line="47" selection-end-column="8" />
           <folding />
         </state>
       </provider>
