@@ -9,6 +9,7 @@ import alice.tuprolog.InvalidTheoryException;
 import alice.tuprolog.MalformedGoalException;
 import alice.tuprolog.SolveInfo;
 import alice.tuprolog.Theory;
+import br.ufsc.ine.agent.Agent;
 import br.ufsc.ine.agent.context.LangContext;
 import br.ufsc.ine.agent.context.ContextService;
 import br.ufsc.ine.utils.PrologEnvironment;
@@ -70,8 +71,8 @@ public class BeliefsContextService implements ContextService {
 	@Override
 	public void appendFact(String c) {
 
-		if(c.startsWith("minus_")){
-			c = c.replace("minus_", "");
+		if(Agent.removeBelief){
+			Agent.removeBelief = false;
 			try {
 				prologEnvironment.removeFact(c);
 				return;

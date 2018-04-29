@@ -25,6 +25,7 @@ public class Agent {
     private static final String BELIEFS = "beliefs";
     private List<Sensor> sensors = new ArrayList<>();
     private List<Actuator> actuators = new ArrayList<>();
+    public static boolean removeBelief = false;
 
     public void run(AgentWalker walker) {
         this.initAgent(walker);
@@ -43,7 +44,8 @@ public class Agent {
     long cycles = 0;
     private synchronized void bdiAlgorithmCycle(String literal){
         if(literal.startsWith("-")){
-            literal = literal.replace("-","minus_").trim();
+            literal = literal.replace("-","").trim();
+            removeBelief = true;
         } else if(literal.startsWith("not")){
             literal = literal.replace(" ", "");
             literal = literal.replace("not","\\+").trim();

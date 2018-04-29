@@ -47,10 +47,11 @@ public class StrongRealismTest {
     @Test
     public void testaRegraParaStrongRealism(){
 
-        plansContext .getInstance().appendFact("plan(test,_,[clear,x(_)],_).");
-        plansContext .getInstance().appendFact("plan(test,_,[test,x(_)],_).");
+        plansContext .getInstance().appendFact("plan(test,_,[clear,x(_)],_). ");
+        plansContext .getInstance().appendFact("plan(test1,_,[test,x(_)],_). ");
         communicationContext.appendFact("sense(clear).");
         desiresContext.appendFact("test.");
+        desiresContext.appendFact("test1.");
 
 
         Body body = Body.builder().context(communicationContext).clause("sense(X)").build();
@@ -103,8 +104,8 @@ public class StrongRealismTest {
     @Test
     public void testaRegraParaStrongRealism2(){
 
+        plansContext .getInstance().appendFact("plan(check(slots),_,[(\\+ garbage),garbage,(\\+ clear),clear],_)."+System.lineSeparator());
         plansContext .getInstance().appendFact("plan(check(slots),_,[(\\+ garbage),garbage,(\\+ clear),clear],_).");
-        //plansContext.appendFact("plan(check(slots),_,[garbage,(\\+ garbage)],_).");
         communicationContext.appendFact("sense(garbage).");
         desiresContext.appendFact("check(slots).");
 
