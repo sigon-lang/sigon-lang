@@ -55,7 +55,9 @@ public class PlansContextService implements ContextService{
 		//TODO: add intencao na verificacao para busca do plano
 
 
-		Optional<Plan> plan = plans.stream().filter(p -> !this.hasBelief(p.getSomethingToBeTrue())).findFirst();
+		Optional<Plan> plan = plans.stream()
+				.filter(p -> !this.hasBelief(p.getSomethingToBeTrue()) && checkPreConditions(p))
+				.findFirst();
 
 		if(plan.isPresent()) {
 
@@ -78,7 +80,26 @@ public class PlansContextService implements ContextService{
 		
     }
 
-    //// TODO: 3/3/18 ver como tratar nots and e ord em clauses
+	private boolean checkPreConditions(Plan p) {
+		boolean check = false;
+		for(String clause : p.getPreConditions()){
+
+			if(clause.startsWith("not")){
+				check =  !hasBelief(clause.replace("not", ""));
+			} else{
+				check =  hasBelief(clause);
+			}
+
+			if(check==false){
+				return  check;
+			}
+
+
+		}
+		return check;
+	}
+
+	//// TODO: 3/3/18 ver como tratar nots and e ord em clauses
     Predicate<Action> actionPredicate = new Predicate<Action>() {
 		@Override
 		public boolean test(Action action) {

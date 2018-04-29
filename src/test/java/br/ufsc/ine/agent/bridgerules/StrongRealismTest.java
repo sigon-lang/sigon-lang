@@ -1,11 +1,15 @@
 package br.ufsc.ine.agent.bridgerules;
 
 import alice.tuprolog.InvalidTheoryException;
+import alice.tuprolog.MalformedGoalException;
+import alice.tuprolog.NoSolutionException;
+import alice.tuprolog.UnknownVarException;
 import br.ufsc.ine.agent.context.beliefs.BeliefsContextService;
 import br.ufsc.ine.agent.context.communication.CommunicationContextService;
 import br.ufsc.ine.agent.context.desires.DesiresContextService;
 import br.ufsc.ine.agent.context.intentions.IntentionsContextService;
 import br.ufsc.ine.agent.context.plans.PlansContextService;
+import br.ufsc.ine.utils.PrologEnvironment;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -20,6 +24,25 @@ public class StrongRealismTest {
     DesiresContextService desiresContext = DesiresContextService.getInstance();
     CommunicationContextService communicationContext = CommunicationContextService.getInstance();
     PlansContextService plansContext = PlansContextService.getInstance();
+    IntentionsContextService intentionsContextService = IntentionsContextService.getInstance();
+
+    @Test
+    public void prologTest() throws MalformedGoalException, InvalidTheoryException, UnknownVarException, NoSolutionException {
+        PrologEnvironment prolog = new PrologEnvironment();
+        //prolog.appendFact("full(0).");
+       // prolog.appendFact("G :- full(G).");
+        prolog.appendFact("clear(N) :- N == 0.");
+
+        System.out.println(prolog.getEngine().getTheory().toString());
+        //System.out.println(prolog.getEngine().solve("G>0.").getTerm("G"));
+        System.out.println(prolog.solveGoal("clear(1).").isSuccess());
+    }
+
+
+    @Test
+    public void testaExemplo(){
+
+    }
 
     @Test
     public void testaRegraParaStrongRealism(){
@@ -33,13 +56,9 @@ public class StrongRealismTest {
         Body plan = Body.builder().context(plansContext).clause("plans(Y,_,Z,_)").build();
         Body planMember = Body.builder().context(plansContext).clause("member(X, Z)").build();
         Body desires = Body.builder().context(desiresContext).clause("Y").build();
-
-
         body.setAnd(plan);
         plan.setAnd(planMember);
         planMember.setAnd(desires);
-
-
         BridgeRule r2 = BridgeRule.builder()
                 .head(Head.builder().context(beliefsContext).clause("X").build())
                 .body(body)
@@ -48,6 +67,68 @@ public class StrongRealismTest {
         r2.execute();
 
         System.out.println(beliefsContext.getTheory().toString());
+
+    }
+
+    private BridgeRule getBridgeRule1StrongRealism() {
+        Body body = Body.builder().context(communicationContext).clause("sense(X)").build();
+        Body plan = Body.builder().context(plansContext).clause("plans(Y,_,Z,_)").build();
+        Body planMember = Body.builder().context(plansContext).clause("member(X, Z)").build();
+        Body desires = Body.builder().context(desiresContext).clause("Y").build();
+
+        body.setAnd(plan);
+        plan.setAnd(planMember);
+        planMember.setAnd(desires);
+
+        return BridgeRule.builder()
+                .head(Head.builder().context(beliefsContext).clause("X").build())
+                .body(body)
+                .build();
+
+    }
+
+
+
+    @Test
+    public void testaRegraParaStrongRealism2(){
+
+        plansContext .getInstance().appendFact("plan(check(slots),_,[(\\+ garbage),garbage,(\\+ clear),clear],_).");
+        plansContext.appendFact("plan(check(slots),_,[garbage,(\\+ garbage)],_).");
+        communicationContext.appendFact("sense(garbage).");
+        desiresContext.appendFact("check(slots).");
+
+
+        Body body = Body.builder().context(communicationContext).clause("sense(X)").build();
+        Body plan = Body.builder().context(plansContext).clause("plan(Y,_,Z,_)").build();
+        Body planMember = Body.builder().context(plansContext).clause("member(X, Z)").build();
+        Body desires = Body.builder().context(desiresContext).clause("Y").build();
+        body.setAnd(planMember);
+        plan.setAnd(planMember);
+        planMember.setAnd(desires);
+        BridgeRule r1 = BridgeRule.builder()
+                .head(Head.builder().context(beliefsContext).clause("X").build())
+                .body(body)
+                .build();
+
+
+
+        BridgeRule r2 =  BridgeRule.builder()
+                .head(Head.builder().not(true).context(intentionsContextService ).clause("X").build())
+                .body(Body.builder().context(desiresContext).notClause("X").build())
+                .build();
+
+
+        // 6
+        BridgeRule r3 =  BridgeRule.builder()
+                .head(Head.builder().context(intentionsContextService).clause("X").build())
+                .body(Body.builder().context(desiresContext).clause("X")
+                        .and(Body.builder().context(beliefsContext)
+                                .notClause("X").build()).build())
+                .build();
+
+        r3.execute();
+
+        System.out.println(intentionsContextService.getTheory().toString());
 
     }
 
@@ -88,11 +169,22 @@ public class StrongRealismTest {
 
     @Test
     public void testaRegrasNegacao(){
-        beliefsContext.appendFact("pos(1,1).");
+        //beliefsContext.appendFact("pos(1,1).");
       // beliefsContext.appendFact("\\+ sense(breeze).");
-       beliefsContext.appendFact("sense(breeze).");
-       beliefsContext.appendFact("\\+ sense(breeze).");
+      // beliefsContext.appendFact("sense(breeze).");
+       //beliefsContext.appendFact("\\+ sense(breeze).");
 
+        //beliefsContext.appendFact("teste.");
+       // beliefsContext.appendFact("position(0,0).");
+
+        //beliefsContext.appendFact("\\+ garbage.");
+        //beliefsContext.appendFact("garbage.");
+        //beliefsContext.appendFact("\\+ garbage.");
+
+       // beliefsContext.appendFact("-test.");
+
+       // beliefsContext.appendFact("teste.");
+        //beliefsContext.appendFact("\\+ teste.");
 
      ///   beliefsContext.appendFact("pos(1,1).");
 

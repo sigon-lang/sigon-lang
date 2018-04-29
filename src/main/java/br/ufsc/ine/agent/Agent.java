@@ -42,32 +42,22 @@ public class Agent {
 
     long cycles = 0;
     private synchronized void bdiAlgorithmCycle(String literal){
+        if(literal.startsWith("-")){
+            literal = literal.replace("-","minus_").trim();
+        } else if(literal.startsWith("not")){
+            literal = literal.replace(" ", "");
+            literal = literal.replace("not","\\+").trim();
+        }
         cycles++;
-        long startTime = System.nanoTime();
         CommunicationContextService.getInstance().appendFact(this.getSense(literal));
         BridgeRulesService.getInstance().executeBdiRules();
         PlansContextService.getInstance().executePlanAlgorithm();
-        long endTime = System.nanoTime();
-        long duration = (endTime - startTime)/1000000;
-
-        String result = cycles+";"+duration+"\n";
-
-       // writeResult(result);
-
     }
 
 
 
 
-    private  static  void writeResult(String result)  {
-        try {
-            Files.write(Paths.get("/home/valdirluiz/testes-stress/result1"), result.getBytes(), StandardOpenOption.APPEND);
 
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-    }
 
     private String getSense(String literal) {
         return "sense("+literal.substring(0, literal.length()-1)+").";
