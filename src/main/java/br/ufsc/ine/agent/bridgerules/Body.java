@@ -118,9 +118,9 @@ public class Body {
     private void addAndOr(StringBuilder builder, Body  body) {
         if(body.getAndOrClause().isPresent()) {
             if (body.and != null) {
-                String[] split = body.and.context.getTheory().toString().replaceAll("\\n", "")
+                String[] split = body.and.context.getTheory().toString()
                         .replaceAll("_([0-9])*", "_")
-                        .trim().split("/.");
+                        .trim().split("\\n");
                 for (String s : split) {
                     if (!s.isEmpty())
                         builder.append(body.and.context.getName() + "(" + s.substring(0, s.length() - 1) + "). \n");
