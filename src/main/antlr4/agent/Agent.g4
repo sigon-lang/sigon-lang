@@ -11,8 +11,6 @@ context
 	logicalContext | functionalContext
 	;
 
-
-
 bridgeRule
 	:
 	head ':-' body '.'
@@ -29,18 +27,20 @@ functionalContext
 	plannerContext	
 	;	
 
-plannerContext
-	:
-	PLANNER  ':' plansFormulas
-	;
 communicationContext:
 	COMMUNICATION ':' (sensor | actuator)+
 	;
 
+plannerContext
+	:
+	PLANNER  ':' plansFormulas
+	;
+
+
 logicalContextName
 	: primitiveContextName 
 	| customContextName
-;
+	;
 
 primitiveContextName
 	: BELIEFS | DESIRES | INTENTIONS
@@ -51,7 +51,6 @@ customContextName
 	'_'(LCLETTER | UCLETTER)+ character*
 	;
  
-//'plan' '(' somethingToBeTrue ',' compoundaction ',' preconditions ',' postconditions ',' cost ')'
 plan
 	: PLAN '(' somethingToBeTrue ',' compoundAction (',' planPreconditions ',' internalOperator? planPostconditions)? (',' cost)? ')'
 	;
@@ -59,7 +58,7 @@ plan
 
 
 somethingToBeTrue
-	: listOfClauses
+	: term
 	;	
 
 planPreconditions
@@ -71,10 +70,9 @@ planPostconditions
 	;
 	
 conditions
-	: ('_' | listOfClauses)
+	: ('_' | term)
 	;
 
-//'action' '(' functionInvocation ',' preconditions ',' postconditions ')'
 action
 	: ACTION '(' functionInvocation (',' actionPreconditions ',' internalOperator? actionPostconditions)? (',' cost)? ')'
 	;
@@ -149,26 +147,9 @@ expression
 compoundAction
 	: ('[' action (',' action)* ']') |'_' ;
 	
-clause
-	: propClause | folClause
-	;
 
-listOfClauses
-	: clause
-	| ('[' clause (',' clause)* ']') 
-	;
 
-formulas
-	: (propFormula	| folFormula )*
-	;
-	
-propFormula
-	: (propClause  (':-' propLogExpr )?)'.'
-	;
-	
-folFormula
-	: (folClause ( ':-' folLogExpr )?) '.'
-	;
+
 		
 plansFormulas
 	: ((plan  | action )'.') *
@@ -182,24 +163,33 @@ contextName:
 
 head
 	:
-('!' negation?  contextName )  (clause | negation? variable)
-;
+	'!' negation?  contextName (term | negation? variable)
+	;
 
 body
-	: negation? contextName   ((clause | negation? variable) | plan)
-((AND | OR) negation?  contextName   ((clause | negation? variable) | plan))*
+	: negation? contextName   ((term | negation? variable) | plan)
+((AND | OR) negation?  contextName   ((term | negation? variable) | plan))*
 	;
 
 
-propClause
-	: negation? constant (annotation)?
-	;
 
-folClause
-	: negation? constant '(' (term) (',' (term) )* ')' (annotation)?
-	;
+
 
 term
+	:  negation? constant ('(' (atom) (',' (atom) )* ')' annotation?)? 
+	| term (AND | OR) term
+	| ('[' term (',' term)* ']')
+	| term ':-' term
+	;
+
+
+
+formulas
+	: term*
+	;
+	
+
+atom
     : (numeral | constant | variable | '_') (operator (numeral | constant | variable | '_') )?
     ;
 
@@ -208,7 +198,7 @@ operator
     ;
 
 negation
-	: 'not' | '~';
+	: 'not ' | '~';
 
 annotation
      : (preAction gradedValue ? ) | gradedValue
@@ -237,21 +227,9 @@ variable
 	: UCLETTER character*
 	;
 
-propLogExpr
-	:  propClause propLogExprL
-	;
+
 	
-propLogExprL
-	: (AND | OR) propClause propLogExprL |
-	;
 
-
-folLogExpr
-	:  folClause folLogExprL
-	;
-folLogExprL
-	: (AND | OR) folClause folLogExprL |
-	;
 	
 
 character
