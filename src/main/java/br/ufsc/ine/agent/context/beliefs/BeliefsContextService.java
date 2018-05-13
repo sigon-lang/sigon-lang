@@ -19,15 +19,12 @@ public class BeliefsContextService implements ContextService {
 	private static BeliefsContextService instance = new BeliefsContextService();
 	private static PrologEnvironment prologEnvironment;
 	private List<LangContext> beliefs = new ArrayList<>();
-
 	private BeliefsContextService() {
 		prologEnvironment = new PrologEnvironment();
 	}
-
 	public static BeliefsContextService getInstance() {
 		return instance;
 	}
-
 
 
 	public void beliefs(List<LangContext> beliefs) {

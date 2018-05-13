@@ -36,30 +36,26 @@ public class Run {
         try {
             String fileName = "/home/valdirluiz/resultado-stress/target";
 
-            FileOutputStream fos = new FileOutputStream("/home/valdirluiz/resultado-stress/6_contexto-aleatorio.csv", true);
+            FileOutputStream fosExecute = new FileOutputStream("/home/valdirluiz/resultado-stress/1_contexto-copia.csv", true);
+            FileOutputStream fosVerifica = new FileOutputStream("/home/valdirluiz/resultado-stress/1_contexto-verifica.csv", true);
+
             try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
 
                 stream.forEach((String t) ->{
-                    Random rand = new Random();
-                    int n = rand.nextInt((5 - 1) + 1) + 1;
-                    if(n == 1) {
-                        desires.appendFact(t);
-                    } else if(n ==2) {
-                        intentions.appendFact(t);
-                    } else if(n == 3) {
-                        customContext1.appendFact(t);
-                    } else if(n ==4) {
-                        customContext2.appendFact(t);
-                    } else if(n == 5) {
-                        customContext3.appendFact(t);
-                    }
+
+                    desires.appendFact(t);
+                   // intentions.appendFact(t);
+                    //customContext1.appendFact(t);
+                    //customContext2.appendFact(t);
+                    //customContext3.appendFact(t);
+
+
                     i++;
-                    long startTime = System.nanoTime();
-                    rule6().execute();
-                    long endTime = System.nanoTime();
-                    long duration = (endTime - startTime) / 1000000;
-                    String result = i+";"+duration+System.lineSeparator();
-                    write(fos, result);
+                    tempoCopia(fosExecute);
+                    tempoVerifica(fosVerifica);
+
+
+
                 });
 
             } catch (Exception e) {
@@ -70,6 +66,26 @@ public class Run {
             e.printStackTrace();
         }
     }
+
+    private static void tempoCopia(FileOutputStream fos) {
+        long startTime = System.nanoTime();
+        rule1().execute();
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime) / 1000000;
+        String result = i+";"+duration+System.lineSeparator();
+        write(fos, result);
+    }
+
+    private static void tempoVerifica(FileOutputStream fos) {
+        long startTime = System.nanoTime();
+        rule1().verify();
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime) / 1000000;
+        String result = i+";"+duration+System.lineSeparator();
+        write(fos, result);
+    }
+
+
 
     private static void write(FileOutputStream fos, String result) {
         try {
@@ -95,11 +111,20 @@ public class Run {
     }
 
 
+    private static  BridgeRule rule1(){
+        Head head = Head.builder().context(beliefsContext).clause("X").build();
+        Body body =   Body.builder().context(desires).clause("X").build();
+
+
+        BridgeRule bridgeRule = BridgeRule.builder().head(head).body(body).build();
+        return bridgeRule;
+    }
+
 
     private static  BridgeRule rule2(){
         Head head = Head.builder().context(beliefsContext).clause("X").build();
-        Body not = Body.builder().context(beliefsContext).notClause("X").build();
-        Body body =   Body.builder().context(desires).clause("X").and(not).build();
+        Body i = Body.builder().context(beliefsContext).notClause("X").build();
+        Body body =   Body.builder().context(desires).clause("X").and(i).build();
 
 
         BridgeRule bridgeRule = BridgeRule.builder().head(head).body(body).build();
