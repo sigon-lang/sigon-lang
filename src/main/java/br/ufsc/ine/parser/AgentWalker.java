@@ -7,9 +7,7 @@ import java.util.List;
 import agent.AgentBaseListener;
 import agent.AgentParser;
 import agent.AgentParser.LogicalContextNameContext;
-import agent.AgentParser.FolFormulaContext;
 import agent.AgentParser.FormulasContext;
-import agent.AgentParser.PropFormulaContext;
 import br.ufsc.ine.agent.context.communication.LangActuator;
 import br.ufsc.ine.agent.context.LangContext;
 import br.ufsc.ine.agent.context.plans.Action;
@@ -84,7 +82,7 @@ public class AgentWalker extends AgentBaseListener {
 
 
 
-	@Override
+	/*@Override
 	public void enterPropFormula(PropFormulaContext ctx) {
 		AgentParser.AnnotationContext annotationContext = ctx.propClause().annotation();
 		if(annotationContext!=null && annotationContext.gradedValue()!=null){
@@ -117,7 +115,7 @@ public class AgentWalker extends AgentBaseListener {
 			this.lastLangContext.addClause(ctx.getText());
 		}
 		super.enterFolFormula(ctx);
-	}
+	}*/
 
 	@Override
 	public void enterFormulas(FormulasContext ctx) {
@@ -136,7 +134,7 @@ public class AgentWalker extends AgentBaseListener {
 
 	@Override
 	public void enterPlanPreconditions(AgentParser.PlanPreconditionsContext ctx) {
-		ctx.conditions().listOfClauses().clause().forEach(c -> {
+		ctx.conditions().term().term().forEach(c -> {
 			this.plan.getPreConditions().add(c.getText());
 		});
 		super.enterPlanPreconditions(ctx);
@@ -187,9 +185,7 @@ public class AgentWalker extends AgentBaseListener {
 		StringBuilder list = new StringBuilder();
 
 		if(ctx.planPreconditions()!=null) {
-
-			ctx.planPreconditions()
-					.conditions().listOfClauses().clause()
+			 ctx.planPreconditions().conditions().term().term()
 					.forEach(e -> {
 						String clause = null;
 						if (e.getText().contains("(") && e.getText().contains(")")) {
