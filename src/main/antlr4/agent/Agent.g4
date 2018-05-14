@@ -7,7 +7,7 @@ agent
 	;
 
 context
-	: 
+	:
 	logicalContext | functionalContext
 	;
 
@@ -23,9 +23,9 @@ logicalContext
 
 functionalContext
 	:
-	communicationContext | 
-	plannerContext	
-	;	
+	communicationContext |
+	plannerContext
+	;
 
 communicationContext:
 	COMMUNICATION ':' (sensor | actuator)+
@@ -38,7 +38,7 @@ plannerContext
 
 
 logicalContextName
-	: primitiveContextName 
+	: primitiveContextName
 	| customContextName
 	;
 
@@ -50,25 +50,25 @@ customContextName
 	:
 	'_'(LCLETTER | UCLETTER)+ character*
 	;
- 
+
 plan
-	: PLAN '(' somethingToBeTrue ',' compoundAction (',' planPreconditions ',' internalOperator? planPostconditions)? (',' cost)? ')'
+	: PLAN '(' somethingToBeTrue ',' compoundAction (',' planPreconditions ',' internalOperator? planPostconditions)? (',' cost)? ').'
 	;
 
 
 
 somethingToBeTrue
 	: term
-	;	
+	;
 
 planPreconditions
 	: conditions
 	;
-	
+
 planPostconditions
 	: conditions
 	;
-	
+
 conditions
 	: ('_' | term)
 	;
@@ -76,11 +76,11 @@ conditions
 action
 	: ACTION '(' functionInvocation (',' actionPreconditions ',' internalOperator? actionPostconditions)? (',' cost)? ')'
 	;
-	
+
 actionPreconditions
 	: conditions
 	;
-	
+
 actionPostconditions
 	: conditions
 	;
@@ -152,7 +152,7 @@ compoundAction
 
 
 plansFormulas
-	: ((plan  | action )'.') *
+	: ((plan  | action )) *
 	;
 
 
@@ -176,7 +176,7 @@ body
 
 
 term
-	:  negation? constant ('(' (atom) (',' (atom) )* ').' annotation?)?
+	:  negation? constant ('(' (atom) (',' (atom) )* (')' | ').') annotation?)?
 	| term (AND | OR) term
 	| ('[' term (',' term)* ']')
 	| term ':-' term
