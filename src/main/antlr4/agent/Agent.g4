@@ -94,7 +94,7 @@ functionName
 	;
 
 sensor
-    : SENSOR '('  sensorIdentifier  ',' sensorImplementation ')' '.'
+    : 'sensor('  sensorIdentifier  ',' sensorImplementation ').'
     ;
 
 
@@ -107,7 +107,7 @@ sensorImplementation
     ;
 
 actuator
-    : ACTUATOR '(' actuatorIdentifier ',' actuatorImplementation ')' '.'
+    : 'actuator(' actuatorIdentifier ',' actuatorImplementation ').'
     ;
 
 
@@ -146,17 +146,17 @@ expression
 
 compoundAction
 	: ('[' action (',' action)* ']') |'_' ;
-	
 
 
 
-		
+
+
 plansFormulas
 	: ((plan  | action )'.') *
-	;	
+	;
 
 
-contextName: 
+contextName:
 	logicalContextName | PLANNER | COMMUNICATION
 	;
 
@@ -176,7 +176,7 @@ body
 
 
 term
-	:  negation? constant ('(' (atom) (',' (atom) )* ')' annotation?)? 
+	:  negation? constant ('(' (atom) (',' (atom) )* ').' annotation?)?
 	| term (AND | OR) term
 	| ('[' term (',' term)* ']')
 	| term ':-' term
@@ -187,7 +187,7 @@ term
 formulas
 	: term*
 	;
-	
+
 
 atom
     : (numeral | constant | variable | '_') (operator (numeral | constant | variable | '_') )?
@@ -228,15 +228,15 @@ variable
 	;
 
 
-	
 
-	
+
+
 
 character
     : LCLETTER | UCLETTER | DIGIT
     ;
 
-/* 
+/*
 * TODO: user been able to add a semantic for a context.
 *semanticRules
 *	: (LCLETTER | UCLETTER) character* '.semantic'
@@ -254,7 +254,7 @@ OR
 
 STRING
 	:
-    '"' (~["\\\r\n] | '"')* '"';
+    '"' (~["\\\r\n])* '"';
 
 
 
@@ -304,7 +304,7 @@ WS
 ;
 
 
-BlockComment 
+BlockComment
     : '/*' .*? '*/' -> skip
     ;
 
@@ -312,3 +312,4 @@ LineComment
     :   '//' ~[\r\n]*
         -> skip
 ;
+
