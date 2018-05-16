@@ -7,7 +7,9 @@ import java.util.List;
 import agent.AgentBaseListener;
 import agent.AgentParser;
 import agent.AgentParser.LogicalContextNameContext;
+import agent.AgentParser.ContextContext;
 import agent.AgentParser.FormulasContext;
+import agent.AgentParser.LogicalContextContext;
 import br.ufsc.ine.agent.context.communication.LangActuator;
 import br.ufsc.ine.agent.context.LangContext;
 import br.ufsc.ine.agent.context.plans.Action;
@@ -73,12 +75,7 @@ public class AgentWalker extends AgentBaseListener {
 		super.enterSensorImplementation(ctx);
 	}
 
-	@Override
-	public void enterLogicalContextName(LogicalContextNameContext ctx) {
-		this.lastLangContext = new LangContext();
-		this.lastLangContext.setName(ctx.getText());
-		super.enterLogicalContextName(ctx);
-	}
+	 
 
 
 
@@ -118,10 +115,19 @@ public class AgentWalker extends AgentBaseListener {
 	}*/
 
 	@Override
-	public void enterFormulas(FormulasContext ctx) {
+	public void enterLogicalContext(LogicalContextContext ctx) {
+		this.lastLangContext = new LangContext();
+		this.lastLangContext.setName(ctx.logicalContextName().getText());
+		if(ctx.formulas()!=null && ctx.formulas().term()!=null) { 
+			ctx.formulas().term().forEach(t->{
+				 this.lastLangContext.addClause(t.getText());
+			 });
+		}
+		super.enterLogicalContext(ctx);
 		this.langContexts.add(lastLangContext);
-		super.enterFormulas(ctx);
 	}
+	
+	 
 
 
 	@Override
