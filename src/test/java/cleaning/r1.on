@@ -1,0 +1,12 @@
+communication:
+    sensor("positionSensor", "cleaning.PositionSensor").
+    actuator("next", "cleaning.NextSlot").
+    actuator("burn", "cleaning.BurnGarbage").
+
+
+desires:
+	check(slots).
+
+planner: 
+	plan(check(slots), [action(next(slot))], [not garbage, not clear], _).
+	plan(check(slots), [action(burn(garbage))],[garbage], not garbage). 

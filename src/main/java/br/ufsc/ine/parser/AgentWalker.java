@@ -2,7 +2,11 @@ package br.ufsc.ine.parser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import agent.AgentBaseListener;
 import agent.AgentParser;
@@ -22,20 +26,19 @@ public class AgentWalker extends AgentBaseListener {
 	private Plan plan;
 	private Action action;
 
-	//TODO: usar objetos criados pelo ant e remover classes LangContext, LangSensor, LangActuator
+	// TODO: usar objetos criados pelo ant e remover classes LangContext,
+	// LangSensor, LangActuator
 	private List<LangContext> langContexts = new ArrayList<>();
 	private List<LangSensor> langSensors = new ArrayList<>();
 	private List<LangActuator> langActuators = new ArrayList<>();
 
-
-	private List<AgentParser.BridgeRuleContext> bridgeRules  = new ArrayList<>();
-
+	private List<AgentParser.BridgeRuleContext> bridgeRules = new ArrayList<>();
 
 	private LangContext lastLangContext;
 	private LangSensor lastSensor;
 	private LangActuator lastActuator;
 
-	private List<String> plansClauses = new ArrayList<>();
+	private Set<String> plansClauses = new HashSet();
 
 	@Override
 	public void enterActuator(AgentParser.ActuatorContext ctx) {
@@ -75,66 +78,24 @@ public class AgentWalker extends AgentBaseListener {
 		super.enterSensorImplementation(ctx);
 	}
 
-	 
-
-
-
-	/*@Override
-	public void enterPropFormula(PropFormulaContext ctx) {
-		AgentParser.AnnotationContext annotationContext = ctx.propClause().annotation();
-		if(annotationContext!=null && annotationContext.gradedValue()!=null){
-			String gradedValue = annotationContext.gradedValue().getText().replaceAll("->", "");
-			String clause = ctx.propClause().constant().getText();
-			StringBuilder builder = new StringBuilder();
-			builder.append(clause);
-			builder.append("(");
-			builder.append(gradedValue);
-			builder.append(").");
-			this.lastLangContext.addClause(builder.toString());
-		}
-		this.lastLangContext.addClause(ctx.getText());
-		super.enterPropFormula(ctx);
-	}
-
-	@Override
-	public void enterFolFormula(FolFormulaContext ctx) {
-		AgentParser.AnnotationContext annotationContext = ctx.folClause().annotation();
-		if(annotationContext!=null && annotationContext.gradedValue()!=null){
-			String gradedValue = annotationContext.gradedValue().getText().replaceAll("->", "");
-			String clause = ctx.getText();
-			StringBuilder builder = new StringBuilder();
-			builder.append(clause.substring(0, clause.lastIndexOf(")")));
-			builder.append(",");
-			builder.append(gradedValue);
-			builder.append(").");
-			this.lastLangContext.addClause(builder.toString());
-		} else{
-			this.lastLangContext.addClause(ctx.getText());
-		}
-		super.enterFolFormula(ctx);
-	}*/
-
 	@Override
 	public void enterLogicalContext(LogicalContextContext ctx) {
 		this.lastLangContext = new LangContext();
 		this.lastLangContext.setName(ctx.logicalContextName().getText());
-		if(ctx.formulas()!=null && ctx.formulas().term()!=null) { 
-			ctx.formulas().term().forEach(t->{
-				 this.lastLangContext.addClause(t.getText());
-			 });
+		if (ctx.formulas() != null && ctx.formulas().term() != null) {
+			ctx.formulas().term().forEach(t -> {
+				this.lastLangContext.addClause(t.getText());
+			});
 		}
-		super.enterLogicalContext(ctx);
 		this.langContexts.add(lastLangContext);
+		super.enterLogicalContext(ctx);
 	}
-	
-	 
-
 
 	@Override
 	public void enterSomethingToBeTrue(AgentParser.SomethingToBeTrueContext ctx) {
 		this.plan = new Plan();
 		this.getPlans().add(plan);
-	    this.plan.setSomethingToBeTrue(ctx.getText());
+		this.plan.setSomethingToBeTrue(ctx.getText());
 		super.enterSomethingToBeTrue(ctx);
 	}
 
@@ -172,14 +133,11 @@ public class AgentWalker extends AgentBaseListener {
 		super.enterActionPreconditions(ctx);
 	}
 
-
-
 	@Override
 	public void enterActionPostconditions(AgentParser.ActionPostconditionsContext ctx) {
 		this.action.getPosConditions().add(ctx.getText());
 		super.enterActionPostconditions(ctx);
 	}
-
 
 	@Override
 	public void enterPlan(AgentParser.PlanContext ctx) {
@@ -190,51 +148,48 @@ public class AgentWalker extends AgentBaseListener {
 		builder.append(",[");
 		StringBuilder list = new StringBuilder();
 
-		if(ctx.planPreconditions()!=null) {
-			 ctx.planPreconditions().conditions().term().term()
-					.forEach(e -> {
-						String clause = null;
-						if (e.getText().contains("(") && e.getText().contains(")")) {
-							StringBuilder builderPre = new StringBuilder();
-							String c = e.getText();
-							String toReplace = c.substring(c.indexOf("(") + 1, c.lastIndexOf(")"));
-							Arrays.stream(toReplace.split(",")).map(i -> "_,").forEach(builderPre::append);
-							StringBuilder test = new StringBuilder();
-							test.append(c.substring(0, c.indexOf("(")));
-							test.append("(");
-							test.append(builderPre.toString().substring(0, builderPre.toString().length() - 1));
-							test.append(")");
-							clause =  test + ",";
-						} else {
-							clause = e.getText() + ",";
-						}
+		if (ctx.planPreconditions() != null) {
+			ctx.planPreconditions().conditions().term().term().forEach(e -> {
+				String clause = null;
+				if (e.getText().contains("(") && e.getText().contains(")")) {
+					StringBuilder builderPre = new StringBuilder();
+					String c = e.getText();
+					String toReplace = c.substring(c.indexOf("(") + 1, c.lastIndexOf(")"));
+					Arrays.stream(toReplace.split(",")).map(i -> "_,").forEach(builderPre::append);
+					StringBuilder test = new StringBuilder();
+					test.append(c.substring(0, c.indexOf("(")));
+					test.append("(");
+					test.append(builderPre.toString().substring(0, builderPre.toString().length() - 1));
+					test.append(")");
+					clause = test + ",";
+				} else {
+					clause = e.getText() + ",";
+				}
 
-						if(clause.length()>=3) {
-							if (clause.substring(0,3).equals("not")) {
-								list.append("\\+"+clause.substring(3));
-								list.append(clause.replaceAll("not", ""));
-							}
+				if (clause.length() >= 3) {
+					if (clause.substring(0, 3).equals("not")) {
+						list.append("\\+" + clause.substring(3));
+						list.append(clause.replaceAll("not", ""));
+					}
 
-							if (!clause.substring(0,3).equals("not")) {
-								list.append(clause);
-								list.append("\\+" + clause);
-							}
-						} else {
-							list.append(clause);
-						}
+					if (!clause.substring(0, 3).equals("not")) {
+						list.append(clause);
+						list.append("\\+" + clause);
+					}
+				} else {
+					list.append(clause);
+				}
 
-
-
-					});
-			if(list!=null && list.length()!=0)
+			});
+			if (list != null && list.length() != 0)
 				builder.append(list.toString().substring(0, list.toString().length() - 1));
-		} else{
+		} else {
 			builder.append("_");
 		}
 
 		builder.append("],_).");
 		plansClauses.add(builder.toString());
-		super.enterPlan(ctx);
+
 	}
 
 	@Override
@@ -248,7 +203,7 @@ public class AgentWalker extends AgentBaseListener {
 	}
 
 	public List<String> getPlansClauses() {
-		return plansClauses;
+		return plansClauses.stream().collect(Collectors.toList());
 	}
 
 	public List<LangContext> getLangContexts() {
