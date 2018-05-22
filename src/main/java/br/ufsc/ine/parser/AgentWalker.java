@@ -5,20 +5,16 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import agent.AgentBaseListener;
 import agent.AgentParser;
-import agent.AgentParser.LogicalContextNameContext;
-import agent.AgentParser.ContextContext;
-import agent.AgentParser.FormulasContext;
 import agent.AgentParser.LogicalContextContext;
-import br.ufsc.ine.agent.context.communication.LangActuator;
 import br.ufsc.ine.agent.context.LangContext;
+import br.ufsc.ine.agent.context.communication.LangActuator;
+import br.ufsc.ine.agent.context.communication.LangSensor;
 import br.ufsc.ine.agent.context.plans.Action;
 import br.ufsc.ine.agent.context.plans.Plan;
-import br.ufsc.ine.agent.context.communication.LangSensor;
 
 public class AgentWalker extends AgentBaseListener {
 
