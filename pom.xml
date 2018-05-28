@@ -119,7 +119,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>br.ufsc.ine.agent.Main</mainClass>
+							<mainClass>r2.Main</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>
@@ -150,10 +150,10 @@
 				<artifactId>aspectj-maven-plugin</artifactId>
 				<version>1.7</version>
 				<configuration>
-					<showWeaveInfo/>
+					<showWeaveInfo />
 					<forceAjcCompile>true</forceAjcCompile>
 					<complianceLevel>1.8</complianceLevel>
-					<sources/>
+					<sources />
 					<source>1.8</source>
 					<target>1.8</target>
 					<showWeaveInfo>true</showWeaveInfo>

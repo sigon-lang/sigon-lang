@@ -11,6 +11,8 @@ import br.ufsc.ine.parser.AgentWalker;
 import br.ufsc.ine.agent.context.communication.Sensor;
 import rx.Observable;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.lang.reflect.Constructor;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -21,98 +23,114 @@ import java.util.stream.Collectors;
 
 public class Agent {
 
-    private static final String DESIRES = "desires";
-    private static final String BELIEFS = "beliefs";
-    private List<Sensor> sensors = new ArrayList<>();
-    private List<Actuator> actuators = new ArrayList<>();
-    public static boolean removeBelief = false;
+	private static final String DESIRES = "desires";
+	private static final String BELIEFS = "beliefs";
+	private List<Sensor> sensors = new ArrayList<>();
+	private List<Actuator> actuators = new ArrayList<>();
+	private String profilingFile;
+	public static boolean removeBelief = false;
 
-    public void run(AgentWalker walker) {
-        this.initAgent(walker);
-        this.subscribeSensors();
-        this.startSensors();
-        CommunicationContextService.getInstance().actuators(this.actuators);
-    }
+	public void run(AgentWalker walker) {
+		this.initAgent(walker);
+		this.subscribeSensors();
+		this.startSensors();
+		CommunicationContextService.getInstance().actuators(this.actuators);
+	}
 
-    private void subscribeSensors() {
-        List<Observable<String>> observables = this.sensors.stream()
-                .map(s -> s.getPublisher()).collect(Collectors.toList());
-        observables.forEach(stringObservable -> stringObservable
-                .subscribe(this::bdiAlgorithmCycle, Throwable::printStackTrace));
-    }
+	private void subscribeSensors() {
+		List<Observable<String>> observables = this.sensors.stream().map(s -> s.getPublisher())
+				.collect(Collectors.toList());
+		observables.forEach(
+				stringObservable -> stringObservable.subscribe(this::bdiAlgorithmCycle, Throwable::printStackTrace));
+	}
 
-    long cycles = 0;
-    private synchronized void bdiAlgorithmCycle(String literal){
-        if(literal.startsWith("-")){
-            literal = literal.replace("-","").trim();
-            removeBelief = true;
-        } else if(literal.startsWith("not")){
-            literal = literal.replace(" ", "");
-            literal = literal.replace("not","\\+").trim();
-        }
-        cycles++;
-        CommunicationContextService.getInstance().appendFact(this.getSense(literal));
-        BridgeRulesService.getInstance().executeBdiRules();
-        PlansContextService.getInstance().executePlanAlgorithm();
-    }
+	long cycles = 0;
 
+	private synchronized void bdiAlgorithmCycle(String literal) {
+		if (literal.startsWith("-")) {
+			literal = literal.replace("-", "").trim();
+			removeBelief = true;
+		} else if (literal.startsWith("not")) {
+			literal = literal.replace(" ", "");
+			literal = literal.replace("not", "\\+").trim();
+		}
+		cycles++;
+		long startTime = System.nanoTime();
+		CommunicationContextService.getInstance().appendFact(this.getSense(literal));
+		BridgeRulesService.getInstance().executeBdiRules();
+		PlansContextService.getInstance().executePlanAlgorithm();
 
+		profiling(startTime);
+	}
 
+	private void profiling(long startTime) {
+		if (profilingFile != null) {
+			long endTime = System.nanoTime();
+			long duration = (endTime - startTime) / 1000000;
+			try {
+				BufferedWriter writer = new BufferedWriter(new FileWriter(profilingFile, true));
+				writer.append(cycles + ";" + duration + System.lineSeparator());
+				writer.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
+	private String getSense(String literal) {
+		return "sense(" + literal.substring(0, literal.length() - 1) + ").";
+	}
 
+	private void startSensors() {
+		this.sensors.stream().forEach(s -> {
+			Thread sensorThread = new Thread(s);
+			sensorThread.start();
+		});
+	}
 
-    private String getSense(String literal) {
-        return "sense("+literal.substring(0, literal.length()-1)+").";
-    }
+	private void initAgent(AgentWalker walker) {
 
-    private void startSensors() {
-        this.sensors.stream().forEach(s-> {
-            Thread sensorThread = new Thread(s);
-            sensorThread.start();
-        });
-    }
+		List<LangContext> desires = getContext(walker, DESIRES);
+		List<LangContext> beliefs = getContext(walker, BELIEFS);
 
-    private void initAgent(AgentWalker walker) {
+		walker.getLangActuators().forEach(a -> {
+			try {
+				Class<?> clazz = Class.forName(a.getImplementation());
+				Constructor<?> ctor = clazz.getConstructor();
+				Actuator actuator = (Actuator) ctor.newInstance();
+				actuator.setName(a.getIdentifier());
+				actuators.add(actuator);
+			} catch (Exception e) {
+				e.printStackTrace();
+				// TODO: implementar log
+			}
+		});
 
-        List<LangContext> desires = getContext(walker, DESIRES);
-        List<LangContext> beliefs = getContext(walker, BELIEFS);
+		walker.getLangSensors().stream().map(s -> s.getImplementation()).forEach(implementation -> {
+			try {
+				Class<?> clazz = Class.forName(implementation);
+				Constructor<?> ctor = clazz.getConstructor();
+				Sensor sensor = (Sensor) ctor.newInstance();
+				sensors.add(sensor);
+			} catch (Exception e) {
+				e.printStackTrace();
+				// TODO: implementar log
+			}
 
-        walker.getLangActuators().forEach(a ->{
-            try{
-                Class<?> clazz = Class.forName(a.getImplementation());
-                Constructor<?> ctor = clazz.getConstructor();
-                Actuator actuator = (Actuator) ctor.newInstance();
-                actuator.setName(a.getIdentifier());
-                actuators.add(actuator);
-            } catch (Exception e){
-                e.printStackTrace();
-                //TODO: implementar log
-            }
-        });
+		});
 
-        walker.getLangSensors().stream().map(s -> s.getImplementation()).forEach(implementation -> {
-            try{
-                Class<?> clazz = Class.forName(implementation);
-                Constructor<?> ctor = clazz.getConstructor();
-                Sensor sensor = (Sensor) ctor.newInstance();
-                sensors.add(sensor);
-            } catch (Exception e){
-                e.printStackTrace();
-                //TODO: implementar log
-            }
+		BeliefsContextService.getInstance().beliefs(beliefs);
+		DesiresContextService.getInstance().desires(desires);
+		PlansContextService.getInstance().plans(walker.getPlans());
+		PlansContextService.getInstance().plansClauses(walker.getPlansClauses());
+	}
 
-        });
+	private List<LangContext> getContext(AgentWalker walker, String context) {
+		return walker.getLangContexts().stream().filter(c -> c.getName().equals(context)).collect(Collectors.toList());
+	}
 
-
-        BeliefsContextService.getInstance().beliefs(beliefs);
-        DesiresContextService.getInstance().desires(desires);
-        PlansContextService.getInstance().plans(walker.getPlans());
-        PlansContextService.getInstance().plansClauses(walker.getPlansClauses());
-    }
-
-    private List<LangContext> getContext(AgentWalker walker, String context) {
-        return walker.getLangContexts().stream().filter(c -> c.getName().equals(context)).collect(Collectors.toList());
-    }
-
+	public void setProfilingFile(String profilingFile) {
+		this.profilingFile = profilingFile;
+	}
 
 }
