@@ -2,13 +2,10 @@ package br.ufsc.ine;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Date;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.stream.Stream;
+import java.util.concurrent.TimeUnit;
 
 import com.ibm.icu.text.SimpleDateFormat;
 
@@ -19,19 +16,19 @@ public class GeraArquivo {
 	static long uteis =0;
 	
 	public static void main(String[] args) {
-		try (Stream<String> stream = Files.lines(Paths.get("/home/valdirluiz/Documents/resultado-regras/30-70"))) {
-
-			stream.forEach(line ->{
-				if(line.contains("sense(approaching(car)).")) {
-					uteis++;
-				}
-			});
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		System.out.println(uteis);
-		//executorService.scheduleWithFixedDelay(approaching(), 0, 70, TimeUnit.MILLISECONDS);
+//		try (Stream<String> stream = Files.lines(Paths.get("/home/valdirluiz/Documents/resultado-regras/30-70"))) {
+//
+//			stream.forEach(line ->{
+//				if(line.contains("sense(approaching(car)).")) {
+//					uteis++;
+//				}
+//			});
+//
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		System.out.println(uteis);
+		executorService.scheduleWithFixedDelay(approaching(), 0, 10, TimeUnit.MILLISECONDS);
 		//executorService.scheduleWithFixedDelay(time(), 0, 30, TimeUnit.MILLISECONDS);
 	}
 	
@@ -55,7 +52,7 @@ public class GeraArquivo {
 			executorService.shutdown();
 		}
 		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter("/home/valdirluiz/Documents/resultado-regras/70-30", true));
+			BufferedWriter writer = new BufferedWriter(new FileWriter("/home/valdirluiz/Documents/resultado-regras/100-0", true));
 			writer.append(sense + System.lineSeparator());
 			writer.close();
 		} catch (Exception e) {
