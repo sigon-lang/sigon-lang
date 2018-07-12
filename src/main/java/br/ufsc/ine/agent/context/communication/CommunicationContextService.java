@@ -50,7 +50,9 @@ public class CommunicationContextService implements ContextService{
                 Actuator actuator = actuators.stream()
                         .filter(a -> a.getName().equals(name))
                         .findFirst().get();
-
+                
+                System.out.println(name);
+               
                 //TODO: passar parametros para funcoes
                 actuator.act(null);
             }
