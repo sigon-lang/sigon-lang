@@ -66,10 +66,13 @@ public class PlansContextService implements ContextService{
 			Collections.shuffle(actions);
 			Optional<Action> any = actions.stream().findAny();
 			if (any.isPresent()) {
-
-				// TODO: 3/3/18 add argumentos da funcao
-				this.appendFact("act(" + any.get().getName() + ").");
-
+				
+				String args =  any.get().getArguments().toString();
+				args = args.replaceAll("[\\[\\]]", "");
+				
+				// TODO: 11/07/18 verify this implementation of the passing of the arguments. FELIPE
+				this.appendFact("act(" + any.get().getName() + "(" + args +  ")" + ").");
+				
 				BridgeRule.builder()
 						.head(Head.builder().context(CommunicationContextService.getInstance()).clause("X").build())
 						.body(Body.builder().context(getInstance()).clause("act(X)").build()).build()
