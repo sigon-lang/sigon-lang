@@ -9,8 +9,8 @@ import br.ufsc.ine.utils.PrologEnvironment;
 
 public class CustomContext  implements ContextService {
 
-    private String name;
-    private PrologEnvironment prologEnvironment;
+    protected String name;
+    protected PrologEnvironment prologEnvironment;
 
     public CustomContext(String name){
         this.name = name;
@@ -20,6 +20,7 @@ public class CustomContext  implements ContextService {
     @Override
     public Theory getTheory() {
         return  prologEnvironment.getEngine().getTheory();
+        
     }
 
     @Override
