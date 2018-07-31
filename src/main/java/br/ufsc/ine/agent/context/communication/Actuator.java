@@ -15,4 +15,9 @@ public abstract class Actuator {
     public String getName() {
         return name;
     }
+    
+    /*public String getFactName() {
+    	int index = name.indexOf("(");    	
+    	return index != -1 ? name.substring(0, index) : name;
+    }*/
 }

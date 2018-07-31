@@ -1,0 +1,57 @@
+communication:
+    sensor("readPropose", "sensor.readPropose").
+    actuator("sendPropose", "actuator.sendPropose").
+
+
+beliefs:
+	available_money(150000).
+	work_distance(20).
+	
+
+//morar próximo do local do trabalho me parece ser um desejo "melhor" do que comprar uma casa
+desires:
+	work_distance(5).
+	
+
+//como atrelar um desejo baseando-se em uma intenção?
+intention:
+	buy(house).
+	
+_negotiation:
+	auction(blind). //tipo de leilão
+	bid(_,_). //ação 1
+	exit(_). //ação 2
+	
+
+//regra de ponte para definir como será feito o lance aka - estratégia
+! _negotiation bid(house, X) :- 
+			beliefs available_money(X) &
+				beliefs work_distance(20) & 
+				desires work_distance(5) & 
+					_negotiation auction(blind).
+					
+
+//regra de ponte para definir ação
+! planner action(bid(house, X), available_money(X), buy(house)) :- _negotiation bid(house, X).
+
+//regra de ponte para definir desejo
+! desires buy(house) :- _negotiation bid(house, X).
+
+
+
+					 
+
+planner:
+	//plan(somethingToBeTrue, compoundaction, preconditions, postconditions)
+	plan(
+		buy(house),
+		[
+			action(bid(house, X),  available_money(X), sendMessage)
+			
+		]		
+		available_money(_),
+		[
+			buy(house)),
+			work_distance(5).
+			
+		]).

@@ -9,6 +9,8 @@ import br.ufsc.ine.utils.PrologEnvironment;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.plaf.synth.SynthSeparatorUI;
+
 public class CommunicationContextService implements ContextService{
 
     private static CommunicationContextService instance = new CommunicationContextService();
@@ -47,11 +49,23 @@ public class CommunicationContextService implements ContextService{
             } else {
             	int i = fact.indexOf("(");
                 String name = fact.substring(0, i);
-                
+                /* Solução passada não levava em consideração que o getName volta os argumentos
+                 * do atuador. Resolvi seguir a abordagem lambda que já tava implementada e
+                 * considerar a possibilidade de ter () ou não. Também é possível passar a parte
+                 * da expressão lambda para a classe. Tem um método não testado getFactName() 
+                 * para exemplo.
+                 * */
                 Actuator actuator = actuators.stream()
-                        .filter(a -> a.getName().equals(name))
-                        .findFirst().get();
-                
+                		.filter((a) -> {
+                	String actuator_name = a.getName();
+                	int i1 = actuator_name.indexOf("(");
+                	if(i1 != -1) {
+                		actuator_name = actuator_name.substring(0, i1);
+                	}
+                	return actuator_name.equals(name);
+                	})
+                		.findFirst().get();                
+                 
                 String arg = fact.substring(i + 1, fact.length() - 2);                
                 String[] args = arg.split(",");
                 
