@@ -69,9 +69,10 @@ public class PlansContextService implements ContextService{
 				
 				String args =  any.get().getArguments().toString();
 				args = args.replaceAll("[\\[\\]]", "");
-				
-				// TODO: 11/07/18 verify this implementation of the passing of the arguments. FELIPE
-				this.appendFact("act(" + any.get().getName() + "(" + args +  ")" + ").");
+				if(args.isEmpty()) {
+					args = "_";
+				}
+ 				this.appendFact("act(" + any.get().getName() + "(" + args +  ")" + ").");
 				
 				BridgeRule.builder()
 						.head(Head.builder().context(CommunicationContextService.getInstance()).clause("X").build())
@@ -84,6 +85,9 @@ public class PlansContextService implements ContextService{
     }
 
 	private boolean checkPreConditions(Plan p) {
+		if(p.getPreConditions().isEmpty()) {
+			return true;
+		}
 		boolean check = false;
 		for(String clause : p.getPreConditions()){
 

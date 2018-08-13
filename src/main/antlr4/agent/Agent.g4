@@ -176,7 +176,7 @@ body
 
 
 term
-	:  negation? constant ('(' (atom) (',' (atom) )* (')' | ').') annotation?)?
+	:  negation? constant ('(' atom (',' atom )* ')')?annotation?
 	| term (AND | OR) term
 	| ('[' term (',' term)* ']')
 	| term ':-' term
@@ -185,7 +185,7 @@ term
 
 
 formulas
-	: term*
+	: (term '.')*
 	;
 
 

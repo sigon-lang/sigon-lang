@@ -20,6 +20,7 @@ public class PrologEnvironment {
 		fact = fact.replaceAll("&", ",");
 		fact = fact.replaceAll("\\|", ";");
 
+		fact = addEndedPeriod(fact);
 
 		if(this.theory==null) {
 			this.theory = new Theory(fact+SPACE);
@@ -27,6 +28,13 @@ public class PrologEnvironment {
 			this.theory.append(new Theory(fact+SPACE));
 		}
 		this.engine.setTheory(theory);
+	}
+
+	private String addEndedPeriod(String fact) {
+		if(!fact.endsWith(".")) {
+			fact = fact+".";
+		}
+		return fact;
 	}
 
 	public void updateFact(String fact, String toTest) throws InvalidTheoryException {
