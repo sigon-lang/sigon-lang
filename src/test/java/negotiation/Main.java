@@ -65,12 +65,12 @@ public class Main{
 	        
 	        Agent agent = new Agent();	        
 	        agent.run(agentWalker);
-	       /* System.out.println(BeliefsContextService.getInstance().getTheory());
+	        System.out.println(BeliefsContextService.getInstance().getTheory());
 	        System.out.println(DesiresContextService.getInstance().getTheory());
 	        System.out.println(IntentionsContextService.getInstance().getTheory());
 	        System.out.println(PlansContextService.getInstance().getTheory());
 	        System.out.println(CommunicationContextService.getInstance().getTheory());
-	        */
+	        
 	        
 	        
 

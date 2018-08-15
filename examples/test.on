@@ -1,16 +1,19 @@
 communication:
-    sensor("readPropose()", "negotiation.ReadMessage").
+    sensor("readPropose", "negotiation.ReadMessage").
     actuator("sendPropose", "negotiation.SendMessage").
 
 
 beliefs:
-	moneyAvailable(15000).
+	
 
 //morar próximo do local do trabalho me parece ser um desejo "melhor" do que comprar uma casa
 desires:
 	buy(house).
+	teste(1).
 
 intentions:
+	buy(house).
+	teste(1).
 
 
 //como atrelar um desejo baseando-se em uma intenção?
@@ -22,10 +25,10 @@ planner:
 	plan(
 		buy(house),
 		[	//funcao que será invocada, préc, posc
-			action(sendPropose(asd))
+			action(sendPropose(teste))
 			
 		]
 		,		
 		[moneyAvailable(15000)],		
-		[ buy(house)]
+		_
 		).

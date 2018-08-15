@@ -9,7 +9,7 @@ public class SendMessage extends Actuator{
 
 	@Override
 	public void act(List<String> args) {
-		System.out.println("teste "+ args.get(0));
+		System.out.println("args action "+ args.get(0));
 		Main.sendPropose(args);
 		
 		
