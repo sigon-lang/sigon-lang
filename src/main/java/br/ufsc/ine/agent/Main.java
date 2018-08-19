@@ -46,7 +46,7 @@ public class Main {
 
 
 			Agent agent = new Agent();
-			agent.run(agentWalker);
+			agent.run(agentWalker, null);
 
 		} catch (IOException e) {
 			System.out.println("I/O exception.");

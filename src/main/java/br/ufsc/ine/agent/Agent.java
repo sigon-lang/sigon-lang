@@ -1,23 +1,21 @@
 package br.ufsc.ine.agent;
 
-import br.ufsc.ine.agent.bridgerules.BridgeRulesService;
-import br.ufsc.ine.agent.context.communication.Actuator;
-import br.ufsc.ine.agent.context.communication.CommunicationContextService;
-import br.ufsc.ine.agent.context.LangContext;
-import br.ufsc.ine.agent.context.beliefs.BeliefsContextService;
-import br.ufsc.ine.agent.context.desires.DesiresContextService;
-import br.ufsc.ine.agent.context.plans.PlansContextService;
-import br.ufsc.ine.parser.AgentWalker;
-import br.ufsc.ine.agent.context.communication.Sensor;
-import rx.Observable;
-
 import java.lang.reflect.Constructor;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import br.ufsc.ine.agent.bridgerules.BridgeRulesService;
+import br.ufsc.ine.agent.context.LangContext;
+import br.ufsc.ine.agent.context.beliefs.BeliefsContextService;
+import br.ufsc.ine.agent.context.communication.Actuator;
+import br.ufsc.ine.agent.context.communication.CommunicationContextService;
+import br.ufsc.ine.agent.context.communication.Sensor;
+import br.ufsc.ine.agent.context.custom.CustomContext;
+import br.ufsc.ine.agent.context.desires.DesiresContextService;
+import br.ufsc.ine.agent.context.plans.PlansContextService;
+import br.ufsc.ine.parser.AgentWalker;
+import rx.Observable;
 
 public class Agent {
 
@@ -26,8 +24,12 @@ public class Agent {
     private List<Sensor> sensors = new ArrayList<>();
     private List<Actuator> actuators = new ArrayList<>();
     public static boolean removeBelief = false;
+    
+    private CustomContext[] customContexts;
 
-    public void run(AgentWalker walker) {
+    public void run(AgentWalker walker, CustomContext[] contexts) {
+    	this.customContexts = contexts;
+    	
         this.initAgent(walker);
         this.subscribeSensors();
         this.startSensors();
@@ -108,6 +110,14 @@ public class Agent {
         DesiresContextService.getInstance().desires(desires);
         PlansContextService.getInstance().plans(walker.getPlans());
         PlansContextService.getInstance().plansClauses(walker.getPlansClauses());
+        
+        if(this.customContexts != null)
+        	for(CustomContext context: this.customContexts) {
+        		BridgeRulesService.getInstance().addCustomContext(context);
+        	}
+        
+        BridgeRulesService.getInstance().rules(walker.getBridgeRules());
+        
     }
 
     private List<LangContext> getContext(AgentWalker walker, String context) {

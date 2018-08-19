@@ -6,7 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
+import agent.AgentParser.BridgeRuleContext;
+import br.ufsc.ine.agent.context.LangContext;
 import br.ufsc.ine.agent.context.beliefs.BeliefsContextService;
 import br.ufsc.ine.agent.context.communication.CommunicationContextService;
 import br.ufsc.ine.agent.context.custom.CustomContext;
@@ -148,18 +151,37 @@ public class BridgeRulesService {
     		clause = clause.replaceFirst("^(not)*~*", "");
     	
     	//TODO: Qual metodo para indicar quando o termo em si e negado?
-    	if(isClauseNegated)
+    	boolean isNegatedSum = (!isNegated || !isClauseNegated) && (isNegated || isClauseNegated);
+    	
+    	if(isNegatedSum)
     		return Body.builder().context(getInstance().customContexts.get(context)).notClause(clause).build();
     	return Body.builder().context(getInstance().customContexts.get(context)).clause(clause).build();
     }
     
-
     public void addCustomContext(CustomContext context) {
     	getInstance().customContexts.put(context.getName(), context);
     }
     
+    public void rules(List<BridgeRuleContext> rules) {
+    	
+    	// list.stream().map(c -> c.getClauses()).flatMap(l -> l.stream());
+    	// List<String> stringRules = rules.stream().map(c -> c.getClauses()).flatMap(l -> l.stream()).collect(Collectors.toList());
+    	
+    	
+    	
+    	List<String> stringRules = rules.stream().map(c -> (c.head().getText() + " :- " + c.body().getText())).collect(Collectors.toList());
+    	
+    	stringRules.forEach(System.out::println);
+    	
+    	
+    	
+    	
+    }
+    
+    
+    
+    
     public void executeBdiRules() {
-
         Body body = Body.builder().context(communicationContext).clause("sense(X)").build();
         Body plan = Body.builder().context(plansContext).clause("plan(Y,_,Z,_)").build();
         Body planMember = Body.builder().context(plansContext).clause("member(X, Z)").build();
