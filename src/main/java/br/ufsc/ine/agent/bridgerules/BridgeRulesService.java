@@ -84,7 +84,6 @@ public class BridgeRulesService {
     	getInstance().bridgeRules.add(bridgeRule);
     }
     
-    //TODO: REFAZER PQ TA BUGANDO CASO A CLAUSULA TEJA NEGADA
     protected Head parseHead(String headRule) {
     	Pattern pattern = Pattern.compile("[|&]*[\\sa-zA-Z_()0-9]+");
     	Matcher matcher = pattern.matcher(headRule);
