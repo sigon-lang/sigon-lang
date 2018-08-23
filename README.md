@@ -40,9 +40,9 @@ Após a geração basta entrar na pasta target e executar o comando para rodar o
 
 ## Como contribuir 
 
-1 - Crie um fork do master
-2 - Implemente uma atualização
-3 - Seja descritivo nos commits
-4 - Faça pull request para o branch Master
+1. Crie um fork do master
+2. Implemente uma atualização
+3. Seja descritivo nos commits
+4. Faça pull request para o branch Master
 
 
