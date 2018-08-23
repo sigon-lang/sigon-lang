@@ -41,14 +41,14 @@ Após a geração basta entrar na pasta target e executar o comando para rodar o
 ## Como contribuir 
 
 
-# Com código
+### Com código
 
 1. Crie um fork do master
 2. Implemente uma atualização
 3. Seja descritivo nos commits. Se for de uma issue, coloque o número
 4. Faça pull request para o branch Master
 
-# Com ideias
+### Com ideias
 
 1. Crie uma issue com etiqueta
 
