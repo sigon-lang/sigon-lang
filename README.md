@@ -1,6 +1,9 @@
-# Sigon Agent
+# Sigon Language
 
-## Ambiente de desenvolvimento
+Sigon is a framework for the development of agents as multi-context systems. It is generic and extensible, in the sense that it allows modeling agents according to existing architectures or to create new ones, as well as to extend an agent construction with additional features through other contexts and bridge rules.
+
+## Environment
+
 
 Para manter e desenvolver o projeto é necessário ter as seguintes tecnologias instaladas:
 
