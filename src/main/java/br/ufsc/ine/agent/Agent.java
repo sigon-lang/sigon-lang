@@ -1,5 +1,7 @@
 package br.ufsc.ine.agent;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,9 @@ public class Agent {
     private List<Sensor> sensors = new ArrayList<>();
     private List<Actuator> actuators = new ArrayList<>();
     public static boolean removeBelief = false;
-    
+	private String profilingFile;
+	//TODO: Profiling true
+	private boolean doProfiling = false;
     private CustomContext[] customContexts;
 
     public void run(AgentWalker walker, CustomContext[] contexts) {
@@ -53,13 +57,29 @@ public class Agent {
             literal = literal.replace("not","\\+").trim();
         }
         cycles++;
+		long startTime = System.nanoTime();
+
         CommunicationContextService.getInstance().appendFact(this.getSense(literal));
         BridgeRulesService.getInstance().executeBdiRules();
         PlansContextService.getInstance().executePlanAlgorithm();
+        if(doProfiling)
+        	profiling(startTime);
     }
 
 
-
+	private void profiling(long startTime) {
+		if (profilingFile != null) {
+			long endTime = System.nanoTime();
+			long duration = (endTime - startTime) / 1000000;
+			try {
+				BufferedWriter writer = new BufferedWriter(new FileWriter(profilingFile, true));
+				writer.append(cycles + ";" + duration + System.lineSeparator());
+				writer.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 
 
@@ -124,5 +144,7 @@ public class Agent {
         return walker.getLangContexts().stream().filter(c -> c.getName().equals(context)).collect(Collectors.toList());
     }
 
-
+	public void setProfilingFile(String profilingFile) {
+		this.profilingFile = profilingFile;
+	}
 }
