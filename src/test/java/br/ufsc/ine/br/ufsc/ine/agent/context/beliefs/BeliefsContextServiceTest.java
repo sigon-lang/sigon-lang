@@ -1,10 +1,10 @@
 package br.ufsc.ine.br.ufsc.ine.agent.context.beliefs;
 
-import br.ufsc.ine.agent.context.beliefs.BeliefsContextService;
-
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+
+import br.ufsc.ine.agent.context.beliefs.BeliefsContextService;
 
 public class BeliefsContextServiceTest {
 
@@ -14,8 +14,12 @@ public class BeliefsContextServiceTest {
         bc.appendFact("p(1,1).");
         bc.appendFact("test.");
         assertEquals(2, bc.size());
-        //BeliefsContextService.getInstance().appendFact("p(2,1).");
-        //System.out.println(BeliefsContextService.getInstance().getTheory().toString());
+        
+        bc.appendFact("-p(1,1).");
+        assertEquals(1, bc.size());
+        bc.appendFact("a:-b.");
+        assertEquals(2, bc.size());
+        
 
     }
 }

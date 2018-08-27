@@ -10,8 +10,8 @@ import alice.tuprolog.MalformedGoalException;
 import alice.tuprolog.SolveInfo;
 import alice.tuprolog.Theory;
 import br.ufsc.ine.agent.Agent;
-import br.ufsc.ine.agent.context.LangContext;
 import br.ufsc.ine.agent.context.ContextService;
+import br.ufsc.ine.agent.context.LangContext;
 import br.ufsc.ine.utils.PrologEnvironment;
 
 public class BeliefsContextService implements ContextService {
@@ -70,7 +70,11 @@ public class BeliefsContextService implements ContextService {
 
 	@Override
 	public void appendFact(String c) {
-
+		//TODO: refactor code (This may appear in other place).
+		if(c.startsWith("-")){
+            c = c.replace("-","").trim();
+            Agent.removeBelief = true;
+        } 
 		if(Agent.removeBelief){
 			Agent.removeBelief = false;
 			try {
