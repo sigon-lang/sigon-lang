@@ -25,7 +25,8 @@ public class BeliefsContextService implements ContextService {
 	public static BeliefsContextService getInstance() {
 		return instance;
 	}
-
+	
+	
 
 	public void beliefs(List<LangContext> beliefs) {
 		this.beliefs = beliefs;
@@ -43,7 +44,9 @@ public class BeliefsContextService implements ContextService {
 
 	}
 
-
+	public int size() {
+		return prologEnvironment.getSize();
+	}
 
 	public List<LangContext> getBeliefs() {
 		return beliefs;

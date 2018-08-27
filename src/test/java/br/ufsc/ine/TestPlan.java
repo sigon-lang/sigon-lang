@@ -10,7 +10,7 @@ import org.junit.Test;
 
 public class TestPlan {
 
-
+/*
 
     @Test
     public void test() throws InvalidTheoryException {
@@ -24,4 +24,5 @@ public class TestPlan {
 
         System.out.println(BeliefsContextService.getInstance().getTheory().toString());
     }
-}
+*/
+	}

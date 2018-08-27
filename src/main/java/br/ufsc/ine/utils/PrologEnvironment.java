@@ -104,5 +104,15 @@ public class PrologEnvironment {
 		}
 		this.theory = new Theory(newTheory.toString());
 		this.engine.setTheory(theory);
+		
+	}
+	public int getSize() {
+		Iterator it = this.theory.iterator(engine);
+		int cont = 0;
+		while(it.hasNext()) {
+			cont++;
+			it.next();
+		}
+		return cont;
 	}
 }
