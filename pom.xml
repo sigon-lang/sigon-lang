@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
@@ -84,7 +85,11 @@
 			<version>1.8.9</version>
 		</dependency>
 
-
+		<dependency>
+			<groupId>org.antlr</groupId>
+			<artifactId>antlr4-runtime-testsuite</artifactId>
+			<version>4.7</version>
+		</dependency>
 
 	</dependencies>
 
@@ -150,10 +155,10 @@
 				<artifactId>aspectj-maven-plugin</artifactId>
 				<version>1.7</version>
 				<configuration>
-					<showWeaveInfo/>
+					<showWeaveInfo />
 					<forceAjcCompile>true</forceAjcCompile>
 					<complianceLevel>1.8</complianceLevel>
-					<sources/>
+					<sources />
 					<source>1.8</source>
 					<target>1.8</target>
 					<showWeaveInfo>true</showWeaveInfo>
