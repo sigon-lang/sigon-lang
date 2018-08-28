@@ -119,7 +119,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>br.ufsc.ine.agent.Main</mainClass>
+							<mainClass>br.ufsc.ine.agent.Agent</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>
