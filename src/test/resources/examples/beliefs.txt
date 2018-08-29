@@ -1,0 +1,8 @@
+communication:
+	sensor("identifier1", "implementation1").
+	
+beliefs:
+	aaaaaa(a,b).
+	a.
+	a(X).
+	a(x)[sfd].
