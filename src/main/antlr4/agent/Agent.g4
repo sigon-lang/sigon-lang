@@ -13,7 +13,7 @@ context
 
 bridgeRule
 	:
-	head ':-' body '.'
+	head ':-' body DOT
 	;
 
 logicalContext
@@ -52,7 +52,7 @@ customContextName
 	;
 
 plan
-	: PLAN '(' somethingToBeTrue ',' compoundAction (',' planPreconditions ',' internalOperator? planPostconditions)? (',' cost)? ').'
+	: PLAN LeftParen somethingToBeTrue ',' compoundAction (',' planPreconditions ',' internalOperator? planPostconditions)? (',' cost)? RightParen DOT
 	;
 
 
@@ -74,7 +74,7 @@ conditions
 	;
 
 action
-	: ACTION '(' functionInvocation (',' actionPreconditions ',' internalOperator? actionPostconditions)? (',' cost)? ')'
+	: ACTION LeftParen functionInvocation (',' actionPreconditions ',' internalOperator? actionPostconditions)? (',' cost)? RightParen
 	;
 
 actionPreconditions
@@ -86,7 +86,7 @@ actionPostconditions
 	;
 
 functionInvocation
-	: functionName '(' argumentList? ')'
+	: functionName LeftParen argumentList? RightParen
 	;
 
 functionName
@@ -94,7 +94,7 @@ functionName
 	;
 
 sensor
-    : 'sensor('  sensorIdentifier  ',' sensorImplementation ').'
+    : 'sensor' LeftParen  sensorIdentifier  ',' sensorImplementation RightParen'.'
     ;
 
 
@@ -107,7 +107,7 @@ sensorImplementation
     ;
 
 actuator
-    : 'actuator(' actuatorIdentifier ',' actuatorImplementation ').'
+    : 'actuator' LeftParen actuatorIdentifier ',' actuatorImplementation RightParen'.'
     ;
 
 
@@ -174,19 +174,18 @@ body
 
 
 
-
 term
-	:  negation? constant ('(' atom (',' atom )* ')')?annotation?
+	:  negation? constant ( annotation | (LeftParen atom (',' atom )* RightParen) annotation?)? 
 	| term (AND | OR) term
 	| ('[' term (',' term)* ']')
 	| term ':-' term
 	;
 
-
-
 formulas
-	: (term '.')*
+	: (term DOT )*
 	;
+
+
 
 
 atom
@@ -251,12 +250,16 @@ OR
    : '|'
    ;
 
+LeftParen : '(';
+RightParen : ')';
 
 STRING
 	:
     '"' (~["\\\r\n])* '"';
 
-
+DOT
+	: 
+	'.';
 
 BELIEFS
 	: 'beliefs'
