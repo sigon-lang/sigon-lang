@@ -1,0 +1,2 @@
+communication:
+	sensor("a", "b").
