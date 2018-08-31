@@ -42,5 +42,33 @@ beliefs:
 	constant(X,a)[preAction]->0.3.
 	constant(a,a)[preAction]->0.3.
 	constant(X,X)[preAction]->0.3.
+
+	a & b.
+	a(a) & b.
+	a(a) & b(b).
+	a(a,b) & b(b,a).
+	a(A,a) & b(B, a).
+
+	a | b.
+	a(a) | b.
+	a(a) | b(b).
+	a(a,b) | b(b,a).
+	a(A,a) | b(B, a).
 	
-	
+	//TODO: Analisar a semântica
+	a :- b.
+	a(a) :- b.
+	a(a,b) :- b.
+	a :- b(b).
+	a :- b(b,b).
+	a(a) :- b(b).
+	a(a,a) :- b(b,b).
+	a :- b(X).
+	a :- b(X,y).
+	a :- b(X,Y).
+	a(X) :- b.
+	a(X,Y) :- b.
+	a(X) :- b(X).
+	a(X,Y) :- b(X,Y).
+	a :- b | a & b.
+	a(a) :- b & b(x) | a(X).
