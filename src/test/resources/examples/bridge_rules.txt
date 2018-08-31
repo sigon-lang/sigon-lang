@@ -1,0 +1,20 @@
+communication:
+	sensor("identifier1", "implementation1").
+	
+beliefs:
+	proposition.
+	
+!beliefs a :- communication X.
+!beliefs a(a) :- communication X.
+!beliefs a(X) :- communication X.
+!beliefs a(X,b) :- communication X.
+!beliefs X :- communication X.
+
+!beliefs a :- communication a.
+!beliefs a :- communication a & beliefs a.
+!beliefs a(X) :- communication a & beliefs a(X).
+!beliefs a(X) :- communication a | beliefs a(X).
+!beliefs a(X) :- communication a | beliefs a(X,b).
+!beliefs a(X,b) :- communication a | beliefs a(X,b).
+!beliefs a(X,b) :- communication sense(a) | beliefs a(X,b).
+
