@@ -18,3 +18,7 @@ beliefs:
 !beliefs a(X,b) :- communication a | beliefs a(X,b).
 !beliefs a(X,b) :- communication sense(a) | beliefs a(X,b).
 
+
+!_custom do(a) :- _emotional do(a).
+!_custom do :- _emotional do.
+!_custom do(a) :- _emotional do(a) & communication bbb.
