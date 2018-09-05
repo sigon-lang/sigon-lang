@@ -9,6 +9,7 @@ import agent.AgentParser;
 import agent.AgentParser.LogicalContextNameContext;
 import agent.AgentParser.ContextContext;
 import agent.AgentParser.FormulasContext;
+import agent.AgentParser.HeadContext;
 import agent.AgentParser.LogicalContextContext;
 import br.ufsc.ine.agent.context.communication.LangActuator;
 import br.ufsc.ine.agent.context.LangContext;
@@ -30,7 +31,7 @@ public class AgentWalker extends AgentBaseListener {
 
 	private List<AgentParser.BridgeRuleContext> bridgeRules  = new ArrayList<>();
 
-
+	
 	private LangContext lastLangContext;
 	private LangSensor lastSensor;
 	private LangActuator lastActuator;
@@ -74,7 +75,16 @@ public class AgentWalker extends AgentBaseListener {
 		this.getLangSensors().add(this.lastSensor);
 		super.enterSensorImplementation(ctx);
 	}
-
+	
+	@Override
+	public void enterHead(HeadContext ctx) {
+		// TODO Auto-generated method stub
+		System.out.println("Head1 "+ctx.contextName().getText());
+		System.out.println("Terms head1 "+ctx.term().getText());
+		super.enterHead(ctx);
+	}
+	
+	
 	 
 
 
@@ -244,6 +254,13 @@ public class AgentWalker extends AgentBaseListener {
 	}
 
 	public List<AgentParser.BridgeRuleContext> getBridgeRules() {
+		
+		for (AgentParser.BridgeRuleContext ctx : bridgeRules) {
+			System.out.println("Head: "+ctx.head().contextName().getText());
+			System.out.println("Body: "+ctx.body().contextName(0).getText());
+			System.out.println("Body term : "+ctx.body().term(0).getText());
+			
+		}
 		return bridgeRules;
 	}
 

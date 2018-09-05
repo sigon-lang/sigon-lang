@@ -1,6 +1,0 @@
-communication:
-	sensor("identifier1", "implementation1").
-	actuator("identifier1", "implementation1").
-	sensor("identifier2", "implementation2").
-	actuator("identifier2", "implementation2").
-

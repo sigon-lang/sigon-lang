@@ -8,7 +8,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import javax.swing.plaf.BorderUIResource;
+
+import agent.AgentParser.BodyContext;
 import agent.AgentParser.BridgeRuleContext;
+import agent.AgentParser.HeadContext;
+import br.ufsc.ine.agent.context.ContextService;
 import br.ufsc.ine.agent.context.LangContext;
 import br.ufsc.ine.agent.context.beliefs.BeliefsContextService;
 import br.ufsc.ine.agent.context.communication.CommunicationContextService;
@@ -29,6 +34,8 @@ public class BridgeRulesService {
     PlansContextService plansContext = PlansContextService.getInstance();
     
     HashMap<String, CustomContext> customContexts = new HashMap<>();
+    HashMap<String, LangContext> cContexts = new HashMap<>();
+    
     ArrayList<BridgeRule> bridgeRules = new ArrayList<>(); 
 
     private BridgeRulesService() {
@@ -162,6 +169,10 @@ public class BridgeRulesService {
     	getInstance().customContexts.put(context.getName(), context);
     }
     
+    public void addCustomContext(LangContext context) {
+    	getInstance().cContexts.put(context.getName(), context);
+    }
+    
     public void rules(List<BridgeRuleContext> rules) {
     	
     	// list.stream().map(c -> c.getClauses()).flatMap(l -> l.stream());
@@ -172,6 +183,21 @@ public class BridgeRulesService {
     	List<String> stringRules = rules.stream().map(c -> (c.head().getText() + " :- " + c.body().getText())).collect(Collectors.toList());
     	
     	stringRules.forEach(System.out::println);
+    	
+    	
+    	
+    	
+    }
+    
+    public void createBridgeRule(HeadContext headContext, BodyContext bodyContext) {
+    	
+    	ContextService cc = customContexts.get(headContext.contextName().getText());
+    	
+    	Head head = Head.builder().context(cc).clause(headContext.term().getText()).build();
+    	Body body = Body.builder().context(customContexts.get(bodyContext.contextName().get(0).getText())).clause(bodyContext.term(0).getText()).build();
+    	BridgeRule.builder()
+    	.head(head)
+    	.body(body).build().execute();
     	
     	
     	
