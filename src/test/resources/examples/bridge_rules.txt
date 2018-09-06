@@ -3,6 +3,9 @@ communication:
 	
 beliefs:
 	proposition.
+
+planner:
+	plan(something, [action(asd(as), _, _)], a,b).
 	
 !beliefs a :- communication X.
 !beliefs a(a) :- communication X.
