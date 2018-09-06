@@ -13,6 +13,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import agent.AgentLexer;
 import agent.AgentParser;
 import br.ufsc.ine.agent.Agent;
+import br.ufsc.ine.agent.context.ContextService;
 import br.ufsc.ine.agent.context.beliefs.BeliefsContextService;
 import br.ufsc.ine.agent.context.communication.CommunicationContextService;
 import br.ufsc.ine.agent.context.custom.CustomContext;
@@ -63,13 +64,17 @@ public class Main{
 
 	        AgentWalker agentWalker = new AgentWalker();
 	        walker.walk(agentWalker, tree);
-	        CustomContext nc = new CustomContext("_negotiation");
+	        
+	        NegotiationContextService nc =  NegotiationContextService.getInstance();
 	        
 	        
-	        
-	        CustomContext[] cc = new CustomContext[] {nc};	        
+	        ContextService[] cc = new ContextService[] {nc};
+	        //CustomContext[] cc = new CustomContext[] {nc.};	        
 	        Agent agent = new Agent();	    
 	        agent.run(agentWalker, cc);
+	        //agent.run(agentWalker, new String[] {"_negotiation"});
+	        
+	        System.out.println("NC 1 "+ NegotiationContextService.getInstance().getTheory().toString());
 	        
 	        
 	        

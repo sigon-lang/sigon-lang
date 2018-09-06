@@ -170,7 +170,12 @@ public class BridgeRulesService {
     }
     
     public void addCustomContext(LangContext context) {
-    	getInstance().cContexts.put(context.getName(), context);
+    	CustomContext cc = new CustomContext(context.getName());
+    	for (String fact : context.getClauses()) {
+			cc.appendFact(fact);
+		}
+    	
+    	getInstance().customContexts.put(cc.getName(), cc);
     }
     
     public void rules(List<BridgeRuleContext> rules) {
@@ -192,9 +197,11 @@ public class BridgeRulesService {
     public void createBridgeRule(HeadContext headContext, BodyContext bodyContext) {
     	
     	ContextService cc = customContexts.get(headContext.contextName().getText());
+    	ContextService cbody = beliefsContext; //iterar sobre o conjunto  
+    	//ContextService cbody = customContexts.get(bodyContext.contextName().get(0).getText());
     	
     	Head head = Head.builder().context(cc).clause(headContext.term().getText()).build();
-    	Body body = Body.builder().context(customContexts.get(bodyContext.contextName().get(0).getText())).clause(bodyContext.term(0).getText()).build();
+    	Body body = Body.builder().context(cbody).clause(bodyContext.term(0).getText()).build();
     	BridgeRule.builder()
     	.head(head)
     	.body(body).build().execute();

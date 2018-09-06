@@ -25,13 +25,3 @@ intentions:
 !_negotiation prop1 :- beliefs aux.	
 	
 
-planner:
-	plan(
-		teste,
-		[	//funcao que será invocada, préc, posc
-			action(sendPropose(msg))			
-		]
-		,		
-		[teste1],		
-		teste
-		).

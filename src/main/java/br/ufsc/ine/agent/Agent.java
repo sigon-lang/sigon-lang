@@ -43,24 +43,41 @@ public class Agent {
 		CommunicationContextService.getInstance().actuators(this.actuators);
 	}
 
-	public void run(AgentWalker walker, String[] contexts) {
-
-		initCustomContexts(walker);
+	public void run(AgentWalker walker, ContextService[] contexts) {
+		
+		initCustomClauses(walker, contexts[0]); //generalizar
 		this.initAgent(walker);
 		this.subscribeSensors();
 		this.startSensors();
 		CommunicationContextService.getInstance().actuators(this.actuators);
 	}
 
-	public void initCustomContexts(AgentWalker walker, String[] contexts) {
+	public void initCustomClauses(AgentWalker walker, ContextService context) {
+		//obter clauses a partir do nome do contexto passado pelo construtor OK
+		//definir as clausulas desse contexto a partir do walker OK
+		List<LangContext> langCustom = getContext(walker, context.getName());
+		for (LangContext langContext : langCustom) {
+			for (String clause : langContext.getClauses()) {
+				context.appendFact(clause);
+			}
+			
+		}
+		System.out.println("NC facts "+context.getTheory().toString());
+		
+
+		
+	}
+
+	public void initCustomContexts(AgentWalker walker, ContextService[] contexts) {
 		List<List<LangContext>> c = new ArrayList<>();
 
-		for (String context : contexts) {
+		/*for (String context : contexts[0].getTheory()) {
 			c.add(getContext(walker, context));
 			BridgeRulesService.getInstance().addCustomContext(getContext(walker, context).get(0));
-			/*TODO porque LISTA?*/
 
-		}
+			/* TODO porque LISTA? COLOCAR ALTERACOES NO BRIDGERULES DO REP MCS e NAS AÇOES
+
+		}*/
 	}
 
 	public void initCustomContexts(AgentWalker walker) {
@@ -73,11 +90,6 @@ public class Agent {
 
 		BridgeRulesService.getInstance().addCustomContext(negotiation.get(0));
 		NegotiationContextService.getInstance().negotiation(negotiation);
-		/* TODO: definir modo genérico de inicializar serviços */
-		/*
-		 * for (String c : contexts) { cc = getContext(walker, c); Lista de
-		 * contextservices para cada contexto }
-		 */
 
 	}
 
@@ -171,7 +183,7 @@ public class Agent {
 
 		if (this.customContexts != null)
 			for (CustomContext context : this.customContexts) {
-				BridgeRulesService.getInstance().addCustomContext(context);
+				// BridgeRulesService.getInstance().addCustomContext(context);
 			}
 
 		walker.getBridgeRules().forEach(a -> {
@@ -179,7 +191,7 @@ public class Agent {
 			/*
 			 * Passar nome do contexto head, termo, contextos body e termos
 			 */
-			BridgeRulesService.getInstance().createBridgeRule(a.head(), a.body());
+			//BridgeRulesService.getInstance().createBridgeRule(a.head(), a.body());
 
 		}
 
