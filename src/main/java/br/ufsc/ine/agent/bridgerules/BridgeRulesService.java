@@ -34,7 +34,7 @@ public class BridgeRulesService {
     PlansContextService plansContext = PlansContextService.getInstance();
     
     HashMap<String, CustomContext> customContexts = new HashMap<>();
-    HashMap<String, LangContext> cContexts = new HashMap<>();
+    HashMap<String, ContextService> cContexts = new HashMap<>();
     
     ArrayList<BridgeRule> bridgeRules = new ArrayList<>(); 
 
@@ -178,6 +178,13 @@ public class BridgeRulesService {
     	getInstance().customContexts.put(cc.getName(), cc);
     }
     
+
+
+	public void addCustomContext(ContextService contextService) {
+		getInstance().cContexts.put(contextService.getName(), contextService);
+		
+	}
+    
     public void rules(List<BridgeRuleContext> rules) {
     	
     	// list.stream().map(c -> c.getClauses()).flatMap(l -> l.stream());
@@ -196,7 +203,7 @@ public class BridgeRulesService {
     
     public void createBridgeRule(HeadContext headContext, BodyContext bodyContext) {
     	
-    	ContextService cc = customContexts.get(headContext.contextName().getText());
+    	ContextService cc = cContexts.get(headContext.contextName().getText());
     	ContextService cbody = beliefsContext; //iterar sobre o conjunto  
     	//ContextService cbody = customContexts.get(bodyContext.contextName().get(0).getText());
     	
@@ -230,4 +237,6 @@ public class BridgeRulesService {
 
 
     }
+
+
 }
