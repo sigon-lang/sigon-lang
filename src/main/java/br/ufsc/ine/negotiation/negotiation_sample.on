@@ -4,13 +4,14 @@ communication:
 
 //uma percepção alfa só é adicionada ao contexto de crenças se ela for uma pre-condição de algum plano.
 beliefs:	
-	not teste.
 	aux.
+	not teste1.
 	
 
 //morar próximo do local do trabalho me parece ser um desejo "melhor" do que comprar uma casa
 desires:
 	teste.
+	
 	
 _negotiation:
 	
@@ -19,9 +20,20 @@ _negotiation:
 	
 
 intentions:
-	teste.
+	
 
 
 !_negotiation prop1 :- beliefs aux.	
+
+planner:
+	plan(
+		teste,
+		[	
+			action(sendPropose(msg))			
+		]
+		,		
+		[teste1],		
+		realizarLance
+		).
 	
 

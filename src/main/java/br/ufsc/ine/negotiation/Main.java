@@ -48,7 +48,8 @@ public class Main{
 	private static void startAgent(){
 	    try {
 
-	        File agentFile = new File("/home/rodrigor/repositorios/mcs/sigon-lang/src/main/java/br/ufsc/ine/negotiation/negotiation_sample.on");
+	        File agentFile = new File("/home/rr/sigon-lang/src/main/java/br/ufsc/ine/negotiation/negotiation_sample.on");
+	        //File agentFile = new File("/home/rr/sigon-lang/src/main/java/br/ufsc/ine/negotiation/test.on");
 	        CharStream stream = CharStreams.fromFileName(agentFile.getAbsolutePath());
 	        AgentLexer lexer = new AgentLexer(stream);
 	        CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -94,7 +95,7 @@ public class Main{
 	 private static void percept(){
 	        System.out.println("Percept");
 
-	        //ReadMessage.publish.onNext("readPropose(teste).");
+	       
 	        ReadMessage.msg.onNext("teste1.");	        
 	        
 	        
@@ -104,7 +105,7 @@ public class Main{
 			System.out.println("NC "+NegotiationContextService.getInstance().getTheory());
 
 	        System.out.println("DC " +DesiresContextService.getInstance().getTheory());
-	        System.out.println("PC " +PlansContextService.getInstance().getTheory());
+	        System.out.println("PC " +PlansContextService.getInstance().getTheory().toString());
 	        System.out.println("IC "+IntentionsContextService.getInstance().getTheory());
 	        System.out.println("CC " +CommunicationContextService.getInstance().getTheory());
 	        

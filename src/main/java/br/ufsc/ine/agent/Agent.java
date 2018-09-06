@@ -200,7 +200,7 @@ public class Agent {
 		DesiresContextService.getInstance().desires(desires);
 		PlansContextService.getInstance().plans(walker.getPlans());
 		PlansContextService.getInstance().plansClauses(walker.getPlansClauses());
-
+		BridgeRulesService.getInstance().executeBdiRules();
 		if (this.customContexts != null)
 			for (CustomContext context : this.customContexts) {
 				// BridgeRulesService.getInstance().addCustomContext(context);

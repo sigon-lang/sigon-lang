@@ -55,7 +55,7 @@ CUSTOMNAME :
 	'_'  ALPHA CHARACTER*
 ;
 plan
-	: PLAN LeftParen somethingToBeTrue ',' compoundAction (',' planPreconditions ',' internalOperator? planPostconditions)? (',' cost)? RightParen '.'
+	: 'plan' LeftParen somethingToBeTrue ',' compoundAction (',' planPreconditions ',' internalOperator? planPostconditions)? (',' cost)? RightParen '.'
 	;
 
 
@@ -77,7 +77,7 @@ conditions
 	;
 
 action
-	: ACTION LeftParen functionInvocation (',' actionPreconditions ',' internalOperator? actionPostconditions)? (',' cost)? RightParen
+	: 'action' LeftParen functionInvocation (',' actionPreconditions ',' internalOperator? actionPostconditions)? (',' cost)? RightParen
 	;
 
 actionPreconditions
@@ -259,12 +259,6 @@ STRING
 
 
 
-PLAN
-	: 'plan'
-	;
-ACTION
-	: 'action'
-	;
 
 fragment ALPHA:
 	LCLETTER | UCLETTER
