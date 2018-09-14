@@ -22,7 +22,7 @@ intentions:
 	
 
 
-!_negotiation prop1 :- beliefs aux.	
+!_negotiation prop1 :- beliefs auxMil | desires testeQ.
 
 planner:
 	plan(

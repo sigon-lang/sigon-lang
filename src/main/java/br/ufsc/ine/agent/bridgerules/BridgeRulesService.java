@@ -7,11 +7,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import javax.naming.Context;
 import javax.swing.plaf.BorderUIResource;
+
+import org.antlr.v4.runtime.tree.ParseTree;
 
 import agent.AgentParser.BodyContext;
 import agent.AgentParser.BridgeRuleContext;
+import agent.AgentParser.ContextNameContext;
 import agent.AgentParser.HeadContext;
+import agent.AgentParser.LogicalOperatorContext;
 import br.ufsc.ine.agent.context.ContextService;
 import br.ufsc.ine.agent.context.LangContext;
 import br.ufsc.ine.agent.context.beliefs.BeliefsContextService;
@@ -38,6 +43,11 @@ public class BridgeRulesService {
 	ArrayList<BridgeRule> bridgeRules = new ArrayList<>();
 
 	private BridgeRulesService() {
+		cContexts.put("beliefs", beliefsContext);
+		cContexts.put("desires", desiresContext);
+		cContexts.put("communication", communicationContext);
+		cContexts.put("intentions", intentionsContext);
+		cContexts.put("planner", plansContext);
 
 	}
 
@@ -190,18 +200,61 @@ public class BridgeRulesService {
 		stringRules.forEach(System.out::println);
 
 	}
+	
+	
 
 	public void createBridgeRule(HeadContext headContext, BodyContext bodyContext) {
-
+		
 		ContextService cc = cContexts.get(headContext.contextName().getText());
-		ContextService cbody = beliefsContext; // iterar sobre o conjunto
+		
+
+		ContextService cBody = cContexts.get(bodyContext.contextName(0).getText());
+		
+		Body previous = Body.builder().context(cBody).clause(bodyContext.term(0).getText()).build();
+		ContextService cBodyI;
+		Body current;
+		Body first = previous;
+		
+		int i = 1;
+
+		
+		
+		for (LogicalOperatorContext op : bodyContext.logicalOperator()) {
+			
+			cBodyI = cContexts.get(bodyContext.contextName(i).getText());
+			current = Body.builder().context(cBodyI).clause(bodyContext.term(i).getText()).build();
+			
+			if(op.getText().equalsIgnoreCase("&")) {
+				previous.setAnd(current);
+			}else {
+				previous.setOr(current); //TODO quando existir mais de um termo da forma: contexto term term term... não funciona
+			}
+			previous = current;
+			i++;
+			
+		}
+		
+		Body cbody = Body.builder().context(cBody).clause(bodyContext.term(0).getText()).build();// iterar sobre o conjunto
 		// ContextService cbody =
 		// customContexts.get(bodyContext.contextName().get(0).getText());
 
 		Head head = Head.builder().context(cc).clause(headContext.term().getText()).build();
-		Body body = Body.builder().context(cbody).clause(bodyContext.term(0).getText()).build();
-		BridgeRule.builder().head(head).body(body).build().execute();
+		//Body body = Body.builder().context(cbody).clause(bodyContext.term(0).getText()).build();
+		BridgeRule.builder().head(head).body(cbody).build().execute();
 
+	}
+	
+	public Body createCustomBody(Body previous, Body current, char logicalOperator) {
+		if(current == null) {
+			return previous;
+		}
+		
+		if(logicalOperator == '&') {
+			previous.setAnd(current);
+		}
+		previous.setOr(current);
+		return previous;
+		
 	}
 
 	public void executeBdiRules() {
@@ -209,6 +262,7 @@ public class BridgeRulesService {
 		Body plan = Body.builder().context(plansContext).clause("plan(Y,_,Z,_)").build();
 		Body planMember = Body.builder().context(plansContext).clause("member(X, Z)").build();
 		Body desires = Body.builder().context(desiresContext).clause("Y").build();
+
 		body.setAnd(plan);
 		plan.setAnd(planMember);
 		planMember.setAnd(desires);
