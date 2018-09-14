@@ -5,7 +5,6 @@ communication:
 //uma percepção alfa só é adicionada ao contexto de crenças se ela for uma pre-condição de algum plano.
 beliefs:	
 	aux.
-	not teste1.
 	
 
 //morar próximo do local do trabalho me parece ser um desejo "melhor" do que comprar uma casa
@@ -29,7 +28,7 @@ planner:
 	plan(
 		teste,
 		[	
-			action(sendPropose(msg))			
+			action(sendPropose(msg), teste1, teste1)			
 		]
 		,		
 		[teste1],		
