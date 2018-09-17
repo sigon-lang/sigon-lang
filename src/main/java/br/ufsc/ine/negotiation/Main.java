@@ -40,6 +40,7 @@ public class Main{
 	
 	public static void sendPropose(List<String> t) {
 		
+		
 		for (String string : t) {
 			System.out.println(string + " propose");
 		}
@@ -48,7 +49,7 @@ public class Main{
 	private static void startAgent(){
 	    try {
 
-	        File agentFile = new File("/home/rr/sigon-lang/src/main/java/br/ufsc/ine/negotiation/negotiation_sample.on");
+	        File agentFile = new File("/home/rodrigor/sigon-lang/src/main/java/br/ufsc/ine/negotiation/negotiation.on");
 	        //File agentFile = new File("/home/rr/sigon-lang/src/main/java/br/ufsc/ine/negotiation/test.on");
 	        CharStream stream = CharStreams.fromFileName(agentFile.getAbsolutePath());
 	        AgentLexer lexer = new AgentLexer(stream);
@@ -96,7 +97,7 @@ public class Main{
 	        System.out.println("Percept");
 
 	       
-	        ReadMessage.msg.onNext("teste1.");	        
+	        ReadMessage.msg.onNext("enterAuction.");	        
 	        
 	        
 	        

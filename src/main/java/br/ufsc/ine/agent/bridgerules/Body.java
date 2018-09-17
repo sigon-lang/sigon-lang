@@ -49,11 +49,12 @@ public class Body {
                             if(Character.isUpperCase(split[i].charAt(0))){
                                 Term solution = solve.getTerm(split[i].trim());
                                 builder.append(solution.toString().replaceAll("_([0-9])*", "_"));
-                                if(i+1<split.length) {
-                                    builder.append(",");
-                                }
+                                
                             } else{
                                 builder.append(split[i]);
+                            }
+                            if(i+1<split.length) {
+                                builder.append(",");
                             }
                         }
 
