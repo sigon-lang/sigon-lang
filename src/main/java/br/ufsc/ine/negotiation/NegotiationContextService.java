@@ -14,28 +14,26 @@ import br.ufsc.ine.agent.context.ContextService;
 import br.ufsc.ine.agent.context.LangContext;
 import br.ufsc.ine.utils.PrologEnvironment;
 
-public class NegotiationContextService implements ContextService{
-	
+public class NegotiationContextService implements ContextService {
+
 	private static NegotiationContextService instance = new NegotiationContextService();
 	private static PrologEnvironment prologEnvironment;
-	//estratégias -> ações (plano)
-	//ações (protocolo) (provavelmente será alterado)
+	// estratégias -> ações (plano)
+	// ações (protocolo) (provavelmente será alterado)
 	private List<LangContext> strategies = new ArrayList<>();
-	
+
 	private NegotiationContextService() {
 		prologEnvironment = new PrologEnvironment();
 	}
-	
 
-	public static NegotiationContextService getInstance() {		
+	public static NegotiationContextService getInstance() {
 		return instance;
-	}	
-	
-	
-	public List<LangContext> strategies(){
+	}
+
+	public List<LangContext> strategies() {
 		return strategies;
 	}
-	
+
 	public void negotiation(List<LangContext> strategies) {
 		this.strategies = strategies;
 		List<String> clauses = strategies.stream().map(c -> c.getClauses()).flatMap(l -> l.stream())
@@ -49,7 +47,7 @@ public class NegotiationContextService implements ContextService{
 				e.printStackTrace();
 			}
 		});
-		
+
 	}
 
 	@Override
@@ -65,57 +63,16 @@ public class NegotiationContextService implements ContextService{
 
 	@Override
 	public void appendFact(String c) {
-		/*try {
-			boolean update = false;
-			String toTest = null;
-
-			if(c.trim().endsWith(").")){
-				StringBuilder builder = new StringBuilder();
-				String toReplace = c.substring(c.indexOf("(")+1, c.lastIndexOf(")"));
-				Arrays.stream(toReplace.split(",")).map( i-> "_,").forEach(builder::append);
-				StringBuilder test = new StringBuilder();
-				test.append(c.substring(0, c.indexOf("(")));
-				test.append("(");
-				test.append(builder.toString().substring(0,builder.toString().length()-1));
-				test.append(").");
-				toTest = test.toString();
-
-				update = (c.startsWith("\\+") && this.verify("\\+" + toTest))
-						|| (!c.startsWith("\\+") && this.verify("\\+" + toTest))
-						|| this.verify(toTest.replace("\\+", ""));
-
-
-			} else if(!c.trim().endsWith(").") && (c.startsWith("\\+") || this.verify("\\+" + c))  ){
-				if(!c.startsWith("\\+") && verify("\\+"+c)){
-					toTest = c;
-					update = true;
-				} else if(c.startsWith("\\+")) {
-					String test = c.substring(2);
-					if(this.verify(test)){
-						toTest = test;
-						update = true;
-					}
-				}
-			}
-
-			if(update){
-				prologEnvironment.updateFact(c, toTest);
-			} else {
-				prologEnvironment.appendFact(c);
-			}
-		} catch (InvalidTheoryException e) {
-			e.printStackTrace();
-		}*/
-		if(c.startsWith("-")){
-            c = c.replace("-","").trim();
-            Agent.removeBelief = true;
-        } 
-		if(Agent.removeBelief){
+		if (c.startsWith("-")) {
+			c = c.replace("-", "").trim();
+			Agent.removeBelief = true;
+		}
+		if (Agent.removeBelief) {
 			Agent.removeBelief = false;
 			try {
 				prologEnvironment.removeFact(c);
 				return;
-			} catch (Exception e){
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
@@ -125,14 +82,14 @@ public class NegotiationContextService implements ContextService{
 			boolean update = false;
 			String toTest = null;
 
-			if(c.trim().endsWith(").")){
+			if (c.trim().endsWith(").")) {
 				StringBuilder builder = new StringBuilder();
-				String toReplace = c.substring(c.indexOf("(")+1, c.lastIndexOf(")"));
-				Arrays.stream(toReplace.split(",")).map( i-> "_,").forEach(builder::append);
+				String toReplace = c.substring(c.indexOf("(") + 1, c.lastIndexOf(")"));
+				Arrays.stream(toReplace.split(",")).map(i -> "_,").forEach(builder::append);
 				StringBuilder test = new StringBuilder();
 				test.append(c.substring(0, c.indexOf("(")));
 				test.append("(");
-				test.append(builder.toString().substring(0,builder.toString().length()-1));
+				test.append(builder.toString().substring(0, builder.toString().length() - 1));
 				test.append(").");
 				toTest = test.toString();
 
@@ -140,21 +97,20 @@ public class NegotiationContextService implements ContextService{
 						|| (!c.startsWith("\\+") && this.verify("\\+" + toTest))
 						|| this.verify(toTest.replace("\\+", ""));
 
-
-			} else if(!c.trim().endsWith(").") && (c.startsWith("\\+") || this.verify("\\+" + c))  ){
-				if(!c.startsWith("\\+") && verify("\\+"+c)){
+			} else if (!c.trim().endsWith(").") && (c.startsWith("\\+") || this.verify("\\+" + c))) {
+				if (!c.startsWith("\\+") && verify("\\+" + c)) {
 					toTest = c;
 					update = true;
-				} else if(c.startsWith("\\+")) {
+				} else if (c.startsWith("\\+")) {
 					String test = c.substring(2);
-					if(this.verify(test)){
+					if (this.verify(test)) {
 						toTest = test;
 						update = true;
 					}
 				}
 			}
 
-			if(update){
+			if (update) {
 				prologEnvironment.updateFact(c, toTest);
 			} else {
 				prologEnvironment.appendFact(c);
@@ -163,8 +119,6 @@ public class NegotiationContextService implements ContextService{
 			e.printStackTrace();
 		}
 
-
-		
 	}
 
 	@Override
@@ -177,28 +131,25 @@ public class NegotiationContextService implements ContextService{
 		return "_negotiation";
 	}
 
-
 	@Override
 	public Theory getTheory() {
 		return prologEnvironment.getEngine().getTheory();
 	}
-	/*
-	public static void Main(String [] args) {
-		LangContext nc = new LangContext();		
-		
-		nc.setName("_negotiation");
-		nc.addClause("aux1.");
-		nc.addClause("aux2.");
-		List<LangContext> ncs = new ArrayList<>();
-		ncs.add(nc);       
-
-		NegotiationContextService.getInstance().negotiation(ncs);
-		System.out.println(NegotiationContextService.getInstance().getTheory());
-		
-		
-		
-		
-		
-	}*/
+	
+	public String getStrategy(String type) {
+		String[] theories = getTheory().toString().split("\n");
+		for (String string : theories) {
+			if(string.indexOf(type) != -1) {
+				return string;
+			}
+		}
+		return null;
+	}
+	
+	
+	
+	
+	
+	
 
 }

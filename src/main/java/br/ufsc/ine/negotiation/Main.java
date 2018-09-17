@@ -40,10 +40,9 @@ public class Main{
 	
 	public static void sendPropose(List<String> t) {
 		
+		System.out.println("NS T:"+NegotiationContextService.getInstance().getTheory().toString());
 		
-		for (String string : t) {
-			System.out.println(string + " propose");
-		}
+		System.out.println("Chosen strategy "+NegotiationContextService.getInstance().getStrategy("bid"));
 	}
 	
 	private static void startAgent(){
