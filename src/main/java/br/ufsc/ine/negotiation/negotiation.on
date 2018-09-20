@@ -6,6 +6,7 @@ communication:
 beliefs:
 	availablemoney(150000).
 	workdistance(20).
+	enterAuction(house).
 	
 
 //morar próximo do local do trabalho me parece ser um desejo "melhor" do que comprar uma casa
@@ -27,15 +28,20 @@ _negotiation:
 ! _negotiation bid(house, Y) :- 
 			beliefs availablemoney(Y) &
 				beliefs workdistance(20) & 
-				desires workdistance(5) & 
-					_negotiation auction(Z, blind).
+					desires workdistance(5) &						
+							_negotiation auction(Z, blind).
+							
+							
+! _negotiation auction(X, blind) :- 
+			beliefs enterAuction(X) &									
+							_negotiation auction(X, blind).							
 					
 
 //regra de ponte para definir ação
-//! planner action(bid(house, X), available_money(X), buy(house)) :- _negotiation bid(house, X).
+//! planner action(bid(house, X), available_money(X), buy(house)) :- _negotiation bid(house, X). Feito pelo código
 
 //regra de ponte para definir desejo
-//! desires buy(house) :- _negotiation bid(house, X). -> PODE SER DEFINIDO PELA INTENCAO
+//! desires buy(house) :- _negotiation bid(house, X). -> PODE SER DEFINIDO PELA INTENCAO / Feito pelos planos
 
 
 //somethingToBeTrue buy house?
@@ -49,7 +55,7 @@ planner:
 			action(sendPropose(msg),  availablemoney(Y), workdistance(5))
 			
 		],		
-		[availablemoney(Y)],
+		[enterAuction(house) , availablemoney(Y)],
 		[
 			buy(house),
 			workdistance(5)

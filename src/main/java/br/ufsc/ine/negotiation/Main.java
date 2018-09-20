@@ -40,7 +40,7 @@ public class Main{
 	
 	public static void sendPropose(List<String> t) {
 		
-		System.out.println("NS T:"+NegotiationContextService.getInstance().getTheory().toString());
+		System.out.println("NS terms:"+NegotiationContextService.getInstance().getTheory().toString());
 		
 		System.out.println("Chosen strategy "+NegotiationContextService.getInstance().getStrategy("bid"));
 	}
@@ -49,7 +49,8 @@ public class Main{
 	    try {
 
 	        File agentFile = new File("/home/rodrigor/sigon-lang/src/main/java/br/ufsc/ine/negotiation/negotiation.on");
-	        //File agentFile = new File("/home/rr/sigon-lang/src/main/java/br/ufsc/ine/negotiation/test.on");
+	        //File agentFile = new File("/home/rodrigor/sigon-lang/src/main/java/br/ufsc/ine/negotiation/negotiation_sample.on");
+	        
 	        CharStream stream = CharStreams.fromFileName(agentFile.getAbsolutePath());
 	        AgentLexer lexer = new AgentLexer(stream);
 	        CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -75,10 +76,6 @@ public class Main{
 	        agent.run(agentWalker, cc);
 	        //agent.run(agentWalker, new String[] {"_negotiation"});
 	        
-	        System.out.println("NC 1 "+ NegotiationContextService.getInstance().getTheory().toString());
-	        
-	        
-	        
 	        
 	        
 	        
@@ -96,7 +93,8 @@ public class Main{
 	        System.out.println("Percept");
 
 	       
-	        ReadMessage.msg.onNext("enterAuction.");	        
+	       ReadMessage.msg.onNext("enterAuction.");	        
+	       // ReadMessage.msg.onNext("teste1(teste).");
 	        
 	        
 	        

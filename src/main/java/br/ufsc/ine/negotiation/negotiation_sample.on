@@ -31,7 +31,7 @@ planner:
 			action(sendPropose(msg), teste1, teste1)			
 		]
 		,		
-		[teste1],		
+		[teste1(teste), testeF],		
 		realizarLance
 		).
 	
