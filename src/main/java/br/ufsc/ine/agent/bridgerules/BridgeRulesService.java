@@ -206,18 +206,16 @@ public class BridgeRulesService {
 	public void createBridgeRule(HeadContext headContext, BodyContext bodyContext) {
 		
 		ContextService cc = cContexts.get(headContext.contextName().getText());
-		
+		if(headContext.contextName().getText().equalsIgnoreCase("planner")) {
+			cc = plannerBridgeRule(headContext);
+		}
 		//se for plan dá de adicionar a ação
 		ContextService cBody = cContexts.get(bodyContext.contextName(0).getText());
 		
 		Body previous = Body.builder().context(cBody).clause(bodyContext.term(0).getText()).build();
 		ContextService cBodyI;
 		Body current;
-		Body first = previous;
-		
-		int i = 1;
-
-		
+		int i = 1;		
 		
 		for (LogicalOperatorContext op : bodyContext.logicalOperator()) {
 			
@@ -242,17 +240,9 @@ public class BridgeRulesService {
 
 	}
 	
-	public Body createCustomBody(Body previous, Body current, char logicalOperator) {
-		if(current == null) {
-			return previous;
-		}
-		
-		if(logicalOperator == '&') {
-			previous.setAnd(current);
-		}
-		previous.setOr(current);
-		return previous;
-		
+	public ContextService plannerBridgeRule(HeadContext headContext) {
+		System.out.println("action "+headContext.term().getText());
+		return null;
 	}
 
 	public void executeBdiRules() {

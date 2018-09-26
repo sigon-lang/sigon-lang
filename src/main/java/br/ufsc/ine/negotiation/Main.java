@@ -48,7 +48,7 @@ public class Main{
 	private static void startAgent(){
 	    try {
 
-	        File agentFile = new File("/home/rr/sigon-lang/src/main/java/br/ufsc/ine/negotiation/negotiation.on");
+	        File agentFile = new File("/home/rodrigor/sigon-lang/src/main/java/br/ufsc/ine/negotiation/negotiation_sample.on");
 	        //File agentFile = new File("/home/rr/sigon-lang/src/main/java/br/ufsc/ine/negotiation/negotiation_sample.on");
 	        
 	        CharStream stream = CharStreams.fromFileName(agentFile.getAbsolutePath());
