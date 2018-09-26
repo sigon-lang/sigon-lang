@@ -207,7 +207,7 @@ public class BridgeRulesService {
 		
 		ContextService cc = cContexts.get(headContext.contextName().getText());
 		
-
+		//se for plan dá de adicionar a ação
 		ContextService cBody = cContexts.get(bodyContext.contextName(0).getText());
 		
 		Body previous = Body.builder().context(cBody).clause(bodyContext.term(0).getText()).build();
@@ -235,11 +235,9 @@ public class BridgeRulesService {
 		}
 		
 		Body cbody = Body.builder().context(cBody).clause(bodyContext.term(0).getText()).build();// iterar sobre o conjunto
-		// ContextService cbody =
-		// customContexts.get(bodyContext.contextName().get(0).getText());
+		
 
 		Head head = Head.builder().context(cc).clause(headContext.term().getText()).build();
-		//Body body = Body.builder().context(cbody).clause(bodyContext.term(0).getText()).build();
 		BridgeRule.builder().head(head).body(cbody).build().execute();
 
 	}

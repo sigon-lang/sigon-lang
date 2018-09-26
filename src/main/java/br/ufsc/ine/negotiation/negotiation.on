@@ -40,8 +40,20 @@ _negotiation:
 //regra de ponte para definir ação
 //! planner action(bid(house, X), available_money(X), buy(house)) :- _negotiation bid(house, X). Feito pelo código
 
+/*Duvidas - ideias de como adicionar planos
+
+Mostrar caso da não adição da crença
+Usar "labels" para pegar estrategias:
+strategy(X,Y)
+
+
+Regra de ponte entre CC e NC para adição de protocolo
+
+
+*/
+
 //regra de ponte para definir desejo
-//! desires buy(house) :- _negotiation bid(house, X). -> PODE SER DEFINIDO PELA INTENCAO / Feito pelos planos
+//! desires buy(house) :- _negotiation bid(house, X). -> PODE SER DEFINIDO PELA INTENCAO // Feito pelos planos
 
 
 //somethingToBeTrue buy house?

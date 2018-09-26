@@ -49,15 +49,24 @@ public class PlansContextService implements ContextService{
 				.clause(clause).build()
 				.verify();
 	}
+	
+	/*Construção através da busca:
+	 * Para cada pós condição da ação, verificar se existe um plano com uma "intenção" aka something to be true
+	 * que faça o match entre os dois.
+	 * Dar uma olhada em planning.
+	 * Desejos de negociação presicam ser adicionados por regras de ponte.
+	 * */
 
     public void executePlanAlgorithm() {
 
 		//TODO: add intencao na verificacao para busca do plano
 
+    	
 
 		Optional<Plan> plan = plans.stream()
 				.filter(p -> !this.hasBelief(p.getSomethingToBeTrue()) && checkPreConditions(p))
 				.findFirst();
+		
 
 		if(plan.isPresent()) {
 

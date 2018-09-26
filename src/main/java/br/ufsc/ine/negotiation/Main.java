@@ -48,8 +48,8 @@ public class Main{
 	private static void startAgent(){
 	    try {
 
-	        File agentFile = new File("/home/rodrigor/sigon-lang/src/main/java/br/ufsc/ine/negotiation/negotiation.on");
-	        //File agentFile = new File("/home/rodrigor/sigon-lang/src/main/java/br/ufsc/ine/negotiation/negotiation_sample.on");
+	        File agentFile = new File("/home/rr/sigon-lang/src/main/java/br/ufsc/ine/negotiation/negotiation.on");
+	        //File agentFile = new File("/home/rr/sigon-lang/src/main/java/br/ufsc/ine/negotiation/negotiation_sample.on");
 	        
 	        CharStream stream = CharStreams.fromFileName(agentFile.getAbsolutePath());
 	        AgentLexer lexer = new AgentLexer(stream);
@@ -93,8 +93,8 @@ public class Main{
 	        System.out.println("Percept");
 
 	       
-	       ReadMessage.msg.onNext("enterAuction.");	        
-	       // ReadMessage.msg.onNext("teste1(teste).");
+	       //ReadMessage.msg.onNext("enterAuction(house).");	        
+	        ReadMessage.msg.onNext("teste1(teste).");
 	        
 	        
 	        
