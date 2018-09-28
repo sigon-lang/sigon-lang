@@ -17,6 +17,7 @@ import agent.AgentParser.BridgeRuleContext;
 import agent.AgentParser.ContextNameContext;
 import agent.AgentParser.HeadContext;
 import agent.AgentParser.LogicalOperatorContext;
+import agent.AgentParser.PlannerContextContext;
 import br.ufsc.ine.agent.context.ContextService;
 import br.ufsc.ine.agent.context.LangContext;
 import br.ufsc.ine.agent.context.beliefs.BeliefsContextService;
@@ -206,8 +207,9 @@ public class BridgeRulesService {
 	public void createBridgeRule(HeadContext headContext, BodyContext bodyContext) {
 		
 		ContextService cc = cContexts.get(headContext.contextName().getText());
+		String head_term = headContext.term().getText();
 		if(headContext.contextName().getText().equalsIgnoreCase("planner")) {
-			cc = plannerBridgeRule(headContext);
+			head_term = plannerBridgeRule(headContext);
 		}
 		//se for plan dá de adicionar a ação
 		ContextService cBody = cContexts.get(bodyContext.contextName(0).getText());
@@ -232,17 +234,24 @@ public class BridgeRulesService {
 			
 		}
 		
-		Body cbody = Body.builder().context(cBody).clause(bodyContext.term(0).getText()).build();// iterar sobre o conjunto
+		Body cbody = Body.builder().context(cBody).clause(bodyContext.term(0).getText()).build();// iterar sobre o conjunto ? NAO SEI SE PRECISA MAIS
 		
-
-		Head head = Head.builder().context(cc).clause(headContext.term().getText()).build();
+		
+		Head head = Head.builder().context(cc).clause(head_term).build();
 		BridgeRule.builder().head(head).body(cbody).build().execute();
+		
+		
 
 	}
 	
-	public ContextService plannerBridgeRule(HeadContext headContext) {
-		System.out.println("action "+headContext.term().getText());
-		return null;
+	public String plannerBridgeRule(HeadContext headContext) {
+		//System.out.println("action "+headContext.term().getText());
+		String actionAsPredicate = headContext.term().getText().replaceAll("\\[|\\]", "");		
+		actionAsPredicate = "action("+actionAsPredicate+")";
+		System.out.println(actionAsPredicate);
+		
+		return actionAsPredicate;
+
 	}
 
 	public void executeBdiRules() {
