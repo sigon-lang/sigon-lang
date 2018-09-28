@@ -3,6 +3,7 @@ package br.ufsc.ine.agent.bridgerules;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -11,6 +12,8 @@ import javax.naming.Context;
 import javax.swing.plaf.BorderUIResource;
 
 import org.antlr.v4.runtime.tree.ParseTree;
+
+import com.github.davidmoten.rx.Strings;
 
 import agent.AgentParser.BodyContext;
 import agent.AgentParser.BridgeRuleContext;
@@ -208,6 +211,7 @@ public class BridgeRulesService {
 		
 		ContextService cc = cContexts.get(headContext.contextName().getText());
 		String head_term = headContext.term().getText();
+		
 		if(headContext.contextName().getText().equalsIgnoreCase("planner")) {
 			head_term = plannerBridgeRule(headContext);
 		}
@@ -245,10 +249,9 @@ public class BridgeRulesService {
 	}
 	
 	public String plannerBridgeRule(HeadContext headContext) {
-		//System.out.println("action "+headContext.term().getText());
+
 		String actionAsPredicate = headContext.term().getText().replaceAll("\\[|\\]", "");		
-		actionAsPredicate = "action("+actionAsPredicate+")";
-		System.out.println(actionAsPredicate);
+		actionAsPredicate = "act("+actionAsPredicate+")";	
 		
 		return actionAsPredicate;
 

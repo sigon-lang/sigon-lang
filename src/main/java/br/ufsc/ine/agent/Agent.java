@@ -37,7 +37,6 @@ public class Agent {
 
 	public void run(AgentWalker walker, CustomContext[] contexts) {
 		this.customContexts = contexts;
-		initCustomContexts(walker);
 		this.initAgent(walker);
 		this.subscribeSensors();
 		this.startSensors();
@@ -46,7 +45,7 @@ public class Agent {
 
 	public void run(AgentWalker walker, ContextService[] contexts) {
 
-		initCustomClauses(walker, contexts); // generalizar
+		initCustomClauses(walker, contexts);
 		this.initAgent(walker);
 		this.subscribeSensors();
 		this.startSensors();
@@ -63,55 +62,12 @@ public class Agent {
 				}
 
 			}
+			
 			BridgeRulesService.getInstance().addCustomContext(contextService);
-			//System.out.println("NC facts "+contextService.getTheory().toString());
 		}
 	}
 	
-	public void initCustomClauses(AgentWalker walker, ContextService context) {
-		// obter clauses a partir do nome do contexto passado pelo construtor OK
-		// definir as clausulas desse contexto a partir do walker OK
-		// linkar com o bridgerules service
-		//
-		List<LangContext> langCustom = getContext(walker, context.getName());
-		for (LangContext langContext : langCustom) {
-			for (String clause : langContext.getClauses()) {
-				context.appendFact(clause);
-			}
-
-		}
-		// System.out.println("NC facts "+context.getTheory().toString());
-
-	}
-
-	public void initCustomContexts(AgentWalker walker, ContextService[] contexts) {
-		List<List<LangContext>> c = new ArrayList<>();
-
-		/*
-		 * for (String context : contexts[0].getTheory()) { c.add(getContext(walker,
-		 * context));
-		 * BridgeRulesService.getInstance().addCustomContext(getContext(walker,
-		 * context).get(0));
-		 * 
-		 * /* TODO porque LISTA? COLOCAR ALTERACOES NO BRIDGERULES DO REP MCS e NAS
-		 * AÇOES
-		 * 
-		 * }
-		 */
-	}
-
-	public void initCustomContexts(AgentWalker walker) {
-
-		List<LangContext> negotiation = getContext(walker, "_negotiation");
-		/*
-		 * for (LangContext langContext : negotiation) {
-		 * System.out.println(langContext.getClauses()); langContext.getClauses(); }
-		 */
-
-		BridgeRulesService.getInstance().addCustomContext(negotiation.get(0));
-		NegotiationContextService.getInstance().negotiation(negotiation);
-
-	}
+	
 
 	private void subscribeSensors() {
 		List<Observable<String>> observables = this.sensors.stream().map(s -> s.getPublisher())

@@ -11,6 +11,7 @@ import br.ufsc.ine.agent.context.ContextService;
 import br.ufsc.ine.agent.context.beliefs.BeliefsContextService;
 import br.ufsc.ine.agent.context.communication.Actuator;
 import br.ufsc.ine.agent.context.communication.CommunicationContextService;
+import br.ufsc.ine.agent.context.desires.DesiresContextService;
 import br.ufsc.ine.utils.PrologEnvironment;
 
 import java.util.ArrayList;
@@ -36,8 +37,8 @@ public class PlansContextService implements ContextService {
 		return instance;
 	}
 
-	private List<Plan> plans;
-	private List<Action> actions;
+	private List<Plan> plans ;
+	private List<Action> actions = new ArrayList<>();
 
 	public void plans(List<Plan> plans) {
 		this.plans = plans;
@@ -59,9 +60,13 @@ public class PlansContextService implements ContextService {
 	 * existe um plano com uma "intenção" aka something to be true que faça o match
 	 * entre os dois. Dar uma olhada em planning. Desejos de negociação presicam ser
 	 * adicionados por regras de ponte.
+	 * 
+	 * Disponivel as ações
 	 */
-
+	
 	public void executePlanAlgorithm() {
+		
+		createPlan();
 
 		// TODO: add intencao na verificacao para busca do plano
 
@@ -229,7 +234,28 @@ public class PlansContextService implements ContextService {
 		// && verifyPreCondition(action.getPreConditions()
 
 		for (Action action : actions) {
-			if (action.getPosConditions().contains(somethingToBeTrue)) { // précondicao deve ser satisfeita
+			if (action.getPosConditions().contains(somethingToBeTrue) && verifyPreCondition(action.getPreConditions())) { // précondicao deve ser satisfeita
+				requiredAcions.add(action);
+			}
+		}
+		// n ações que satisfazem o plano
+		/* Considerar as pós condicoes das ações como pré condição das ações? */
+		// definir sequencia de acao - se acao n tem pré condicao que é pos condicao de
+		// acao n-1,
+		// entao adicionar em ordem
+
+		// System.out.println("required actions "+requiredAcions.get(0).getName());
+
+		return requiredAcions;
+
+	}
+	public Set<Action> chooseActionsToSatisfyDesire(String somethingToBeTrue) {
+
+		Set<Action> requiredAcions = new HashSet<Action>();
+		// && verifyPreCondition(action.getPreConditions()
+
+		for (Action action : actions) {
+			if (action.getPosConditions().contains(somethingToBeTrue.replace(".", "")) && verifyPreCondition(action.getPreConditions())) { // précondicao deve ser satisfeita
 				requiredAcions.add(action);
 			}
 		}
@@ -248,14 +274,58 @@ public class PlansContextService implements ContextService {
 	public boolean verifyPreCondition(Set<String> preConditions) {
 		/* Se tiver alguma preC não satisfeita, então a ação não pode ser executada. */
 		for (String condition : preConditions) {
-			if (!BeliefsContextService.getInstance().verify(condition))
+			if (!BeliefsContextService.getInstance().verify(condition+"."))
 				return false;
 
 		}
 		return true;
 	}
+	
+	public boolean verifyPosCondition(Set<String> posConditions) {
+		
+		/* verificar se uma pos condicao satisfaz o desejo por completo
+		 * [a, b, c]
+		 * pos condicao pode só tornar verdade o 'a', por exemplo
+		 * */
+		
+		
+		return true;
+		
+	}
+	
+	public void createPlan() {
+		
+		String[] actionsPC = PlansContextService.getInstance().getTheory().toString().split("\n");
+		String[] terms;
+		/* Create instances of actions */
+		for (String action : actionsPC) {
+			if (action.contains("act(")) {
+				
+				Action a = new Action();
+				terms = action.replace("act(", "").replaceAll("\\).", "").split(",");
+				Set<String> pre = new HashSet<>();
+				Set<String> pos = new HashSet<>();
+				pre.add(terms[1]);
+				pos.add(terms[2]);
+				a.setName(terms[0]);
+				a.setPreConditions(pre);
+				a.setPosConditions(pos);		
+				actions.add(a);
+				
+			}			
+		}
+		
+		String[] somethingToBeTrue = DesiresContextService.getInstance().getTheory().toString().split("\n");
+		for (String desire : somethingToBeTrue) {			
+			createSimplePlan(chooseActionsToSatisfyDesire(desire), desire);
+		}
+		
+		System.out.println(plans.toString());
+		
+		
+	}
 
-	// the name was intentional haha
+	// the name was on purpose haha
 	/*
 	 * 
 	 * */
@@ -282,7 +352,7 @@ public class PlansContextService implements ContextService {
 	public void addPlan(Plan p) {
 		this.plans.add(p);
 	}
-
+/*
 	public static void main(String[] args) {
 		PlansContextService pc = new PlansContextService();
 		List<Plan> plans = new ArrayList<>();
@@ -319,5 +389,5 @@ public class PlansContextService implements ContextService {
 			System.out.println(pl.getPosConditions());
 		}
 
-	}
+	}*/
 }

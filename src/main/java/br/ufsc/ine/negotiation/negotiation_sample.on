@@ -5,7 +5,7 @@ communication:
 //uma percepção alfa só é adicionada ao contexto de crenças se ela for uma pre-condição de algum plano.
 beliefs:	
 	aux.
-	
+	t.
 
 //morar próximo do local do trabalho me parece ser um desejo "melhor" do que comprar uma casa
 desires:
@@ -24,7 +24,7 @@ intentions:
 
 !_negotiation prop1 :- beliefs aux | desires testeQ.
 
-! planner [teste, t, t] :- beliefs aux.
+! planner [msg, t, teste] :- beliefs aux.
 
 planner:
 	plan(
