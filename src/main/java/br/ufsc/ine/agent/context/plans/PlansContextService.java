@@ -250,18 +250,29 @@ public class PlansContextService implements ContextService {
 
 	public void verifyPreCondition(Action goal, List<Action> sortedActions, List<Action> actions, int index) {
 
-		if (verifyPreConditionFromBeliefContext(goal.getPreConditions())) {
+		if (dumbCheck(goal.getPreConditions())) { // verifyPreConditionFromBeliefContext(goal.getPreConditions())
 			sortedActions.add(index, goal);
 
 		} else {
-			for (Action action : actions) {
-				if (action.getPreConditions().contains(goal.getPosConditions().stream().findFirst().get())) {
-					sortedActions.add(index, goal);
-					index++;
-					verifyPreCondition(goal, sortedActions, actions, index);
+			for (Action action : actions) { // colocar nome da acao no if
+				if (index >= actions.size()) {
+					break;
+
+				} else {
+					if (action.getPosConditions().contains(goal.getPreConditions().stream().findFirst().get())) {
+						sortedActions.add(index, goal);
+						index++;
+						verifyPreCondition(action, sortedActions, actions, index);
+					}
 				}
+
 			}
 		}
+
+	}
+
+	public boolean dumbCheck(Set<String> preC) {
+		return preC.contains(beliefDumb);
 
 	}
 
@@ -344,32 +355,61 @@ public class PlansContextService implements ContextService {
 	public void addPlan(Plan p) {
 		this.plans.add(p);
 	}
-	/*
-	 * public static void main(String[] args) { PlansContextService pc = new
-	 * PlansContextService(); List<Plan> plans = new ArrayList<>(); List<Action>
-	 * actions = new ArrayList<>();
-	 * 
-	 * Action a = new Action(); a.setName("action1"); Set<String> preC = new
-	 * HashSet<>(); preC.add("t1");
-	 * 
-	 * Set<String> posC = new HashSet<>(); posC.add("aux");
-	 * 
-	 * a.setPreConditions(preC); a.setPosConditions(posC);
-	 * 
-	 * actions.add(a);
-	 * 
-	 * Plan p = new Plan(); p.setSomethingToBeTrue("aux"); plans.add(p);
-	 * 
-	 * pc.plans(plans);
-	 * 
-	 * Set<Action> chosenActions = pc.chooseActionsToSatisfyDesire(actions, "aux");
-	 * pc.createSimplePlan(chosenActions, "aux");
-	 * System.out.println(pc.plans.size()); for (Plan pl : pc.plans) {
-	 * System.out.println("something to be true " + pl.getSomethingToBeTrue());
-	 * System.out.println(pl.getPreConditions()); for (Action action :
-	 * pl.getActions()) { System.out.println(action.getName()); }
-	 * System.out.println(pl.getPosConditions()); }
-	 * 
-	 * }
-	 */
+
+	private String someThingToReach = "aux";
+	private String beliefDumb = "teste";
+
+	public static void main(String[] args) {
+		PlansContextService pc = new PlansContextService();
+		List<Plan> plans = new ArrayList<>();
+		List<Action> actions = new ArrayList<>();
+
+		Action a = new Action();
+		a.setName("action1");
+
+		Action a1 = new Action();
+		a1.setName("action2");
+
+		Set<String> preC = new HashSet<>();
+		preC.add("t1");
+
+		Set<String> posC = new HashSet<>();
+		posC.add("aux");
+
+		Set<String> preC1 = new HashSet<>();
+		preC1.add("teste");
+
+		Set<String> posC1 = new HashSet<>();
+		posC1.add("t1");
+
+		a.setPreConditions(preC);
+		a.setPosConditions(posC);
+
+		a1.setPreConditions(preC1);
+		a1.setPosConditions(posC1);
+
+		actions.add(a);
+		actions.add(a1);
+
+		Plan p = new Plan();
+		p.setSomethingToBeTrue("aux");
+		plans.add(p);
+
+		pc.plans(plans);
+
+		List<Action> sortedActions = new ArrayList<>();
+
+		pc.verifyPreCondition(a, sortedActions, actions, 0);
+		/*
+		 * Set<Action> chosenActions = pc.chooseActionsToSatisfyDesire(actions, "aux");
+		 * pc.createSimplePlan(chosenActions, "aux");
+		 * System.out.println(pc.plans.size()); for (Plan pl : pc.plans) {
+		 * System.out.println("something to be true " + pl.getSomethingToBeTrue());
+		 * System.out.println(pl.getPreConditions()); for (Action action :
+		 * pl.getActions()) { System.out.println(action.getName()); }
+		 * System.out.println(pl.getPosConditions()); }
+		 */
+
+	}
+
 }
