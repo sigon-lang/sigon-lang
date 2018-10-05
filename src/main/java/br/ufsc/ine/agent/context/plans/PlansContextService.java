@@ -17,6 +17,7 @@ import br.ufsc.ine.utils.PrologEnvironment;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -120,21 +121,11 @@ public class PlansContextService implements ContextService {
 	}
 
 	//// TODO: 3/3/18 ver como tratar nots and e ord em clauses
-	Predicate<Action> actionPredicate = new Predicate<Action>() {
-		@Override
-		public boolean test(Action action) {
-			for (String clause : action.getPreConditions()) {
+	Predicate<Action> actionPredicate=new Predicate<Action>(){@Override public boolean test(Action action){for(String clause:action.getPreConditions()){
 
-				if (clause.startsWith("not")) {
-					return !hasBelief(clause.replace("not", ""));
-				} else {
-					return hasBelief(clause);
-				}
+	if(clause.startsWith("not")){return!hasBelief(clause.replace("not",""));}else{return hasBelief(clause);}
 
-			}
-			return true;
-		}
-	};
+	}return true;}};
 
 	@Override
 	public boolean verify(String fact) {
@@ -207,6 +198,23 @@ public class PlansContextService implements ContextService {
 	 * 
 	 */
 
+	public List<Action> sortActionsToSatisfyDesire(String somethingToBeTrue) {
+
+		List<Action> requiredActions = new ArrayList<>();
+
+		for (Action action : actions) {
+			if (action.getPosConditions().contains(somethingToBeTrue.replace(".", ""))) { // précondicao deve ser
+				verifyPreCondition(action, requiredActions, actions, 0);														// satisfeita
+			}
+		}
+		
+
+		return requiredActions;
+
+	}
+
+	
+
 	public Set<Action> chooseActionsToSatisfyDesire(String somethingToBeTrue) {
 
 		Set<Action> requiredAcions = new HashSet<Action>();
@@ -250,7 +258,7 @@ public class PlansContextService implements ContextService {
 
 	public void verifyPreCondition(Action goal, List<Action> sortedActions, List<Action> actions, int index) {
 
-		if (dumbCheck(goal.getPreConditions())) { // verifyPreConditionFromBeliefContext(goal.getPreConditions())
+		if (verifyPreConditionFromBeliefContext(goal.getPreConditions())) { // verifyPreConditionFromBeliefContext(goal.getPreConditions())
 			sortedActions.add(index, goal);
 
 		} else {
@@ -301,6 +309,7 @@ public class PlansContextService implements ContextService {
 
 		String[] actionsPC = PlansContextService.getInstance().getTheory().toString().split("\n");
 		String[] terms;
+		
 		/* Create instances of actions */
 		for (String action : actionsPC) {
 			if (action.contains("act(")) {
@@ -311,6 +320,7 @@ public class PlansContextService implements ContextService {
 				Set<String> pos = new HashSet<>();
 				pre.add(terms[1]);
 				pos.add(terms[2]);
+				
 				a.setName(terms[0]);
 				a.setPreConditions(pre);
 				a.setPosConditions(pos);
@@ -321,7 +331,9 @@ public class PlansContextService implements ContextService {
 
 		String[] somethingToBeTrue = DesiresContextService.getInstance().getTheory().toString().split("\n");
 		for (String desire : somethingToBeTrue) {
-			createSimplePlan(chooseActionsToSatisfyDesire(desire), desire);
+			//preciso achar o goal antes de chamar o método
+			//createSimplePlan(actions, desire);
+			createPlanWithOrderedActions(actions, desire);
 		}
 
 		System.out.println(plans.toString());
@@ -331,8 +343,8 @@ public class PlansContextService implements ContextService {
 	// the name was on purpose haha
 	/*
 	 * 
-	 * */
-	public void createSimplePlan(Set<Action> actions, String somethingToBeTrue) {
+	 * 
+	public void createSimplePlan(List<Action> actions, String somethingToBeTrue) {
 		Plan p = new Plan();
 		p.setSomethingToBeTrue(somethingToBeTrue);
 		if (actions.size() > 0) {
@@ -350,6 +362,36 @@ public class PlansContextService implements ContextService {
 
 		plans.add(p);
 
+	}*/
+	//actions nao ta na ordem certa
+	//usar pilha ou fila
+	
+	public void createPlanWithOrderedActions(List<Action> actions, String somethingToBeTrue) {
+		
+		List<Action> sortedActions = new ArrayList<>();
+
+		for (Action action : actions) {
+			if(action.getPosConditions().contains(somethingToBeTrue.replace(".", "")))
+				verifyPreCondition(action, sortedActions, actions, 0);
+		}
+		
+		Plan p = new Plan();
+		Set<String> preC = new HashSet<>();
+		
+		preC.add(sortedActions.get(sortedActions.size()-1).getPreConditions().stream().findFirst().get());
+		
+		Set<String> posC = new HashSet<>();
+		posC.add(sortedActions.get(0).getPosConditions().stream().findFirst().get());
+		
+		p.setPreConditions(preC);
+		p.setPosConditions(posC);
+		p.setSomethingToBeTrue(somethingToBeTrue);
+		if (sortedActions.size() > 0) {
+			p.setActions(new HashSet<>(sortedActions));
+		}
+
+		plans.add(p);
+
 	}
 
 	public void addPlan(Plan p) {
@@ -359,7 +401,7 @@ public class PlansContextService implements ContextService {
 	private String someThingToReach = "aux";
 	private String beliefDumb = "teste";
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		PlansContextService pc = new PlansContextService();
 		List<Plan> plans = new ArrayList<>();
 		List<Action> actions = new ArrayList<>();
@@ -370,6 +412,9 @@ public class PlansContextService implements ContextService {
 		Action a1 = new Action();
 		a1.setName("action2");
 
+		Action a2 = new Action();
+		a2.setName("action3");
+
 		Set<String> preC = new HashSet<>();
 		preC.add("t1");
 
@@ -377,10 +422,16 @@ public class PlansContextService implements ContextService {
 		posC.add("aux");
 
 		Set<String> preC1 = new HashSet<>();
-		preC1.add("teste");
+		preC1.add("t2");
 
 		Set<String> posC1 = new HashSet<>();
 		posC1.add("t1");
+
+		Set<String> preC2 = new HashSet<>();
+		preC2.add("teste");
+
+		Set<String> posC2 = new HashSet<>();
+		posC2.add("t2");
 
 		a.setPreConditions(preC);
 		a.setPosConditions(posC);
@@ -388,8 +439,12 @@ public class PlansContextService implements ContextService {
 		a1.setPreConditions(preC1);
 		a1.setPosConditions(posC1);
 
+		a2.setPreConditions(preC2);
+		a2.setPosConditions(posC2);
+
 		actions.add(a);
 		actions.add(a1);
+		actions.add(a2);
 
 		Plan p = new Plan();
 		p.setSomethingToBeTrue("aux");
@@ -408,8 +463,9 @@ public class PlansContextService implements ContextService {
 		 * System.out.println(pl.getPreConditions()); for (Action action :
 		 * pl.getActions()) { System.out.println(action.getName()); }
 		 * System.out.println(pl.getPosConditions()); }
-		 */
+		 
+		System.out.println(sortedActions.toString());
 
-	}
+	}*/
 
 }
