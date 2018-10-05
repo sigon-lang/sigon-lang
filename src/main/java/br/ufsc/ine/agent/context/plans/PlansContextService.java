@@ -260,6 +260,7 @@ public class PlansContextService implements ContextService {
 
 		if (verifyPreConditionFromBeliefContext(goal.getPreConditions())) { // verifyPreConditionFromBeliefContext(goal.getPreConditions())
 			sortedActions.add(index, goal);
+			index++;
 
 		} else {
 			for (Action action : actions) { // colocar nome da acao no if

@@ -12,6 +12,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import agent.AgentLexer;
 import agent.AgentParser;
+import alice.util.Sleep;
 import br.ufsc.ine.agent.Agent;
 import br.ufsc.ine.agent.context.ContextService;
 import br.ufsc.ine.agent.context.beliefs.BeliefsContextService;
@@ -27,15 +28,11 @@ import br.ufsc.ine.parser.VerboseListener;
 
 public class Main{
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		startAgent();
+		Thread.sleep(2000);
 		percept();
-
-
-		
-
-
-		
+				
 	}
 	
 	public static void sendPropose(List<String> t) {
@@ -94,7 +91,7 @@ public class Main{
 
 	       
 	       //ReadMessage.msg.onNext("enterAuction(house).");	        
-	        ReadMessage.msg.onNext("teste1(teste).");
+	        ReadMessage.msg.onNext("percep.");
 	        
 	        
 	        
