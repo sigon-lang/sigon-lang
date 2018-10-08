@@ -4,10 +4,13 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.stream.Collectors;
 
+import agent.AgentParser.BodyContext;
+import agent.AgentParser.HeadContext;
 import br.ufsc.ine.agent.bridgerules.BridgeRulesService;
 import br.ufsc.ine.agent.bridgerules.Head;
 import br.ufsc.ine.agent.context.ContextService;
@@ -62,18 +65,19 @@ public class Agent {
 				}
 
 			}
-			
+
 			BridgeRulesService.getInstance().addCustomContext(contextService);
 		}
 	}
-	
-	
 
 	private void subscribeSensors() {
 		List<Observable<String>> observables = this.sensors.stream().map(s -> s.getPublisher())
 				.collect(Collectors.toList());
 		observables.forEach(
-				stringObservable -> stringObservable.subscribe(this::bdiAlgorithmCycle, Throwable::printStackTrace));
+				stringObservable -> 
+					stringObservable.subscribe(this::bdiAlgorithmCycle, Throwable::printStackTrace)					
+		);
+
 	}
 
 	long cycles = 0;
@@ -90,10 +94,20 @@ public class Agent {
 		long startTime = System.nanoTime();
 
 		CommunicationContextService.getInstance().appendFact(this.getSense(literal));
+		executeBridgeRules();
 		BridgeRulesService.getInstance().executeBdiRules();
 		PlansContextService.getInstance().executePlanAlgorithm();
 		if (doProfiling)
 			profiling(startTime);
+	}
+
+	private synchronized void executeBridgeRules() {
+		rules.forEach((head, body) -> {
+			BridgeRulesService.getInstance().createBridgeRule(head, body);
+
+		}
+
+		);
 	}
 
 	private void profiling(long startTime) {
@@ -162,11 +176,8 @@ public class Agent {
 			}
 
 		walker.getBridgeRules().forEach(a -> {
-			// create bridge rule
-			/*
-			 * Passar nome do contexto head, termo, contextos body e termos
-			 */
-			BridgeRulesService.getInstance().createBridgeRule(a.head(), a.body());
+			// BridgeRulesService.getInstance().createBridgeRule(a.head(), a.body());
+			rules.put(a.head(), a.body());
 
 		}
 
@@ -175,6 +186,8 @@ public class Agent {
 		// BridgeRulesService.getInstance().rules(walker.getBridgeRules());
 
 	}
+
+	private HashMap<HeadContext, BodyContext> rules = new HashMap<>();
 
 	private List<LangContext> getContext(AgentWalker walker, String context) {
 		return walker.getLangContexts().stream().filter(c -> c.getName().equals(context)).collect(Collectors.toList());

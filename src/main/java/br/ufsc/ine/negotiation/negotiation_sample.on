@@ -24,6 +24,7 @@ intentions:
 
 !_negotiation prop1 :- beliefs aux | desires testeQ.
 
+! _negotiation salaryOptions(X) :- communication sense(X).
 
 
 

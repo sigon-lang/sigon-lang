@@ -91,7 +91,11 @@ public class Main{
 
 	       
 	       //ReadMessage.msg.onNext("enterAuction(house).");	        
-	        ReadMessage.msg.onNext("percep.");
+	       // ReadMessage.msg.onNext("jobOffer/(salary(7000, 5000), time(5, 6)).");
+	        ReadMessage.msg.onNext("salaryOptions(7000, 5000).");
+	        
+	        
+	        
 	        
 	        
 	        
