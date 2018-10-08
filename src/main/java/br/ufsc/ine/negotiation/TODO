@@ -1,0 +1,7 @@
+TODO Planning:
+
+Implementar questão do _
+Verificar impacto do binding quando o plano é criado de forma diferente
+Implementar questão de múltiplicas precondicoes
+Implementar planejamento usando custos
+Testar controle de custo por meio de regras de ponte e negociacao

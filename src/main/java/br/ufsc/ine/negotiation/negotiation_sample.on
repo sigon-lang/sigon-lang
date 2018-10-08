@@ -24,20 +24,15 @@ intentions:
 
 !_negotiation prop1 :- beliefs aux | desires testeQ.
 
+
+
+
 ! planner [sendPropose1, aux1, teste] :- beliefs aux.
 
 ! planner [sendPropose, aux, aux1] :- beliefs aux.
 
 
 planner:
-	plan(
-		teste,
-		[	
-			action(sendPropose(msg), aux, teste1)			
-		]
-		,		
-		[percep],		
-		[realizarLance]
-		).
+
 	
 
