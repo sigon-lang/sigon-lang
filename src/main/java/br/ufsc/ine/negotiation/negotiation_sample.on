@@ -24,9 +24,12 @@ intentions:
 
 !_negotiation prop1 :- beliefs aux | desires testeQ.
 
-! planner [sendPropose, aux, teste] :- beliefs aux.
+! planner [sendPropose1, aux1, teste] :- beliefs aux.
 
-/*planner:
+! planner [sendPropose, aux, aux1] :- beliefs aux.
+
+
+planner:
 	plan(
 		teste,
 		[	
@@ -34,7 +37,7 @@ intentions:
 		]
 		,		
 		[percep],		
-		realizarLance
+		[realizarLance]
 		).
 	
-*/
+
