@@ -65,10 +65,25 @@ _negotiation:
 
 
 //usando o CC para definir o que será negociado - replicar para outros casos
-! _negotiation salaryOptions(X,Y,Z) :- 
+! _negotiation salary(X,Y,Z) :- 
 	communication sense(jobOffer(salary(X,Y,Z),_,_,_,_,_)).
 	
-
+	
+! _negotiation jobDescription(X,Y,Z,W) :- 
+	communication sense(jobOffer(_,jobDescription(X,Y,Z,W),_,_,_,_)).
+	
+! _negotiation car(X,Y,Z) :- 
+	communication sense(jobOffer(_,_,car(X,Y,Z),_,_,_)).
+	
+! _negotiation pension(X,Y,Z,W) :- 
+	communication sense(jobOffer(_,_,_,pension(X,Y,Z,W),_,_)).
+	
+	
+! _negotiation promotion(X,Y,Z) :- 
+	communication sense(jobOffer(_,_,_,_,promotion(X,Y,Z),_)).
+	
+! _negotiation workingHours(X,Y,Z) :- 
+	communication sense(jobOffer(_,_,_,_,_,workingHours(X,Y,Z))).
 
 
 	
@@ -102,10 +117,7 @@ _negotiation:
 //usando AAT para definir desejos de negociacao
 
 ! desires propose(X) :- _negotiation increaseUrgency(X, 10).
-					
 
-//regra de ponte para definir ação
-//! planner action(bid(house, X), available_money(X), buy(house)) :- _negotiation bid(house, X). Feito pelo código
 
 /*Duvidas - ideias de como adicionar planos
 
@@ -119,24 +131,7 @@ Regra de ponte entre CC e NC para adição de protocolo
 
 */
 
-//regra de ponte para definir desejo
-//! desires buy(house) :- _negotiation bid(house, X). -> PODE SER DEFINIDO PELA INTENCAO // Feito pelos planos
-
-
-//somethingToBeTrue buy house?
 					 
 
 planner:
-	//plan(somethingToBeTrue, compoundaction, preconditions, postconditions)
-	plan(
-		buy(house),
-		[
-			action(sendPropose(msg),  availablemoney(Y), workdistance(5))
-			
-		],		
-		[enterAuction(house) , availablemoney(Y)],
-		[
-			buy(house),
-			workdistance(5)
-			
-		]).
+

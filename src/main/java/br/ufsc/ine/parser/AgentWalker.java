@@ -79,8 +79,7 @@ public class AgentWalker extends AgentBaseListener {
 	@Override
 	public void enterHead(HeadContext ctx) {
 		// TODO Auto-generated method stub
-		System.out.println("Head1 "+ctx.contextName().getText());
-		System.out.println("Terms head1 "+ctx.term().getText());
+		
 		super.enterHead(ctx);
 	}
 	
@@ -255,12 +254,6 @@ public class AgentWalker extends AgentBaseListener {
 
 	public List<AgentParser.BridgeRuleContext> getBridgeRules() {
 		
-		for (AgentParser.BridgeRuleContext ctx : bridgeRules) {
-			System.out.println("Head: "+ctx.head().contextName().getText());
-			System.out.println("Body: "+ctx.body().contextName(0).getText());
-			System.out.println("Body term : "+ctx.body().term(0).getText());
-			
-		}
 		return bridgeRules;
 	}
 
