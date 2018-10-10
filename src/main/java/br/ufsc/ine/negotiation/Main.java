@@ -45,8 +45,8 @@ public class Main{
 	private static void startAgent(){
 	    try {
 
-	        //File agentFile = new File("/home/rodrigor/sigon-lang/src/main/java/br/ufsc/ine/negotiation/negotiation_sample.on");
-	        File agentFile = new File("/home/rr/sigon-lang/src/main/java/br/ufsc/ine/negotiation/negotiation_sample.on");
+	        File agentFile = new File("/home/rodrigor/sigon-lang/src/main/java/br/ufsc/ine/negotiation/negotiation_sample.on");
+	        //File agentFile = new File("/home/rr/sigon-lang/src/main/java/br/ufsc/ine/negotiation/negotiation_sample.on");
 	        
 	        CharStream stream = CharStreams.fromFileName(agentFile.getAbsolutePath());
 	        AgentLexer lexer = new AgentLexer(stream);
@@ -92,7 +92,25 @@ public class Main{
 	       
 	       //ReadMessage.msg.onNext("enterAuction(house).");	        
 	       // ReadMessage.msg.onNext("jobOffer/(salary(7000, 5000), time(5, 6)).");
-	        ReadMessage.msg.onNext("salaryOptions(7000, 5000).");
+	        //ReadMessage.msg.onNext("salaryOptions(7000, 10000, 12000).");
+	        
+	        /*jobOffer(
+			salary(7000, 10000, 12000),
+			jobDescription(qa, programmer, teamManager, projectManager),
+			car(leased, noLeased, noAgreement),
+			pension(0, 10, 20, noAgreement),
+			promotion(2, 4, noAgreement),
+			workingHours(8, 9, 10)
+			)*/
+	        
+	        ReadMessage.msg.onNext("jobOffer(\n" + 
+	        		"salary(7000, 10000, 12000),\n" + 
+	        		"jobDescription(qa, programmer, teamManager, projectManager),\n" + 
+	        		"car(leased, noLeased, noAgreement),\n" + 
+	        		"pension(0, 10, 20, noAgreement),\n" + 
+	        		"promotion(2, 4, noAgreement),\n" + 
+	        		"workingHours(8, 9, 10)\n" + 
+	        		").");
 	        
 	        
 	        

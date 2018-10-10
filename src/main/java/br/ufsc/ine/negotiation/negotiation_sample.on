@@ -24,8 +24,8 @@ intentions:
 
 !_negotiation prop1 :- beliefs aux | desires testeQ.
 
-! _negotiation salaryOptions(X) :- communication sense(X).
 
+! _negotiation salaryOptions(X,Y,Z) :- communication sense(jobOffer(salary(X,Y,Z),_,_,_,_,_)).
 
 
 ! planner [sendPropose1, aux1, teste] :- beliefs aux.
