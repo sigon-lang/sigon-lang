@@ -65,7 +65,7 @@ _negotiation:
 
 
 //usando o CC para definir o que será negociado - replicar para outros casos
-! _negotiation salary(X,Y,Z) :- 
+/*! _negotiation salary(X,Y,Z) :- 
 	communication sense(jobOffer(salary(X,Y,Z),_,_,_,_,_)).
 	
 	
@@ -84,7 +84,7 @@ _negotiation:
 	
 ! _negotiation workingHours(X,Y,Z) :- 
 	communication sense(jobOffer(_,_,_,_,_,workingHours(X,Y,Z))).
-
+*/
 
 	
 
@@ -97,11 +97,10 @@ _negotiation:
 ! _negotiation decreaseUrgency(car, 0) :- 
 	beliefs workdistance(5) | car(working).
 	
-! _negotiation increaseUrgency(occupiedHours(8), 10) :- 
-	desires occupiedHours(10) && beliefs occupiedHours(2).
+! _negotiation increaseUrgency(occupiedHours(8), 10) :- desires occupiedHours(10) & beliefs occupiedHours(2).
 	
 /*! _negotiation decreaseUrgency(occupiedHours(10), 10) :- 
-	desires occupiedHours(10) && beliefs occupiedHours(2).*/
+	desires occupiedHours(10) & beliefs occupiedHours(2).*/
 	
 //usando AAT para definir ações 													
 

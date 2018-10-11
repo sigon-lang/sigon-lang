@@ -16,42 +16,18 @@ _negotiation:
 	
 	aux1. //ação 1	
 	aux2.
+	teste(teste).
 	
 
 intentions:
 	
 
 
-!_negotiation prop1 :- beliefs aux | desires testeQ.
+! _negotiation prop1 :- beliefs aux | desires testeQ.
 
 
-//! _negotiation salaryOptions(X,Y,Z) :- communication sense(jobOffer(salary(X,Y,Z),_,_,_,_,_)).
+! planner [teste, aux, aux1] :- _negotiation X.
 
-
-! _negotiation salary(X,Y,Z) :- 
-	communication sense(jobOffer(salary(X,Y,Z),_,_,_,_,_)).
-	
-	
-! _negotiation jobDescription(X,Y,Z,W) :- 
-	communication sense(jobOffer(_,jobDescription(X,Y,Z,W),_,_,_,_)).
-	
-! _negotiation car(X,Y,Z) :- 
-	communication sense(jobOffer(_,_,car(X,Y,Z),_,_,_)).
-	
-! _negotiation pension(X,Y,Z,W) :- 
-	communication sense(jobOffer(_,_,_,pension(X,Y,Z,W),_,_)).
-	
-	
-! _negotiation promotion(X,Y,Z) :- 
-	communication sense(jobOffer(_,_,_,_,promotion(X,Y,Z),_)).
-	
-! _negotiation workingHours(X,Y,Z) :- 
-	communication sense(jobOffer(_,_,_,_,_,workingHours(X,Y,Z))).
-
-
-! planner [sendPropose1, aux1, teste] :- beliefs aux.
-
-! planner [sendPropose, aux, aux1] :- beliefs aux.
 
 
 planner:
