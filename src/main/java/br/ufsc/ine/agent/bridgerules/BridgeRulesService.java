@@ -19,8 +19,10 @@ import agent.AgentParser.BodyContext;
 import agent.AgentParser.BridgeRuleContext;
 import agent.AgentParser.ContextNameContext;
 import agent.AgentParser.HeadContext;
+import agent.AgentParser.LogicalContextContext;
 import agent.AgentParser.LogicalOperatorContext;
 import agent.AgentParser.PlannerContextContext;
+import agent.AgentParser.TermContext;
 import br.ufsc.ine.agent.context.ContextService;
 import br.ufsc.ine.agent.context.LangContext;
 import br.ufsc.ine.agent.context.beliefs.BeliefsContextService;
@@ -216,24 +218,79 @@ public class BridgeRulesService {
 			head_term = plannerBridgeRule(headContext);
 		}
 		//se for plan dá de adicionar a ação
-		ContextService cBody = cContexts.get(bodyContext.contextName(0).getText());
+		ContextService cBody = cContexts.get(bodyContext.contextName(0).getText()); //obtem contexto do body
 		
-		Body previous = Body.builder().context(cBody).clause(bodyContext.term(0).getText()).build();
+		Body previous = Body.builder().context(cBody).clause(bodyContext.term(0).getText()).build(); // cria o body
 		ContextService cBodyI;
 		Body current;
-		int i = 1;		
+		int i = 1;	
+		List<Body> bodies = new ArrayList<>();
+		bodies.add(previous);
+		
 		
 		for (LogicalOperatorContext op : bodyContext.logicalOperator()) {
 			
 			cBodyI = cContexts.get(bodyContext.contextName(i).getText());
-			current = Body.builder().context(cBodyI).clause(bodyContext.term(i).getText()).build();
+			current = Body.builder().context(cBodyI).clause(bodyContext.term(i).getText()).build(); 
 			
 			if(op.getText().equalsIgnoreCase("&")) {
-				previous.setAnd(current);
+				bodies.get(i-1).setAnd(current); 
+			}else {
+				bodies.get(i-1).setOr(current); //TODO quando existir mais de um termo da forma: contexto term term term... não funciona
+			}
+			bodies.add(i, current);
+
+			i++;
+
+		}
+		
+		Head head = Head.builder().context(cc).clause(head_term).build();
+		BridgeRule.builder().head(head).body(bodies.get(0)).build().execute();
+		
+		
+
+	}
+	
+	 /*
+	
+	public void createBridgeRuleRecursive(HeadContext headContext, BodyContext bodyContext) {
+		ContextService cc = cContexts.get(headContext.contextName().getText());
+		String head_term = headContext.term().getText();
+		
+		if(headContext.contextName().getText().equalsIgnoreCase("planner")) {
+			head_term = plannerBridgeRule(headContext);
+		}
+		//se for plan dá de adicionar a ação
+		ContextService cBody = cContexts.get(bodyContext.contextName(0).getText()); //obtem contexto do body
+		
+		Body previous = Body.builder().context(cBody).clause(bodyContext.term(0).getText()).build(); // cria o body
+		ContextService cBodyI;
+		this.contexts =  bodyContext.term();
+		Body current;
+		int i = 0;		
+		List<LogicalOperatorContext> operators = bodyContext.logicalOperator();
+		
+		if(!operators.isEmpty()) {
+			
+			i++;
+			createBody(i, operators.get(i), contexts.get(i), previous);
+
+		}else {
+			// nao tem previous dai
+		}
+		
+		
+		for (LogicalOperatorContext op : bodyContext.logicalOperator()) {
+			
+			cBodyI = cContexts.get(bodyContext.contextName(i).getText()); //pega o contexto apos o operador
+			current = Body.builder().context(cBodyI).clause(bodyContext.term(i).getText()).build(); //cria o body do contexto apos o operador
+			
+			if(op.getText().equalsIgnoreCase("&")) {
+				previous.setAnd(current); //seta o contexto apos o operador
 			}else {
 				previous.setOr(current); //TODO quando existir mais de um termo da forma: contexto term term term... não funciona
 			}
-			previous = current;
+			previous = current; //troca de contextos para setar and do proximo
 			i++;
 			
 		}
@@ -243,10 +300,28 @@ public class BridgeRulesService {
 		
 		Head head = Head.builder().context(cc).clause(head_term).build();
 		BridgeRule.builder().head(head).body(cbody).build().execute();
+	}
+	
+	public void createBody(int index, int indexOperator,List<LogicalOperatorContext> logicalOperatorContext, Body current, Body previous) {
 		
+		
+		if(index < contexts.size()) {
+			if(logicalOperatorContext.get(indexOperator).getText().equalsIgnoreCase("&")) {
+				previous.setAnd(current); //seta o contexto apos o operador
+			}else {
+				previous.setOr(current); //TODO quando existir mais de um termo da forma: contexto term term term... não funciona
+			}
+			indexOperator++;
+			
+			index++;		
+			createBody(index, logicalOperatorContext, termContext, previous);
+		}
 		
 
-	}
+		
+		
+		
+	}*/
 	
 	public String plannerBridgeRule(HeadContext headContext) {
 

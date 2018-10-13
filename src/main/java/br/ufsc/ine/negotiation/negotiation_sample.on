@@ -17,16 +17,26 @@ _negotiation:
 	aux1. //ação 1	
 	aux2.
 	teste(teste).
+	increaseUrgency(car, 10).
 	
 
 intentions:
 	
 
 
-! _negotiation prop1 :- beliefs aux | desires testeQ.
+//! _negotiation teste(prop1) :- beliefs teste(aux) | _negotiation testeQ.
 
 
-! planner [teste, aux, aux1] :- _negotiation X.
+! desires propose(car) :- beliefs aux | beliefs t2.
+
+
+
+
+
+/*! planner [teste, aux, aux1] :- _negotiation X.
+
+! planner [propose, not car, propose(car)] :- _negotiation increaseUrgency(car, 10) & _negotiation car & beliefs not car.*/
+
 
 
 
