@@ -249,6 +249,7 @@ public class AgentWalker extends AgentBaseListener {
 	@Override
 	public void enterBridgeRule(AgentParser.BridgeRuleContext ctx) {
 		this.bridgeRules.add(ctx);
+		
 		super.enterBridgeRule(ctx);
 	}
 

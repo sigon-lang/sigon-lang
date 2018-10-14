@@ -94,12 +94,12 @@ _negotiation:
 */ 
 
 //usando crencas e desejos para definir o AAT
-! _negotiation decreaseUrgency(car, 0) :- 
-	beliefs workdistance(5) | car(working).
+/*! _negotiation decreaseUrgency(car, 0) :- 
+	beliefs workdistance(5) | car(working).*/
 	
 //! _negotiation increaseUrgency(occupiedHours(8), 10) :- desires occupiedHours(10) & beliefs occupiedHours(2).
 
-! _negotiation increaseUrgency(eightHours, 10) :- desires occupiedHours(10) & beliefs occupiedHours(2).
+//! _negotiation increaseUrgency(eightHours, 10) :- desires occupiedHours(10) & beliefs occupiedHours(2).
 	
 /*! _negotiation decreaseUrgency(occupiedHours(10), 10) :- 
 	desires occupiedHours(10) & beliefs occupiedHours(2).*/
@@ -117,7 +117,7 @@ _negotiation:
 
 //usando AAT para definir desejos de negociacao
 
-! desires propose(X) :- _negotiation increaseUrgency(X, 10) & X.
+! desires propose(X) :- _negotiation increaseUrgency(X, 10) .
 
 
 /*Duvidas - ideias de como adicionar planos
