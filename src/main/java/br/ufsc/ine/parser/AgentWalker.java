@@ -126,7 +126,7 @@ public class AgentWalker extends AgentBaseListener {
 	@Override
 	public void enterLogicalContext(LogicalContextContext ctx) {
 		this.lastLangContext = new LangContext();
-		this.lastLangContext.setName(ctx.logicalContextName().getText());
+		this.lastLangContext.setName(ctx.logicalContextName().getText().replace("_", ""));
 		if(ctx.formulas()!=null && ctx.formulas().term()!=null) { 
 			ctx.formulas().term().forEach(t->{
 				 this.lastLangContext.addClause(t.getText());

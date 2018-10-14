@@ -218,7 +218,7 @@ public class BridgeRulesService {
 			head_term = plannerBridgeRule(headContext);
 		}
 		//se for plan dá de adicionar a ação
-		ContextService cBody = cContexts.get(bodyContext.contextName(0).getText()); //obtem contexto do body
+		ContextService cBody = cContexts.get(bodyContext.contextName(0).getText().replaceAll("_", "")); //obtem contexto do body
 		
 		Body previous = Body.builder().context(cBody).clause(bodyContext.term(0).getText()).build(); // cria o body
 		ContextService cBodyI;

@@ -128,7 +128,7 @@ public class NegotiationContextService implements ContextService {
 
 	@Override
 	public String getName() {
-		return "_negotiation";
+		return "negotiation";
 	}
 
 	@Override

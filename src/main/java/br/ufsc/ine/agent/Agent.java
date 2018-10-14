@@ -60,6 +60,7 @@ public class Agent {
 		for (ContextService contextService : contexts) {
 			List<LangContext> langCustom = getContext(walker, contextService.getName());
 			for (LangContext langContext : langCustom) {
+				//langContext.setName(langContext.getName().replaceAll("_", ""));
 				for (String clause : langContext.getClauses()) {
 					contextService.appendFact(clause);
 				}
@@ -189,7 +190,7 @@ public class Agent {
 
 	private HashMap<HeadContext, BodyContext> rules = new HashMap<>();
 
-	private List<LangContext> getContext(AgentWalker walker, String context) {
+	private List<LangContext> getContext(AgentWalker walker, String context) {		
 		return walker.getLangContexts().stream().filter(c -> c.getName().equals(context)).collect(Collectors.toList());
 	}
 

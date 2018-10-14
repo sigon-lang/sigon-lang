@@ -27,7 +27,7 @@ intentions:
 //! _negotiation teste(prop1) :- beliefs teste(aux) | _negotiation testeQ.
 
 
-! desires propose(car) :- beliefs aux | beliefs t2.
+! desires propose(car) :- _negotiation aux1.
 
 
 

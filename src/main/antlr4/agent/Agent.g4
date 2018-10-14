@@ -43,7 +43,7 @@ logicalContextName
 	;
 
 primitiveContextName
-	: 'beliefs' | 'desires' | 'intentions'
+	: 'beliefs' | 'desires' | 'intentions' 
 	;
 
 customContextName

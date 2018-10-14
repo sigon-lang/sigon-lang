@@ -28,6 +28,7 @@ public class Body {
     public boolean verify(){
         try {
             Theory contextTheory = defineBodyTheory();
+            
             Prolog prolog = new Prolog();
             prolog.setTheory(contextTheory);
 
@@ -91,15 +92,17 @@ public class Body {
         StringBuilder builder = new StringBuilder();
         String[] contextSplit = context.getTheory().toString()
                 //.replaceAll("_([0-9])*", "_").trim()
-                .replaceAll("\\n\\n", "/")
+                .replaceAll("\\n\\n", "/").replaceAll("_", "")
                 .split("/");
 
+        //String contextName = context.getName().replaceAll("_", "");
+        String contextName = context.getName();
 
 
         for (String s :contextSplit) {
             if (!s.isEmpty()){
                 String result = s.replaceAll("_([0-9])*", "_").trim();
-                builder.append(context.getName() + "(" + result.substring(0, result.length() - 1) + "). \n");
+                builder.append(contextName + "(" + result.substring(0, result.length() - 1) + "). \n");
             }
         }
 
