@@ -88,7 +88,12 @@ public class PlansContextService implements ContextService {
 				if (args.isEmpty()) {
 					args = "_";
 				}
-				this.appendFact("act(" + any.get().getName() + "(" + args + ")" + ").");
+				if(any.get().getName().indexOf("(") != -1) {
+					this.appendFact("act(" + any.get().getName() +").");
+				}else {
+					this.appendFact("act(" + any.get().getName() + "(" + args + ")" + ").");
+				}
+				
 
 				BridgeRule.builder()
 						.head(Head.builder().context(CommunicationContextService.getInstance()).clause("X").build())
@@ -321,9 +326,11 @@ public class PlansContextService implements ContextService {
 		/* Create instances of actions */
 		for (String action : actionsPC) {
 			if (action.contains("act(")) {
-
+				
 				Action a = new Action();
-				terms = action.replace("act(", "").replaceAll("\\).", "").split(",");
+				terms = action.substring(4, action.length()-2).split(","); //usar outra abordagem para o split
+				
+				//terms = action.replace("act(", "").replaceAll("\\).", "").split(",");
 				Set<String> pre = new HashSet<>();
 				Set<String> pos = new HashSet<>();
 				pre.add(terms[1]);

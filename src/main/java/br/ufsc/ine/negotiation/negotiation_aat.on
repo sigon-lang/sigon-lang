@@ -42,6 +42,7 @@ communication:
 beliefs:
 	occupiedHours(2). //Bob faz um curso que ocupa 2 horas diarias dele
 	workdistance(5). //Bob vive proximo do empresa que pretende trabalhar
+	car.
 	
 
 
@@ -65,7 +66,9 @@ _negotiation:
 
 
 //usando o CC para definir o que será negociado - replicar para outros casos
-/*! _negotiation salary(X,Y,Z) :- 
+
+/*
+! _negotiation salary(X,Y,Z) :- 
 	communication sense(jobOffer(salary(X,Y,Z),_,_,_,_,_)).
 	
 	
@@ -84,8 +87,8 @@ _negotiation:
 	
 ! _negotiation workingHours(X,Y,Z) :- 
 	communication sense(jobOffer(_,_,_,_,_,workingHours(X,Y,Z))).
-*/
 
+*/
 	
 
 /*como definir o gamma?
@@ -94,19 +97,27 @@ _negotiation:
 */ 
 
 //usando crencas e desejos para definir o AAT
-/*! _negotiation decreaseUrgency(car, 0) :- 
-	beliefs workdistance(5) | car(working).*/
+! _negotiation decreaseUrgency(car, 0) :- 
+	beliefs workdistance(5) | beliefs car(working).
 	
 //! _negotiation increaseUrgency(occupiedHours(8), 10) :- desires occupiedHours(10) & beliefs occupiedHours(2).
 
-//! _negotiation increaseUrgency(eightHours, 10) :- desires occupiedHours(10) & beliefs occupiedHours(2).
+! _negotiation increaseUrgency(eightHours, 10) :- desires occupiedHours(10) & beliefs occupiedHours(2).
 	
 /*! _negotiation decreaseUrgency(occupiedHours(10), 10) :- 
 	desires occupiedHours(10) & beliefs occupiedHours(2).*/
 	
+	
+! _negotiation decreaseUrgency(tenHours, 10) :- desires occupiedHours(10) & beliefs occupiedHours(2).
+	
 //usando AAT para definir ações 													
 
 ! planner [propose, not car, propose(car)] :- _negotiation increaseUrgency(car, 10) & _negotiation car & beliefs not car.
+
+//! planner [propose(noCar), car, propose(noCar)] :- _negotiation decreaseUrgency(car, 0) & _negotiation car(X,Y,Z) & beliefs car.
+
+! planner [sendPropose(msg), car, propose(noCar)] :- _negotiation decreaseUrgency(car, 0).
+
 
 /*Uma ação de negociação consiste em propor algo, ou seja, propor X
  A pré-condicao de propor X é que X seja um atributo de negociação (garantido na RP entre PC e NC), ou seja, 
@@ -117,7 +128,9 @@ _negotiation:
 
 //usando AAT para definir desejos de negociacao
 
-! desires propose(X) :- _negotiation increaseUrgency(X, 10) .
+! desires propose(noCar) :- _negotiation decreaseUrgency(car, 0) .
+
+
 
 
 /*Duvidas - ideias de como adicionar planos
