@@ -12,12 +12,10 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import agent.AgentLexer;
 import agent.AgentParser;
-import alice.util.Sleep;
 import br.ufsc.ine.agent.Agent;
 import br.ufsc.ine.agent.context.ContextService;
 import br.ufsc.ine.agent.context.beliefs.BeliefsContextService;
 import br.ufsc.ine.agent.context.communication.CommunicationContextService;
-import br.ufsc.ine.agent.context.custom.CustomContext;
 import br.ufsc.ine.agent.context.desires.DesiresContextService;
 import br.ufsc.ine.agent.context.intentions.IntentionsContextService;
 import br.ufsc.ine.agent.context.plans.PlansContextService;
@@ -26,7 +24,7 @@ import br.ufsc.ine.parser.VerboseListener;
 
 
 
-public class Main{
+public class MainTrescak{
 	
 	public static void main(String[] args) throws InterruptedException {
 		startAgent();
@@ -45,12 +43,9 @@ public class Main{
 	private static void startAgent(){
 	    try {
 
-	       // File agentFile = new File("/home/rodrigor/sigon-lang/src/main/java/br/ufsc/ine/negotiation/negotiation_sample.on");
-	        //File agentFile = new File("/home/rodrigor/sigon-lang/src/main/java/br/ufsc/ine/negotiation/negotiation.on");
-	        //File agentFile = new File("/home/rodrigor/sigon-lang/src/main/java/br/ufsc/ine/negotiation/negotiation_aat.on");
-	        //File agentFile = new File("/home/rr/sigon-lang/src/main/java/br/ufsc/ine/negotiation/negotiation.on");
+	       
 	    	//File agentFile = new File("/home/rr/sigon-lang/src/main/java/br/ufsc/ine/negotiation/negotiation_aat.on");
-	    	File agentFile = new File("/home/rodrigor/sigon-lang/src/main/java/br/ufsc/ine/negotiation/test.on");
+	    	File agentFile = new File("/home/rodrigor/sigon-lang/src/main/java/br/ufsc/ine/negotiation/cenario2_trescak.on");
 	        CharStream stream = CharStreams.fromFileName(agentFile.getAbsolutePath());
 	        AgentLexer lexer = new AgentLexer(stream);
 	        CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -67,20 +62,10 @@ public class Main{
 	        AgentWalker agentWalker = new AgentWalker();
 	        walker.walk(agentWalker, tree);
 	        
-	        NegotiationContextService nc =  NegotiationContextService.getInstance();
-	        
-	        
+	        NegotiationContextService nc =  NegotiationContextService.getInstance();	        	        
 	        ContextService[] cc = new ContextService[] {nc};
-	        //CustomContext[] cc = new CustomContext[] {nc.};	        
 	        Agent agent = new Agent();	    
 	        agent.run(agentWalker, cc);
-	        //agent.run(agentWalker, new String[] {"_negotiation"});
-	        
-	        
-	        
-	        
-
-
 
 
 	    } catch (IOException e) {
@@ -90,32 +75,22 @@ public class Main{
 	
 	
 	 private static void percept(){
-	        System.out.println("Percept");
-
-	       
-	       //ReadMessage.msg.onNext("enterAuction(house).");	        
-	       // ReadMessage.msg.onNext("jobOffer/(salary(7000, 5000), time(5, 6)).");
-	        //ReadMessage.msg.onNext("salaryOptions(7000, 10000, 12000).");
-	        
-	        /*jobOffer(
-			salary(7000, 10000, 12000),
-			jobDescription(qa, programmer, teamManager, projectManager),
-			car(leased, noLeased, noAgreement),
-			pension(0, 10, 20, noAgreement),
-			promotion(2, 4, noAgreement),
-			workingHours(8, 9, 10)
-			)*/
-	        
-	        ReadMessage.msg.onNext("jobOffer(\n" + 
-	        		"salary(7000, 10000, 12000),\n" + 
-	        		"jobDescription(qa, programmer, teamManager, projectManager),\n" + 
-	        		"car(leased, noLeased, noAgreement),\n" + 
-	        		"pension(0, 10, 20, noAgreement),\n" + 
-	        		"promotion(2, 4, noAgreement),\n" + 
-	        		"workingHours(8, 9, 10)\n" + 
-	        		").");
+	        System.out.println("GetKnowledge from alpha and beta");       
+	      
+	        //I(Can(alpha, hangPicutre))
+	        //I(Can(beta, hangMirror))
 	        
 	        
+	        ReadMessage.msg.onNext("intensions(can(alpha, hangPicutre),can(beta, hangMirror)).");
+	        //ReadMessage.msg.onNext("can(alpha, hangPicutre).");
+	        
+	        /*Have(alpha, picture)
+	         * Have(alpha, screw)
+	         * Have(alpha, hammer)
+	         * Have(beta, nail)
+	         * Have(beta, mirror)
+	         * 
+	         * */
 	        
 	        
 	        

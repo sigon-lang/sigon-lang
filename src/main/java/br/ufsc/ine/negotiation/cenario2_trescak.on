@@ -1,0 +1,53 @@
+/*maquina de estados do processo inteiro
+impactos em reescalar atributos e como isso é feito
+
+Objetivo é modelar o agente mediador mi, inicialmente ele não possui conhecimento
+Os agentes alfa e beta enviam seus objetivos para o agente mi
+
+1-Descobrir como o createSolution funciona -> no primeiro caso ele falha
+
+*/
+
+
+communication:
+    sensor("readPropose", "br.ufsc.ine.negotiation.ReadMessage").
+    actuator("sendPropose", "br.ufsc.ine.negotiation.SendMessage").
+
+//uma percepção alfa só é adicionada ao contexto de crenças se ela for uma pre-condição de algum plano.
+beliefs:	
+	gatherInformation.	
+	teste :- gatherInformation.
+	
+
+
+desires:
+	resolveDispute.
+	createProposal.
+	
+_negotiations:
+	
+	//modelar argumentacao usando o G.1  e G.2
+	//Reduction - if there is a way to achieve an intention, an agent
+	//adopts the intention to achieve its preconditions:
+		
+	
+
+	
+	
+
+intentions:
+	
+
+! beliefs have(Y,Z) :- beliefs have(X,Z) & beliefs give(X,Y,Z). //G.1 Ownership
+
+
+planner:
+	plan(
+		createProposal,
+		[	
+			action(sendPropose(msg))			
+		]
+		,		
+		[intensions(_, _)],		
+		[resolveDispute]
+		).
