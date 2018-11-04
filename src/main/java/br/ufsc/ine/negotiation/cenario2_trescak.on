@@ -15,8 +15,17 @@ communication:
 
 //uma percepção alfa só é adicionada ao contexto de crenças se ela for uma pre-condição de algum plano.
 beliefs:	
-	gatherInformation.	
-	teste :- gatherInformation.
+	gatherInformation.
+	have(X, screw).
+	have(X, screwdriver).
+	have(X, mirror).
+	
+	
+	
+	
+	
+! beliefs can(X, hangMirror) :- beliefs have(X, screw) & beliefs have(X, screwdriver) 
+	& beliefs have(X, mirror). //M.2
 	
 
 
@@ -24,18 +33,33 @@ desires:
 	resolveDispute.
 	createProposal.
 	
+	
+
+intentions:
+	can(alpha, hangPicture). //M.5
+	can(beta, hangMirror). //M.6
+	
+	
+! intentions have(X, screw) :- intentions can(X, hangMirror) & beliefs not have(X, screw). //parte dos pre req
+! intentions have(X, screwDriver) :- intentions can(X, hangMirror) & beliefs not have(X, screwDriver).
+! intentions have(X, mirror) :- intentions can(X, hangMirror) & beliefs not have(X, mirror). //mudar parte das intencoes do agente
+
+	
+	
 _negotiations:
 	
 	//modelar argumentacao usando o G.1  e G.2
 	//Reduction - if there is a way to achieve an intention, an agent
-	//adopts the intention to achieve its preconditions:
+	//adopts the intention to achieve its preconditions: Rever questao de intencao
+	//se o agente pretender atingir q, ele deve ter suas precondicoes satisfeitas
 		
-	
+! intentions X :- beliefs Y.  
+
 
 	
 	
+	
 
-intentions:
 	
 
 ! beliefs have(Y,Z) :- beliefs have(X,Z) & beliefs give(X,Y,Z). //G.1 Ownership
