@@ -15,19 +15,31 @@ communication:
 
 //uma percepção alfa só é adicionada ao contexto de crenças se ela for uma pre-condição de algum plano.
 beliefs:	
-	gatherInformation.
-	have(X, screw).
-	have(X, screwdriver).
-	have(X, mirror).
+	
+	have(alpha, picture).
+	have(alpha, screw). //M.7
+	have(alpha, hammer).
+	have(beta, nail).
+	have(beta, mirror).
+	not have(beta, screw).
+	not have(beta, screwDriver).
+	have(mi, screwDriver).
+	have(alpha, picture) :- have(beta, picture).
 	
 	
 	
-	
-	
-! beliefs can(X, hangMirror) :- beliefs have(X, screw) & beliefs have(X, screwdriver) 
-	& beliefs have(X, mirror). //M.2
-	
+//! beliefs have(Y,Z) :- beliefs have(X,Z) & beliefs give(X,Y,Z). //G.1 Ownership
 
+	
+! beliefs can(X, hangMirror) :- beliefs have(X, screw) & beliefs have(X, screwDriver) 
+	& beliefs have(X, mirror). //M.2 OK 
+	
+//M7 e G.1
+	//! beliefs have(Y,screw) :- beliefs have(X,screw) & beliefs give(X,Y,screw).  //G.1
+	
+//m.12
+
+	
 
 desires:
 	resolveDispute.
@@ -35,7 +47,10 @@ desires:
 	
 	
 
-intentions:
+	
+	
+
+intentions:	
 	can(alpha, hangPicture). //M.5
 	can(beta, hangMirror). //M.6
 	
@@ -44,6 +59,21 @@ intentions:
 ! intentions have(X, screwDriver) :- intentions can(X, hangMirror) & beliefs not have(X, screwDriver).
 ! intentions have(X, mirror) :- intentions can(X, hangMirror) & beliefs not have(X, mirror). //mudar parte das intencoes do agente
 
+
+! beliefs give1(alpha, Y, screw) :- intentions have(Y, screw) & beliefs have(alpha, screw).
+
+! beliefs give2(mi, Y, screwDriver) :- intentions have(Y, screwDriver) & beliefs have(mi, screwDriver).
+
+
+! intentions give(alpha,Y, screw) :- intentions have(Y, screw).
+
+! intentions give2(mi, Y, screwDriver) :- intentions have(Y, screwDriver) & beliefs have(mi, screwDriver).
+
+ 
+//tell se X é um pre req pra atingir um objetivo
+! communication sendPropose(X,Y,Z) :- intentions give(X,Y,Z). // equivalente ao tell do artigo 
+
+//! communication tell(mi, Y, I) :- intentions intentions(Y, I).   
 	
 	
 _negotiations:
@@ -53,25 +83,8 @@ _negotiations:
 	//adopts the intention to achieve its preconditions: Rever questao de intencao
 	//se o agente pretender atingir q, ele deve ter suas precondicoes satisfeitas
 		
-! intentions X :- beliefs Y.  
+  	
 
 
-	
-	
-	
-
-	
-
-! beliefs have(Y,Z) :- beliefs have(X,Z) & beliefs give(X,Y,Z). //G.1 Ownership
 
 
-planner:
-	plan(
-		createProposal,
-		[	
-			action(sendPropose(msg))			
-		]
-		,		
-		[intensions(_, _)],		
-		[resolveDispute]
-		).

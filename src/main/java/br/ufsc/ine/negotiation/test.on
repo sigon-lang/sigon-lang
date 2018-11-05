@@ -5,6 +5,13 @@ communication:
 //uma percepção alfa só é adicionada ao contexto de crenças se ela for uma pre-condição de algum plano.
 beliefs:	
 	aux ->0.5.
+	teste(teste) :- aux(teste).
+		have(alpha, picture) :- have(beta, picture).
+	
+	
+	
+	
+! beliefs outro :- beliefs teste(teste) :- aux.
 	
 
 //morar próximo do local do trabalho me parece ser um desejo "melhor" do que comprar uma casa
