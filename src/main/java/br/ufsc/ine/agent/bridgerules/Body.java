@@ -90,6 +90,7 @@ public class Body {
     private Theory defineBodyTheory() throws InvalidTheoryException {
 
         StringBuilder builder = new StringBuilder();
+        System.out.println(context.getTheory().toString());
         String[] contextSplit = context.getTheory().toString()
                 //.replaceAll("_([0-9])*", "_").trim()
                 .replaceAll("\\n\\n", "/").replaceAll("_", "")
@@ -118,16 +119,29 @@ public class Body {
 
         return contextTheory;
     }
+    
+   
+    
 
     private void addAndOr(StringBuilder builder, Body  body) {
         if(body.getAndOrClause().isPresent()) {
-            if (body.and != null) {
-                String[] split = body.and.context.getTheory().toString()
+        	if (body.and != null) {       
+        		String [] split = body.and.context.getTheory().toString()
                         .replaceAll("_([0-9])*", "_")
-                        .trim().split("\\n");
+                        .trim().split("\\.");        		
+        		//qual era a necessidade de ser um split pela quebra de linha e não pelo .?
+        		
+        		/*if(body.and.context.getTheory().toString().contains(":-")) {
+        			split = body.and.context.getTheory().toString()
+                    .replaceAll("_([0-9])*", "_")
+                    .trim().split("\\.");
+        		}*/
+        		
+            	
+                
                 for (String s : split) {
                     if (!s.isEmpty())
-                        builder.append(body.and.context.getName() + "(" + s.substring(0, s.length() - 1) + "). \n");
+                        builder.append(body.and.context.getName() + "(" + s.substring(0, s.length()) + "). \n");
                 }
 
                 if (body.and.getAndOrClause().isPresent()){

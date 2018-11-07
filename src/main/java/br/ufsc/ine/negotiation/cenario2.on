@@ -1,0 +1,32 @@
+communication:
+    sensor("readPropose", "br.ufsc.ine.negotiation.ReadMessage").
+    actuator("sendPropose", "br.ufsc.ine.negotiation.SendMessage").
+
+beliefs:
+	have(X, screw).	
+	have(X, screwDriver).
+	have(X, mirror).
+	have(X,Z) & give(X,Y,Z) :- have(Y,Z).
+	 
+
+	
+desires:
+	resolveDispute.
+	createProposal.
+	
+	
+
+	
+	
+
+intentions:	
+	can(alpha, hangPicture). //M.5
+	can(beta, hangMirror). //M.6
+	
+	
+	
+	
+! beliefs can(X, hangMirror) :- beliefs have(X, screw) & beliefs have(X, screwDriver) 
+	& beliefs have(X, mirror). //M.2 OK 
+
+	
