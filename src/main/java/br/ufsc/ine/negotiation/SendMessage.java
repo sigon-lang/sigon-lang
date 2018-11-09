@@ -9,18 +9,13 @@ public class SendMessage extends Actuator{
 
 	@Override
 	public void act(List<String> args) {
-		System.out.println("args action "+ args.get(1));
-		Main.sendPropose(args);
+		
+		MainTrescak.sendPropose(args);
 		
 		
 		// TODO Auto-generated method stub
 		
 		
-	}
-	
-	public void sendPropose() {
-		
-		System.out.println("teste Propose");
 	}
 	
 	

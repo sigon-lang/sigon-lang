@@ -33,11 +33,10 @@ public class MainTrescak{
 				
 	}
 	
-	public static void sendPropose(List<String> t) {
+	public static void sendPropose(List<String> t) {		
+		System.out.println(t);
+		System.out.println(t.get(1)+" "+t.get(0)+" to "+t.get(2)+" the "+t.get(3));
 		
-		System.out.println("NS terms:"+NegotiationContextService.getInstance().getTheory().toString());
-		
-		System.out.println("Chosen strategy "+NegotiationContextService.getInstance().getStrategy("bid"));
 	}
 	
 	private static void startAgent(){
@@ -54,7 +53,7 @@ public class MainTrescak{
 	        parser.removeErrorListeners();
 	        parser.addErrorListener(new VerboseListener());
 
-	        ParseTree tree = parser.agent();
+	        ParseTree tree = parser.agent(); 
 	        ParseTreeWalker walker = new ParseTreeWalker();
 	        System.out.println(tree.toStringTree(parser));
 	        
@@ -75,24 +74,8 @@ public class MainTrescak{
 	
 	
 	 private static void percept(){
-	        System.out.println("GetKnowledge from alpha and beta");       
-	      
-	        //I(Can(alpha, hangPicutre))
-	        //I(Can(beta, hangMirror))
-	        
-	        
-	        ReadMessage.msg.onNext("intensions(can(alpha, hangPicutre),can(beta, hangMirror)).");
-	        //ReadMessage.msg.onNext("can(alpha, hangPicutre).");
-	        
-	        /*Have(alpha, picture)
-	         * Have(alpha, screw)
-	         * Have(alpha, hammer)
-	         * Have(beta, nail)
-	         * Have(beta, mirror)
-	         * 
-	         * */
-	        
-	        
+	        ReadMessage.msg.onNext("solveDispute.");
+
 	        
 	        
 	        System.out.println("CC "+CommunicationContextService.getInstance().getTheory());
@@ -103,6 +86,10 @@ public class MainTrescak{
 	        System.out.println("PC " +PlansContextService.getInstance().getTheory().toString());
 	        System.out.println("IC "+IntentionsContextService.getInstance().getTheory());
 	        System.out.println("CC " +CommunicationContextService.getInstance().getTheory());
+	        
+	        
+	     
+
 	        
 	        
 	        

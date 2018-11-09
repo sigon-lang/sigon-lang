@@ -37,9 +37,6 @@ public class Main{
 	
 	public static void sendPropose(List<String> t) {
 		
-		System.out.println("NS terms:"+NegotiationContextService.getInstance().getTheory().toString());
-		
-		System.out.println("Chosen strategy "+NegotiationContextService.getInstance().getStrategy("bid"));
 	}
 	
 	private static void startAgent(){

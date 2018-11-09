@@ -1,3 +1,4 @@
+//ciclo 1
 /*maquina de estados do processo inteiro
 impactos em reescalar atributos e como isso é feito
 
@@ -45,9 +46,9 @@ intentions:
 ! intentions have(X, screwDriver) :- intentions can(X, hangMirror) & beliefs not have(X, screwDriver). //G.2 especifico
 ! intentions have(X, mirror) :- intentions can(X, hangMirror) & beliefs not have(X, mirror). //G.2 especifico
 
-/*! intentions have(X, nail) :- intentions can(X, hangPicture) & beliefs not have(X, nail).
+! intentions have(X, nail) :- intentions can(X, hangPicture) & beliefs not have(X, nail).
 ! intentions have(X, hammer) :- intentions can(X, hangPicture) & beliefs not have(X, hammer).
-! intentions have(X, picture) :- intentions can(X, hangPicture) & beliefs not have(X, picture).*/
+! intentions have(X, picture) :- intentions can(X, hangPicture) & beliefs not have(X, picture).
 
 
 
@@ -55,12 +56,13 @@ intentions:
 
 ! intentions give(mi, Y, screwDriver) :- intentions have(Y, screwDriver) & beliefs have(mi, screwDriver).
 
-//! intentions give(beta , alpha , nail) :- intentions have(alpha, nail) & beliefs have(beta, nail).
+! intentions give(beta , alpha , nail) :- intentions have(alpha, nail) & beliefs have(beta, nail).
 
 
  
 //tell se X é um pre req pra atingir um objetivo
-! communication sendPropose(give,mi,Y,Z) :- intentions give(mi,Y,Z).
+//! communication sendPropose(give,mi,Y,Z,and,give,alpha,W,K) :- intentions give(mi,Y,Z) & intentions give(alpha,W,K). // equivalente ao tell do artigo 
+! communication sendPropose(give,X,Y,Z) :- intentions give(X,Y,Z).
 ! communication sendPropose(give,alpha,Y,Z) :- intentions give(alpha,Y,Z).
 //! communication sendPropose(give,beta,Y,Z) :- intentions give(beta,Y,Z).
 

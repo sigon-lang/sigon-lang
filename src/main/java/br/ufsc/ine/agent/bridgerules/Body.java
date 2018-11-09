@@ -90,7 +90,6 @@ public class Body {
     private Theory defineBodyTheory() throws InvalidTheoryException {
 
         StringBuilder builder = new StringBuilder();
-        System.out.println(context.getTheory().toString());
         String[] contextSplit = context.getTheory().toString()
                 //.replaceAll("_([0-9])*", "_").trim()
                 .replaceAll("\\n\\n", "/").replaceAll("_", "")
