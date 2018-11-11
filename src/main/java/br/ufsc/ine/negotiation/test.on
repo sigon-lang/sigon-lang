@@ -5,20 +5,16 @@ communication:
 //uma percepção alfa só é adicionada ao contexto de crenças se ela for uma pre-condição de algum plano.
 beliefs:	
 
-	happy(yolanda).
-	listens2music(mia).
-	! beliefs listens2music(yolanda) :- beliefs happy(yolanda) & beliefs listens2music(mia).
-
+	teste.	
+	aux :- teste & teste2.
 
 
 	
-	
-! desires inferiu :- teste :- beliefs listens2music(mia).
-! beliefs give (alpa, Y, screw) :- have(Y,screw) :- beliefs have(alpha,screw) & beliefs give(alpha, Y, screw) :- have(Y, screw).
+! desires inferiu  :- beliefs aux.
 
 //morar próximo do local do trabalho me parece ser um desejo "melhor" do que comprar uma casa
 desires:
-	teste.
+
 	
 _negotiations:
 	

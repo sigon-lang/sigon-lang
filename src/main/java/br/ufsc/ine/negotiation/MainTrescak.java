@@ -12,6 +12,10 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import agent.AgentLexer;
 import agent.AgentParser;
+import alice.tuprolog.InvalidTheoryException;
+import alice.tuprolog.Prolog;
+import alice.tuprolog.SolveInfo;
+import alice.tuprolog.Theory;
 import br.ufsc.ine.agent.Agent;
 import br.ufsc.ine.agent.context.ContextService;
 import br.ufsc.ine.agent.context.beliefs.BeliefsContextService;
@@ -35,7 +39,7 @@ public class MainTrescak{
 	
 	public static void sendPropose(List<String> t) {		
 		System.out.println(t);
-		System.out.println(t.get(1)+" "+t.get(0)+" to "+t.get(2)+" the "+t.get(3));
+		//System.out.println(t.get(1)+" "+t.get(0)+" to "+t.get(2)+" the "+t.get(3));
 		
 	}
 	
@@ -44,7 +48,7 @@ public class MainTrescak{
 
 	       
 	    	//File agentFile = new File("/home/rr/sigon-lang/src/main/java/br/ufsc/ine/negotiation/negotiation_aat.on");
-	    	File agentFile = new File("/home/rodrigor/sigon-lang/src/main/java/br/ufsc/ine/negotiation/cenario2.on");
+	    	File agentFile = new File("/home/rodrigor/sigon-lang/src/main/java/br/ufsc/ine/negotiation/test.on");
 	        CharStream stream = CharStreams.fromFileName(agentFile.getAbsolutePath());
 	        AgentLexer lexer = new AgentLexer(stream);
 	        CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -75,7 +79,8 @@ public class MainTrescak{
 	
 	 private static void percept(){
 	        ReadMessage.msg.onNext("solveDispute.");
-
+	        
+	     
 	        
 	        
 	        System.out.println("CC "+CommunicationContextService.getInstance().getTheory());
@@ -83,11 +88,10 @@ public class MainTrescak{
 			System.out.println("NC "+NegotiationContextService.getInstance().getTheory());
 
 	        System.out.println("DC " +DesiresContextService.getInstance().getTheory());
-	        System.out.println("PC " +PlansContextService.getInstance().getTheory().toString());
 	        System.out.println("IC "+IntentionsContextService.getInstance().getTheory());
-	        System.out.println("CC " +CommunicationContextService.getInstance().getTheory());
 	        
-	        
+	        //ReadMessage.msg.onNext("askGive(mi,beta,screwDriver).");
+
 	     
 
 	        

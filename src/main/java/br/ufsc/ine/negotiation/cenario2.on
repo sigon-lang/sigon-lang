@@ -45,13 +45,13 @@ intentions:
 ! intentions have(X, screwDriver) :- intentions can(X, hangMirror) & beliefs not have(X, screwDriver). //G.2 especifico
 ! intentions have(X, mirror) :- intentions can(X, hangMirror) & beliefs not have(X, mirror). //G.2 especifico
 
-/*! intentions have(X, nail) :- intentions can(X, hangPicture) & beliefs not have(X, nail).
+! intentions have(X, nail) :- intentions can(X, hangPicture) & beliefs not have(X, nail).
 ! intentions have(X, hammer) :- intentions can(X, hangPicture) & beliefs not have(X, hammer).
-! intentions have(X, picture) :- intentions can(X, hangPicture) & beliefs not have(X, picture).*/
+! intentions have(X, picture) :- intentions can(X, hangPicture) & beliefs not have(X, picture).
 
 
 
-! intentions give(alpha,Y,screw) :- intentions have(Y, screw) & beliefs have(alpha, screw).
+! intentions give(alpha , Y ,screw) :- intentions have(Y, screw) & beliefs have(alpha,screw).
 
 ! intentions give(mi, Y, screwDriver) :- intentions have(Y, screwDriver) & beliefs have(mi, screwDriver).
 
@@ -65,7 +65,6 @@ intentions:
 //! communication sendPropose(give,beta,Y,Z) :- intentions give(beta,Y,Z).
 
 
-! beliefs give(X,Y,Z) :- communication give(X,Y,Z) & intentions not have(X,Z). //R.5
   	
 
 
