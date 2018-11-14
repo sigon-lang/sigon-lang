@@ -24,9 +24,7 @@ beliefs:
 	not have(beta, screw).
 	not have(beta, screwDriver).
 	have(mi, screwDriver).	
-	
-	
-//! beliefs have(Y,Z) :- beliefs have(X,Z) & beliefs give(X,Y,Z). //G.1 Ownership
+ 	have(Y,Z) :- have(X,Z) & give(X,Y,Z). //G.1 Ownership
 
 	
 ! beliefs can(X, hangMirror) :- beliefs have(X, screw) & beliefs have(X, screwDriver) 

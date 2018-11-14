@@ -6,6 +6,7 @@ communication:
 beliefs:	
 
 	teste.	
+	teste2.
 	aux :- teste & teste2.
 
 

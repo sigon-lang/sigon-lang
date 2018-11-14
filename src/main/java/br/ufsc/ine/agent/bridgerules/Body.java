@@ -118,9 +118,7 @@ public class Body {
 			builder.deleteCharAt(builder.length()-1);
 			builder.append(":-");
 
-		}
-		
-		
+		}		
 		builder.replace(builder.length()-2, builder.length(),".\n");
 		
 
@@ -143,13 +141,8 @@ public class Body {
 		for (String s : contextSplit) {
 			if (!s.isEmpty()) {
 				String result = s.replaceAll("_([0-9])*", "_").trim();
-				if (result.contains(":-")) {
-					
-					inferenceParsingFull(builder, result.split(":-"));
-					/*String[] inference = result.split(":-");
-					builder.append(contextName + "(" + inference[0].substring(0, inference[0].length() - 1) + ") ");
-					builder.append(":- ");
-					builder.append(contextName + "(" + inference[1].substring(0, inference[1].length() - 1) + ").\n");*/
+				if (result.contains(":-")) {					
+					inferenceParsingFull(builder, result.split(":-"));					
 					
 				} else {
 					builder.append(contextName + "(" + result.substring(0, result.length() - 1) + "). \n");
