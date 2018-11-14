@@ -168,7 +168,7 @@ public class Body {
 		if (body.getAndOrClause().isPresent()) {
 			if (body.and != null) {
 				String[] split = body.and.context.getTheory().toString().replaceAll("_([0-9])*", "_").trim()
-						.split("\\.");
+						.split("\\n");
 				// qual era a necessidade de ser um split pela quebra de linha e não pelo .?
 
 				/*
@@ -179,7 +179,7 @@ public class Body {
 
 				for (String s : split) {
 					if (!s.isEmpty())
-						builder.append(body.and.context.getName() + "(" + s.substring(0, s.length()) + "). \n");
+						builder.append(body.and.context.getName() + "(" + s.substring(0, s.length()-1) + "). \n");
 				}
 
 				if (body.and.getAndOrClause().isPresent()) {

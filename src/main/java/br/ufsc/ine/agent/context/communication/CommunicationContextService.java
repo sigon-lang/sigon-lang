@@ -56,6 +56,8 @@ public class CommunicationContextService implements ContextService {
 				 * getFactName() para exemplo.
 				 * Fazer pull request para master
 				 */
+				
+
 				Actuator actuator = actuators.stream().filter((a) -> {
 					String actuator_name = a.getName();
 					int i1 = actuator_name.indexOf("(");

@@ -31,11 +31,16 @@ public class Main{
 	public static void main(String[] args) throws InterruptedException {
 		startAgent();
 		Thread.sleep(2000);
+
 		percept();
 				
 	}
 	
 	public static void sendPropose(List<String> t) {
+	
+
+		System.out.println(t);
+
 		
 	}
 	
@@ -47,7 +52,7 @@ public class Main{
 	        //File agentFile = new File("/home/rodrigor/sigon-lang/src/main/java/br/ufsc/ine/negotiation/negotiation_aat.on");
 	        //File agentFile = new File("/home/rr/sigon-lang/src/main/java/br/ufsc/ine/negotiation/negotiation.on");
 	    	//File agentFile = new File("/home/rr/sigon-lang/src/main/java/br/ufsc/ine/negotiation/negotiation_aat.on");
-	    	File agentFile = new File("/home/rodrigor/sigon-lang/src/main/java/br/ufsc/ine/negotiation/test.on");
+	    	File agentFile = new File("/home/rr/sigon-lang/src/main/java/br/ufsc/ine/negotiation/cenario2_aat.on");
 	        CharStream stream = CharStreams.fromFileName(agentFile.getAbsolutePath());
 	        AgentLexer lexer = new AgentLexer(stream);
 	        CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -103,19 +108,9 @@ public class Main{
 			workingHours(8, 9, 10)
 			)*/
 	        
-	        ReadMessage.msg.onNext("jobOffer(\n" + 
-	        		"salary(7000, 10000, 12000),\n" + 
-	        		"jobDescription(qa, programmer, teamManager, projectManager),\n" + 
-	        		"car(leased, noLeased, noAgreement),\n" + 
-	        		"pension(0, 10, 20, noAgreement),\n" + 
-	        		"promotion(2, 4, noAgreement),\n" + 
-	        		"workingHours(8, 9, 10)\n" + 
-	        		").");
+	        ReadMessage.msg.onNext("solveDispute.");
 	        
-	        
-	        
-	        
-	        
+			
 	        
 	        System.out.println("CC "+CommunicationContextService.getInstance().getTheory());
 	        System.out.println("BC "+BeliefsContextService.getInstance().getTheory().toString());	

@@ -274,7 +274,7 @@ public class BridgeRulesService {
 		BridgeRule.builder().head(Head.builder().context(beliefsContext).clause("X").build()).body(body).build()
 				.execute();
 
-		/* bridge rule to add intentions based on plans, desires, and beliefs 
+		/* bridge rule to add intentions based on plans, desires, and beliefs */
 
 		Body desireIntention = Body.builder().context(desiresContext).clause("X").build();
 		Body notBelief = Body.builder().context(beliefsContext).notClause("X").build();
@@ -285,7 +285,7 @@ public class BridgeRulesService {
 		notBelief.setAnd(planMemberIntention);
 		planMemberIntention.setAnd(notIntention);
 		BridgeRule.builder().head(Head.builder().context(intentionsContext).clause("X").build()).body(desireIntention)
-				.build().execute();*/
+				.build().execute();
 
 	}
 
