@@ -31,7 +31,9 @@ public class Body {
 			prolog.setTheory(contextTheory);
 
 			String toTest = this.toString().endsWith(".") ? this.toString() : this.toString() + END;
+			
 			SolveInfo solve = prolog.solve(toTest);
+		
 
 			try {
 				if (head != null && !head.isVariable()) {

@@ -5,35 +5,20 @@ communication:
 //uma percepção alfa só é adicionada ao contexto de crenças se ela for uma pre-condição de algum plano.
 beliefs:	
 
-	teste.	
-	teste2.
-	aux :- teste & teste2.
-
-
+	teste(aux).	
+	teste(f).
 	
-! desires inferiu  :- beliefs aux.
+	
+! desires teste(X)  :- beliefs teste(X).
 
 //morar próximo do local do trabalho me parece ser um desejo "melhor" do que comprar uma casa
 desires:
 
 	
 _negotiations:
-	
-	aux1. //ação 1	
-	aux2.
-	
+
 
 intentions:
 	
 
 
-planner:
-	plan(
-		teste,
-		[	
-			action(sendPropose(msg))			
-		]
-		,		
-		[teste1],		
-		[aux]
-		).
