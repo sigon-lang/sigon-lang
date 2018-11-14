@@ -48,7 +48,6 @@ _negotiation:
 
 ! intentions not use(X, nail) :- desires can(X, hangMirror) & beliefs have(X, nail).
 
-
 ! _negotiation decreaseUrgency(X, Y, 0) :- beliefs have(X, Y) & intentions not use(X,Y).
 
 ! _negotiation increaseUrgency(X, Y, 10) :- desires can(X, hangPicture) & beliefs not have(X, Y).

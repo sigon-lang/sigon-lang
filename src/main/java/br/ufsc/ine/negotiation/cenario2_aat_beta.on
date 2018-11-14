@@ -1,0 +1,50 @@
+communication:
+    sensor("readPropose", "br.ufsc.ine.negotiation.ReadMessage").
+    actuator("sendPropose", "br.ufsc.ine.negotiation.SendMessage").
+
+//uma percepção alfa só é adicionada ao contexto de crenças se ela for uma pre-condição de algum plano.
+beliefs:	
+	have(mi, screwDriver). //M.1	
+	have(alpha, picture). //M.6
+	have(alpha, screw). //M.7
+	have(alpha, hammer). //M.8
+	have(beta, nail). //M.9
+	have(beta, mirror). //M.10
+	not have(beta, screw).
+	not have(beta, screwDriver).
+	not have(alpha, nail).
+	
+	
+	
+	
+	
+
+desires:	
+	can(alpha, hangPicture). //M.4
+	can(beta, hangMirror). //M.5
+	
+		
+	
+
+intentions:	
+	
+
+
+
+_negotiation:
+
+! communication sendPropose(give,X,Y,Z) :- _negotiation decreaseUrgency(X,Z,0) & _negotiation increaseUrgency(Y,Z,10).
+
+! communication sendPropose(give,mi,X,Y) :- beliefs have(mi, Y) & beliefs not have(X,Y) & desires can(X, hangMirror). //podemos usar aqui a RP para adicionar uma intecao de ter o Y
+
+
+! intentions not use(X, screw) :- desires can(X, hangPicture) & beliefs have(X, screw).
+
+
+! _negotiation decreaseUrgency(X, Y, 0) :- beliefs have(X, Y) & intentions not use(X,Y).
+
+! _negotiation increaseUrgency(X, Y, 10) :- desires can(X, hangMirror) & beliefs not have(X, Y).
+
+	
+ 
+
