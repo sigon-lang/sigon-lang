@@ -24,10 +24,8 @@ beliefs:
 	not have(beta, screw).
 	not have(beta, screwDriver).
 	not have(alpha, nail).
-	need(mirror, screw).
-	need(mirror, screwDriver).
-	not need(mirror, nail).
-	not need(mirror, hammer).
+	
+	
 	
 	
 	
@@ -40,21 +38,21 @@ desires:
 	
 
 intentions:	
-	not have(beta, nail).
+	
 
 
 
 _negotiation:
-	
+
 ! communication sendPropose(give,X,Y,Z) :- _negotiation decreaseUrgency(X,Z,0) & _negotiation increaseUrgency(Y,Z,10).
 
-! _negotiation decreaseUrgency(beta, X, 0) :- beliefs have(beta, X) & beliefs not need(mirror,X).
+! intentions not use(X, nail) :- desires can(X, hangMirror) & beliefs have(X, nail).
+
+
+! _negotiation decreaseUrgency(X, Y, 0) :- beliefs have(X, Y) & intentions not use(X,Y).
 
 ! _negotiation increaseUrgency(X, Y, 10) :- desires can(X, hangPicture) & beliefs not have(X, Y).
 
 	
-	
-
-
-
+ 
 
