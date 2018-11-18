@@ -1,0 +1,60 @@
+/*Cenário 1 - Home improvements
+Modelagem do agente Alpha*/
+
+communication:
+    sensor("readPropose", "br.ufsc.ine.negotiation.ReadMessage").
+    actuator("sendPropose", "br.ufsc.ine.negotiation.SendMessage").
+
+
+beliefs:
+	have(b, mirror).
+	have(b, nail).
+	not have(b, hammer).
+	//give(b, a, nail). //recebe de a na primeira rodada
+	not give(b, a, nail). //conclusao da primeira rodada
+	askGive(b,a, screw).
+	askGive(b,a, screwDriver).
+	
+	
+! beliefs  can(X, hangMirror) :- beliefs askGive(Y,X, screw) & beliefs askGive(Y,X, screwDriver). //M.2 - contado para b como argumento de a na segunda rodada
+! beliefs  can(X, hangMirror) :- beliefs have(X, hammer) & beliefs have(X, nail) & beliefs have(X, mirror). //M.2
+
+
+//! beliefs X :- communication sense(belief(X)). // Implementar
+	
+! intentions have(b, nail) :- intentions can(b, hangMirror) &  beliefs not have(b, nail). //isso não é verdade na segunda rodada
+! intentions have(b, hammer) :- intentions can(b, hangMirror) &  beliefs not have(b, hammer).
+! intentions have(b, mirror) :- intentions can(b, hangMirror) &  beliefs not have(b, mirror).
+! intentions give(a, b, screw) :- intentions can(b, hangMirror) &  beliefs askGive(b, a, screw).
+! intentions give(a, b, screwDriver) :- intentions can(b, hangMirror) &  beliefs askGive(b, a, screwDriver).
+
+
+
+
+
+! intentions give(X,Y,Z) :- intentions have(Y, Z) & beliefs have(X, Z).
+
+! intentions not give(b,X,nail) :- intentions have(b,Y) & beliefs give(b, X, Y). //parcial  
+
+! communication sendPropose(give,X,Y,Z) :- intentions give(X,Y,Z). //RP do Tell
+
+! communication sendPropose(askGive, Y, a, screw, screwDriver) :- intentions give(a,Y,screw) & intentions give(a,Y, screwDriver). //RP gambiarra por causa do cut
+
+! communication sendPropose(not,give,X,Y,Z) :- intentions not give(X,Y,Z).
+
+
+
+
+desires:
+
+intentions:
+	can(b, hangMirror).
+	have(a, nail).
+	//not have(b, nail). //adicionado após A argumentar
+		
+
+
+
+	
+
+

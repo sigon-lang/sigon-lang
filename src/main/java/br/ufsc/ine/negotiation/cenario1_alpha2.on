@@ -53,7 +53,7 @@ intentions:
 
 ! beliefs can(Y, hangMirror) :- beliefs askGive(Y,a,screw) & beliefs askGive(Y,a,screwDriver).
 
-! communication sendPropose(ask, hangMirror, screw, screwDriver) :- intentions give(a,b,screw) & intentions give(a,b,screwDriver).
+! communication sendPropose(belief, hangMirror, screw, screwDriver) :- intentions give(a,b,screw) & intentions give(a,b,screwDriver). //enviar na forma sense(belief(can(X, hangMirror, screw,screwDriver)))
 
 //! communication sendPropose(give,X,Y,Z) :- intentions give(X,Y,Z).
 
