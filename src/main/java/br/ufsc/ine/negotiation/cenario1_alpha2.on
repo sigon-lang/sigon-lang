@@ -1,0 +1,68 @@
+/*Cenário 1 - Home improvements
+Modelagem do agente Alpha
+Autores dizem que cenário é usado só para apresentar a abordagem, 
+então talvez fosse interessante eu só comparar de forma descritiva o meu trabalho com o deles
+*/
+
+communication:
+    sensor("readPropose", "br.ufsc.ine.negotiation.ReadMessage").
+    actuator("sendPropose", "br.ufsc.ine.negotiation.SendMessage").
+
+
+beliefs:
+	have(a, picture).
+	have(a, hammer).
+	have(a, screw).
+	have(a, screwDriver).
+	have(b, nail).
+	have(b, mirror).
+	not have(a, nail).
+	askGive(b,a,screw).
+	askGive(b,a,screwDriver).
+	
+	
+desires:
+
+intentions:
+	can(a, hangPicture).
+	not can(a, hangMirror).
+		
+	
+	
+//! beliefs askGive(Y,X,Z) :- communication sense(askGive(Y,X,Z)). ERRO
+
+
+! beliefs  can(X, hangMirror) :- beliefs have(X, screw) & beliefs have(X, screDriver) & beliefs have(X, mirror). //M.2
+! beliefs  can(X, hangPicture) :- beliefs have(X, hammer) & beliefs have(X, nail) & beliefs have(X, picture). //M.3
+
+	
+	
+! intentions have(a, nail) :- intentions can(a, hangPicture) &  beliefs not have(a, nail).
+! intentions have(a, hammer) :- intentions can(a, hangPicture) &  beliefs not have(a, hammer).
+! intentions have(a, picture) :- intentions can(a, hangPicture) &  beliefs not have(a, picture).
+
+
+
+//! intentions give(X,Y,Z) :- intentions have(Y, Z) & beliefs have(X, Z).
+
+! intentions not have(a, screw) :- intentions not can(a, hangMirror).
+! intentions not have(a, screwDriver) :- intentions not can(a, hangMirror).
+
+! intentions give(a,Y,screwDriver) :- beliefs have(a,screwDriver) & beliefs askGive(Y,a,screwDriver) & intentions not have(a,screwDriver).
+! intentions give(a,Y,screw) :- beliefs have(a,screw) & beliefs askGive(Y,a,screw) & intentions not have(a,screw).
+
+! beliefs can(Y, hangMirror) :- beliefs askGive(Y,a,screw) & beliefs askGive(Y,a,screwDriver).
+
+! communication sendPropose(ask, hangMirror, screw, screwDriver) :- intentions give(a,b,screw) & intentions give(a,b,screwDriver).
+
+//! communication sendPropose(give,X,Y,Z) :- intentions give(X,Y,Z).
+
+
+
+
+
+
+
+	
+
+
