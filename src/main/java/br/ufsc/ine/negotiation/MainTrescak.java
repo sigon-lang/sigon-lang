@@ -50,7 +50,8 @@ public class MainTrescak{
 	    	//File agentFile = new File("/home/rr/sigon-lang/src/main/java/br/ufsc/ine/negotiation/negotiation_aat.on");
 	    	//File agentFile = new File("/home/rodrigor/sigon-lang/src/main/java/br/ufsc/ine/negotiation/propose_to_alpha.on");
 	    	//File agentFile = new File("/home/rodrigor/sigon-lang/src/main/java/br/ufsc/ine/negotiation/cenario2Final.on");
-	    	File agentFile = new File("/home/rr/sigon-lang/src/main/java/br/ufsc/ine/negotiation/propose_to_beta_first.on");
+	    	//File agentFile = new File("/home/rodrigor/sigon-lang/src/main/java/br/ufsc/ine/negotiation/propose_to_beta_first.on");
+	    	File agentFile = new File("/home/rodrigor/sigon-lang/src/main/java/br/ufsc/ine/negotiation/cenario1_beta.on");
 	        CharStream stream = CharStreams.fromFileName(agentFile.getAbsolutePath());
 	        AgentLexer lexer = new AgentLexer(stream);
 	        CommonTokenStream tokens = new CommonTokenStream(lexer);

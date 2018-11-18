@@ -1,0 +1,46 @@
+/*Cenário 1 - Home improvements
+Modelagem do agente Alpha*/
+
+communication:
+    sensor("readPropose", "br.ufsc.ine.negotiation.ReadMessage").
+    actuator("sendPropose", "br.ufsc.ine.negotiation.SendMessage").
+
+
+beliefs:
+	have(b, mirror).
+	have(b, nail).
+	not have(b, hammer).
+	give(b, a, nail).
+	
+	
+	
+
+! beliefs  can(X, hangMirror) :- beliefs have(X, hammer) & beliefs have(X, nail) & beliefs have(X, mirror). //M.2
+
+	
+	
+! intentions have(b, nail) :- intentions can(b, hangMirror) &  beliefs have(b, nail).
+! intentions have(b, hammer) :- intentions can(b, hangMirror) &  beliefs not have(b, hammer).
+! intentions have(b, mirror) :- intentions can(b, hangMirror) &  beliefs have(b, mirror).
+
+
+//! intentions give(X,Y,Z) :- intentions have(Y, Z) & beliefs have(X, Z).
+
+! intentions not give(b,X,nail) :- intentions have(b,Y) & beliefs give(b, X, Y). //parcial  
+
+! communication sendPropose(give,X,Y,Z) :- intentions give(X,Y,Z).
+
+! communication sendPropose(not,give,X,Y,Z) :- intentions not give(X,Y,Z).
+
+
+desires:
+
+intentions:
+	can(b, hangMirror).
+		
+
+
+
+	
+
+
