@@ -1,5 +1,5 @@
 /*Cenário 1 - Home improvements
-Modelagem do agente Alpha*/
+Modelagem do agente Beta*/
 
 communication:
     sensor("readPropose", "br.ufsc.ine.negotiation.ReadMessage").
