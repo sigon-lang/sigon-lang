@@ -57,6 +57,8 @@ intentions:
 
 //! communication sendPropose(give,X,Y,Z) :- intentions give(X,Y,Z).
 
+! beliefs tell(X,Y,canHangMirror, screw, screwDriver) :- beliefs can(Y, hangMirror) & beliefs use(Y, nail);
+
 
 
 
