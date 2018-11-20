@@ -29,6 +29,8 @@ beliefs:
 	have(a, screwDriver).
 	have(b, nail).	
 	not have(a, nail).
+	not give(X, a, nail). //passado durante a comunicacao
+	can(b, hangMirror). //passado durante a comunicacao
 
 ! beliefs  can(X, hangMirror) :- beliefs have(X, screw) & beliefs have(X, screDriver) & beliefs have(X, mirror). //M.2
 
@@ -79,5 +81,9 @@ _negotiation:
 ! intentions askGive(a, b, nail) :- _negotiation increaseUrgency(a, nail, 10).
 
 ! communication sendPropose(give, X, Y, Z) :- intentions askGive(X,Y, Z).
+
+
+
+! communication sendPropose(can, X, hangMirror, screw, screwDriver) :- beliefs not give(X, a, nail) & beliefs can(X, hangMirror).
 
 	

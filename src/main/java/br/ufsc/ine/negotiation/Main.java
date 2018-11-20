@@ -54,7 +54,7 @@ public class Main{
 	    	//File agentFile = new File("/home/rr/sigon-lang/src/main/java/br/ufsc/ine/negotiation/negotiation_aat.on");
 	    	//File agentFile = new File("/home/rr/sigon-lang/src/main/java/br/ufsc/ine/negotiation/cenario2_aat.on");
 	    	//File agentFile = new File("/home/rr/sigon-lang/src/main/java/br/ufsc/ine/negotiation/cenario2_aat_beta.on");
-	    	File agentFile = new File("/home/rr/sigon-lang/src/main/java/br/ufsc/ine/negotiation/cenario1_Baat.on");
+	    	File agentFile = new File("/home/rr/sigon-lang/src/main/java/br/ufsc/ine/negotiation/cenario1_aat/cenario1_Aaat2.on");
 
 	        CharStream stream = CharStreams.fromFileName(agentFile.getAbsolutePath());
 	        AgentLexer lexer = new AgentLexer(stream);

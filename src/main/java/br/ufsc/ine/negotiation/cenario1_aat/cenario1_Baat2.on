@@ -10,15 +10,21 @@ beliefs:
 	have(b, mirror).
 	have(b, nail).
 	not have(b, hammer).
-	give(b, a, nail). //recebido
+	give(b, a, nail). //recebido 1 b define increase  - usa
+	give(a, b, screw). //recebido 1 b define decrease - nao uso
+	give(a,b, screwDriver). //recebido 1 b define decrease - nao usa
+
 	
 	
 	
+	
+//! beliefs can(X, hangMirror) :- have(X, screw) & have(X, screwDriver) :- communication(sense(blabla))
 
 ! beliefs  can(X, hangMirror) :- beliefs have(X, hammer) & beliefs have(X, nail) & beliefs have(X, mirror). //M.2
 
 	
-	
+! intentions have(b, X) :- beliefs hangMirror(X). //generica  
+
 
 
 //! intentions give(X,Y,Z) :- intentions have(Y, Z) & beliefs have(X, Z).
@@ -38,6 +44,10 @@ _negotiation:
 
 
 ! _negotiation increaseUrgency(b, nail, 10) :- desires can(b, hangMirror) & beliefs have(b, nail).
+
+! _negotiation decreaseUrgency(b, X, 0) :- intentions not use(b, X).
+
+
 
 ! intentions not give(b,X,Y) :- _negotiation increaseUrgency(b, Y, 10) & beliefs give(b, X, Y). //parcial
 
