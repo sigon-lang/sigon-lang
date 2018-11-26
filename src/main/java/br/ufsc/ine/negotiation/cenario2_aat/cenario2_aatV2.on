@@ -26,15 +26,10 @@ beliefs:
 	not have(alpha, nail).
 	
 	
-	
-	
-	
 
 desires:	
 	can(alpha, hangPicture). //M.4
 	can(beta, hangMirror). //M.5
-	
-		
 	
 
 intentions:	
@@ -43,6 +38,9 @@ intentions:
 
 
 _negotiation:
+	increaseUrgency(X,Y,Z).
+	decreaseUrgency(X,Y,Z).
+	
 
 ! communication sendPropose(give,X,Y,Z) :- _negotiation decreaseUrgency(X,Z,0) & _negotiation increaseUrgency(Y,Z,10).
 

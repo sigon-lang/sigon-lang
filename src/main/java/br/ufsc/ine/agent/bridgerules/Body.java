@@ -31,9 +31,8 @@ public class Body {
 			prolog.setTheory(contextTheory);
 
 			String toTest = this.toString().endsWith(".") ? this.toString() : this.toString() + END;
-			
+
 			SolveInfo solve = prolog.solve(toTest);
-		
 
 			try {
 				if (head != null && !head.isVariable()) {
@@ -44,23 +43,34 @@ public class Body {
 						String clauses = head.getClause().substring(head.getClause().indexOf("(") + 1,
 								head.getClause().indexOf(")"));
 						String[] split = clauses.trim().split(",");
-						StringBuilder builder = new StringBuilder();
-						for (int i = 0; i < split.length; i++) {
-							split[i] = split[i].replace(" ", "");
-							if (Character.isUpperCase(split[i].charAt(0))) {
-								Term solution = solve.getTerm(split[i].trim());
-								builder.append(solution.toString().replaceAll("_([0-9])*", "_"));
+						
+						boolean hasOpenAlternatives = true;
+						while (hasOpenAlternatives) {
+							hasOpenAlternatives = solve.hasOpenAlternatives();
+							
+							StringBuilder builder = new StringBuilder();
 
-							} else {
-								builder.append(split[i]);
+							for (int i = 0; i < split.length; i++) {
+
+								split[i] = split[i].replace(" ", "");
+								if (Character.isUpperCase(split[i].charAt(0))) {
+									Term solution = solve.getTerm(split[i].trim());
+									builder.append(solution.toString().replaceAll("_([0-9])*", "_"));
+
+								} else {
+									builder.append(split[i]);
+								}
+								if (i + 1 < split.length) {
+									builder.append(",");
+								}
 							}
-							if (i + 1 < split.length) {
-								builder.append(",");
-							}
+
+							variableFacts.add(
+									head.getClause().substring(0, head.getClause().indexOf("(") + 1) + builder + ").");
+							solve = prolog.solveNext();
+
 						}
 
-						variableFacts
-								.add(head.getClause().substring(0, head.getClause().indexOf("(") + 1) + builder + ").");
 						return solve.isSuccess();
 					}
 
@@ -87,9 +97,13 @@ public class Body {
 		}
 	}
 
+	private void appendFact() {
+
+	}
+
 	private void inferenceParsing(StringBuilder builder, String[] value) {
 		/* teste :- aux , aux2 */
-		
+
 		String bodyTerms = value[1];
 		String contextName = context.getName();
 
@@ -99,12 +113,10 @@ public class Body {
 			builder.append(" , ");
 
 		}
-		builder.deleteCharAt(builder.length()-1); //remover o ultimo ,
+		builder.deleteCharAt(builder.length() - 1); // remover o ultimo ,
 		builder.append(".\n");
-		
 
 	}
-	
 
 	private void inferenceParsingFull(StringBuilder builder, String[] value) {
 		/* teste :- aux , aux2 */
@@ -112,23 +124,18 @@ public class Body {
 		for (String bodyTerms : value) {
 			String[] terms = bodyTerms.trim().replace(".", "").split(",");
 			for (String term : terms) {
-				
+
 				builder.append(contextName + "(" + term.substring(0, term.length()) + ") ");
 				builder.append(" ,");
 
 			}
-			builder.deleteCharAt(builder.length()-1);
+			builder.deleteCharAt(builder.length() - 1);
 			builder.append(":-");
 
-		}		
-		builder.replace(builder.length()-2, builder.length(),".\n");
-		
-
-
-		
+		}
+		builder.replace(builder.length() - 2, builder.length(), ".\n");
 
 	}
-
 
 	private Theory defineBodyTheory() throws InvalidTheoryException {
 
@@ -143,9 +150,9 @@ public class Body {
 		for (String s : contextSplit) {
 			if (!s.isEmpty()) {
 				String result = s.replaceAll("_([0-9])*", "_").trim();
-				if (result.contains(":-")) {					
-					inferenceParsingFull(builder, result.split(":-"));					
-					
+				if (result.contains(":-")) {
+					inferenceParsingFull(builder, result.split(":-"));
+
 				} else {
 					builder.append(contextName + "(" + result.substring(0, result.length() - 1) + "). \n");
 				}
@@ -179,7 +186,7 @@ public class Body {
 
 				for (String s : split) {
 					if (!s.isEmpty())
-						builder.append(body.and.context.getName() + "(" + s.substring(0, s.length()-1) + "). \n");
+						builder.append(body.and.context.getName() + "(" + s.substring(0, s.length() - 1) + "). \n");
 				}
 
 				if (body.and.getAndOrClause().isPresent()) {

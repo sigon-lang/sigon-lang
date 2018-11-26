@@ -1,11 +1,19 @@
 package br.ufsc.ine.negotiation;
 
+import java.util.AbstractMap;
+import java.util.List;
+
 import alice.tuprolog.EngineManager;
 import alice.tuprolog.InvalidTheoryException;
 import alice.tuprolog.MalformedGoalException;
+import alice.tuprolog.NoMoreSolutionException;
+import alice.tuprolog.NoSolutionException;
 import alice.tuprolog.Prolog;
 import alice.tuprolog.SolveInfo;
+import alice.tuprolog.Term;
+import alice.tuprolog.TermVisitor;
 import alice.tuprolog.Theory;
+import alice.tuprolog.Var;
 
 public class MainProlog {
 
@@ -13,7 +21,7 @@ public class MainProlog {
 
 		try {
 			StringBuilder builder = new StringBuilder();
-			builder.append("bc(aux2). \n bc(teste) :- bc(aux) , bc(aux2).");
+			builder.append("bc(a1). bc(a2).");
 			// builder.append("bc(teste :- aux).");
 			Theory contextTheory;
 			/*
@@ -23,12 +31,26 @@ public class MainProlog {
 			 */
 			contextTheory = new Theory(builder.toString());
 			Prolog prolog = new Prolog();
-			
+
 			prolog.setTheory(contextTheory);
 			System.out.println(contextTheory.toJSON());
-			SolveInfo solve = prolog.solve("bc(teste).");
+			SolveInfo solve = prolog.solve("bc(X).");
+			System.out.println(solve.hasOpenAlternatives());
+			
+
+			SolveInfo s1 = prolog.solveNext();
+			solve.getBindingVars();
 			System.out.println(solve);
-		} catch (InvalidTheoryException | MalformedGoalException e) {
+			System.out.println(s1);
+			System.out.println(s1.hasOpenAlternatives());
+
+
+			
+
+		} catch (InvalidTheoryException | MalformedGoalException | NoSolutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoMoreSolutionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

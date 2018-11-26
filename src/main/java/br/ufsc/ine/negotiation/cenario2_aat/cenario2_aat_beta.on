@@ -33,7 +33,6 @@ intentions:
 
 _negotiation:
 
-! communication sendPropose(give,X,Y,Z) :- _negotiation decreaseUrgency(X,Z,0) & _negotiation increaseUrgency(Y,Z,10).
 
 ! communication sendPropose(give,mi,X,Y) :- beliefs have(mi, Y) & beliefs not have(X,Y) & desires can(X, hangMirror). //podemos usar aqui a RP para adicionar uma intecao de ter o Y
 
