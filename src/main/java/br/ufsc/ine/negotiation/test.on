@@ -9,7 +9,7 @@ beliefs:
 	teste(f).
 	
 	
-! desires teste(X)  :- beliefs teste(X).
+! desires teste(X,Y)  :- beliefs teste(X) & intentions testeF(Y).
 
 //morar próximo do local do trabalho me parece ser um desejo "melhor" do que comprar uma casa
 desires:
