@@ -37,6 +37,8 @@ intentions:
 
 ! intentions give(X,Y,Z) :- intentions have(Y, Z) & beliefs have(X, Z).
 
+! beliefs have(Y,Z) :- beliefs have(X,Z) & give(X,Y,Z). //ownership
+
   	
 
 

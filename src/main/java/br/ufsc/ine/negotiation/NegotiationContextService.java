@@ -146,6 +146,10 @@ public class NegotiationContextService implements ContextService {
 		return null;
 	}
 	
+	public void initUrgency() {
+		
+	}
+	
 	
 	
 	

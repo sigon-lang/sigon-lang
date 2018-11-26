@@ -117,6 +117,17 @@ public class Body {
 		builder.append(".\n");
 
 	}
+	
+	private void parseInference(StringBuilder builder, String[] value) {
+		String contextName = context.getName();
+		builder.append(contextName+"("+value[0].trim()+")"); //assumindo que terá apenas um termo na cabeça
+		String[] terms = value[1].split("(?<=)[,|;]"); 
+		//duas possibilidades de split: aux , aux2; ou aux(teste)
+		
+		terms.toString();
+		
+		
+	}
 
 	private void inferenceParsingFull(StringBuilder builder, String[] value) {
 		/* teste :- aux , aux2 */
@@ -140,7 +151,9 @@ public class Body {
 	private Theory defineBodyTheory() throws InvalidTheoryException {
 
 		StringBuilder builder = new StringBuilder();
-		String[] contextSplit = context.getTheory().toString()
+		String terms = context.getTheory().toString().replaceAll("(.*):-[\\s]*(.*)([,|;]?[\\s]*)*", "$1:- $2");
+		System.out.println(terms);
+		String[] contextSplit = terms
 				// .replaceAll("_([0-9])*", "_").trim()
 				.replaceAll("\\n\\n", "/").replaceAll("_", "").split("/");
 
@@ -151,7 +164,7 @@ public class Body {
 			if (!s.isEmpty()) {
 				String result = s.replaceAll("_([0-9])*", "_").trim();
 				if (result.contains(":-")) {
-					inferenceParsingFull(builder, result.split(":-"));
+					parseInference(builder, result.split(":-"));
 
 				} else {
 					builder.append(contextName + "(" + result.substring(0, result.length() - 1) + "). \n");
@@ -174,8 +187,11 @@ public class Body {
 	private void addAndOr(StringBuilder builder, Body body) {
 		if (body.getAndOrClause().isPresent()) {
 			if (body.and != null) {
-				String[] split = body.and.context.getTheory().toString().replaceAll("_([0-9])*", "_").trim()
+				String terms = body.and.context.getTheory().toString().replaceAll("(.*):-[\\s]*(.*).", "$1:- $2.");
+				System.out.println(terms);
+				String[] split = terms.replaceAll("_([0-9])*", "_").trim()
 						.split("\\n");
+				
 				// qual era a necessidade de ser um split pela quebra de linha e não pelo .?
 
 				/*

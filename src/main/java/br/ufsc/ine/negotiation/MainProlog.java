@@ -21,7 +21,7 @@ public class MainProlog {
 
 		try {
 			StringBuilder builder = new StringBuilder();
-			builder.append("bc(a1). bc(a2).");
+			builder.append("a1 :- a2.");
 			// builder.append("bc(teste :- aux).");
 			Theory contextTheory;
 			/*
@@ -31,10 +31,10 @@ public class MainProlog {
 			 */
 			contextTheory = new Theory(builder.toString());
 			Prolog prolog = new Prolog();
-
+			
 			prolog.setTheory(contextTheory);
-			System.out.println(contextTheory.toJSON());
-			SolveInfo solve = prolog.solve("bc(X).");
+			System.out.println(contextTheory.toString());
+			/*SolveInfo solve = prolog.solve("bc(X).");
 			System.out.println(solve.hasOpenAlternatives());
 			
 
@@ -42,15 +42,12 @@ public class MainProlog {
 			solve.getBindingVars();
 			System.out.println(solve);
 			System.out.println(s1);
-			System.out.println(s1.hasOpenAlternatives());
+			System.out.println(s1.hasOpenAlternatives());*/
 
 
 			
 
-		} catch (InvalidTheoryException | MalformedGoalException | NoSolutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoMoreSolutionException e) {
+		} catch (InvalidTheoryException e ) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
