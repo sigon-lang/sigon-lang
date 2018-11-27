@@ -131,7 +131,6 @@ public class BeliefsContextService implements ContextService {
 
 	@Override
 	public Theory getTheory(){
-		System.out.println(prologEnvironment.getEngine().getTheory().toJSON());
 		return prologEnvironment.getEngine().getTheory();
 	}
 

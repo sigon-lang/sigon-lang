@@ -46,11 +46,11 @@ public class Body {
 						String clauses = head.getClause().substring(head.getClause().indexOf("(") + 1,
 								head.getClause().indexOf(")"));
 						String[] split = clauses.trim().split(",");
-						
+
 						boolean hasOpenAlternatives = true;
 						while (hasOpenAlternatives) {
 							hasOpenAlternatives = solve.hasOpenAlternatives();
-							
+
 							StringBuilder builder = new StringBuilder();
 
 							for (int i = 0; i < split.length; i++) {
@@ -120,41 +120,28 @@ public class Body {
 		builder.append(".\n");
 
 	}
-	
+
 	private void parseInference(StringBuilder builder, String[] value) {
 		String contextName = context.getName();
-		builder.append(contextName+"("+value[0].trim()+")"); //assumindo que terá apenas um termo na cabeça
-		String terms = value[1].trim().replaceAll("\\)(,)", ")&").replaceAll("\\)(;)", ")|");
-		String[] terms2 = terms.split("(?=(&|\\|))");
+		builder.append(contextName + "(" + value[0].trim() + "):-"); // assumindo que terá apenas um termo na cabeça
+
 		String term = "";
-		for (String string : terms2) {
-			term = contextName+"("+string.trim()+")";
-			//builder.append(contextName+"("+string.trim()+")");
-			if(string.contains("&")) {
-				
-				builder.append(",");
-			}			
-			else {
-				builder.append(contextName+"("+string.replace("|", "")+");");
+
+		String[] terms3 = value[1].trim().split("(?<=\\)(, | ;))"); //problema com o or
+
+		for (int i = 0; i < terms3.length; i++) {
+
+			term = terms3[i].substring(0, terms3[i].length() - 1).trim();
+			if (terms3[i].endsWith(",") || terms3[i].endsWith(";")) {
+				builder.append(contextName + "(" + term + ")");
+				builder.append(terms3[i].charAt(terms3[i].length() - 1));
+			} else {
+				builder.append(contextName + "(" + term + ")");
 			}
-			
-				
+
 		}
 		builder.append(".");
-		
-		System.out.println();
-		
-		
-		
-		String[] terms3 = value[1].trim().split("(?<=\\)[,|;])");
-		
-		
-		
-		//duas possibilidades de split: aux , aux2; ou aux(teste)
-		
-		terms.toString();
-		
-		
+
 	}
 
 	private void inferenceParsingFull(StringBuilder builder, String[] value) {
@@ -180,7 +167,6 @@ public class Body {
 
 		StringBuilder builder = new StringBuilder();
 		String terms = context.getTheory().toString().replaceAll("(.*):-[\\s]*(.*)([,|;]?[\\s]*)*", "$1:- $2");
-		System.out.println(terms);
 		String[] contextSplit = terms
 				// .replaceAll("_([0-9])*", "_").trim()
 				.replaceAll("\\n\\n", "/").replaceAll("_", "").split("/");
@@ -216,10 +202,8 @@ public class Body {
 		if (body.getAndOrClause().isPresent()) {
 			if (body.and != null) {
 				String terms = body.and.context.getTheory().toString().replaceAll("(.*):-[\\s]*(.*).", "$1:- $2.");
-				System.out.println(terms);
-				String[] split = terms.replaceAll("_([0-9])*", "_").trim()
-						.split("\\n");
-				
+				String[] split = terms.replaceAll("_([0-9])*", "_").trim().split("\\n");
+
 				// qual era a necessidade de ser um split pela quebra de linha e não pelo .?
 
 				/*

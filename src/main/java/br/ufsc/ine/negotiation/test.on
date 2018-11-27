@@ -5,7 +5,7 @@ communication:
 //uma percepção alfa só é adicionada ao contexto de crenças se ela for uma pre-condição de algum plano.
 beliefs:	
 	have(a).
-	have(d) :- have(a,e) & have(b,c).
+	have(d) :- have(a) | have(b).
 	
 	
 	
