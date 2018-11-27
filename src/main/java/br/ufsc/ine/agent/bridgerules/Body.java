@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.util.*;
+import java.util.regex.Matcher;
+
+import org.abego.treelayout.util.FixedNodeExtentProvider;
 
 @Builder
 @Data
@@ -121,7 +124,32 @@ public class Body {
 	private void parseInference(StringBuilder builder, String[] value) {
 		String contextName = context.getName();
 		builder.append(contextName+"("+value[0].trim()+")"); //assumindo que terá apenas um termo na cabeça
-		String[] terms = value[1].split("(?<=)[,|;]"); 
+		String terms = value[1].trim().replaceAll("\\)(,)", ")&").replaceAll("\\)(;)", ")|");
+		String[] terms2 = terms.split("(?=(&|\\|))");
+		String term = "";
+		for (String string : terms2) {
+			term = contextName+"("+string.trim()+")";
+			//builder.append(contextName+"("+string.trim()+")");
+			if(string.contains("&")) {
+				
+				builder.append(",");
+			}			
+			else {
+				builder.append(contextName+"("+string.replace("|", "")+");");
+			}
+			
+				
+		}
+		builder.append(".");
+		
+		System.out.println();
+		
+		
+		
+		String[] terms3 = value[1].trim().split("(?<=\\)[,|;])");
+		
+		
+		
 		//duas possibilidades de split: aux , aux2; ou aux(teste)
 		
 		terms.toString();
