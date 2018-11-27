@@ -126,8 +126,39 @@ public class Body {
 		builder.append(contextName + "(" + value[0].trim() + "):-"); // assumindo que terá apenas um termo na cabeça
 
 		String term = "";
+		String[] terms3;
+		String[] terms4 = value[1].split("(?<=\\)(,)) | ;");
+		
+		if(value[1].contains("(") && value[1].contains(",") && ! value[1].contains(";")) {
+			terms3 = value[1].split("(?<=\\)(,))"); //problema com o or gambiarra mode on
+		}else {
+			if(value[1].contains(";")) {
+				terms3 = value[1].split("(?<=;)");
 
-		String[] terms3 = value[1].trim().split("(?<=\\)(, | ;))"); //problema com o or
+			}else {
+				terms3 = value[1].split("(?<=,)");
+			}
+			
+			
+		}
+		
+		/*if(!value[1].contains("(")) {
+			
+		}else {
+			if(value[1].contains(";")) {
+				terms3 = value[1].split("(?<=;)"); //problema com o or gambiarra mode on
+			}
+			else	{
+				
+			}
+			
+		}*/
+		
+		
+		//TODO arrumar REGEX para capturar todos os casos: & e Or misturados
+
+		
+		
 
 		for (int i = 0; i < terms3.length; i++) {
 
@@ -140,7 +171,7 @@ public class Body {
 			}
 
 		}
-		builder.append(".");
+		builder.append(".\n");
 
 	}
 
@@ -166,7 +197,9 @@ public class Body {
 	private Theory defineBodyTheory() throws InvalidTheoryException {
 
 		StringBuilder builder = new StringBuilder();
-		String terms = context.getTheory().toString().replaceAll("(.*):-[\\s]*(.*)([,|;]?[\\s]*)*", "$1:- $2");
+		System.out.println(context.getTheory().toJSON());
+		//String terms = context.getTheory().toString().replaceAll("(.*):-[\\s]*(.*)([,| ; ]?[\\s]*)*", "$1:- $2");
+		String terms = context.getTheory().toString().replaceAll("(.*):-[\\s]*(.*)(,|\\s*;\\s*?[\\s]*)*", "$1:- $2");
 		String[] contextSplit = terms
 				// .replaceAll("_([0-9])*", "_").trim()
 				.replaceAll("\\n\\n", "/").replaceAll("_", "").split("/");

@@ -4,15 +4,20 @@ communication:
 
 //uma percepção alfa só é adicionada ao contexto de crenças se ela for uma pre-condição de algum plano.
 beliefs:	
-	have(mi, screwDriver). //M.1	
-	have(alpha, picture). //M.6
-	have(alpha, screw). //M.7
-	have(alpha, hammer). //M.8
-	have(beta, nail). //M.9
-	have(beta, mirror). //M.10
+		
+	have(alpha, picture).
+	have(mi, screwDriver). 
+	have(alpha, screw). 
+	have(alpha, hammer). 
+	have(beta, nail). 
+	have(beta, mirror). 
 	not have(beta, screw).
 	not have(beta, screwDriver).
 	not have(alpha, nail).
+	//can(X, hangMirror) :- have(X, screw) & have(X, screwDriver) & have(X, mirror).
+	
+	
+	not can(X, hangMirror) :- not have(X, screw) | not have(X, screwDriver) | not have(X, mirror).
 	
 
 
@@ -37,7 +42,7 @@ intentions:
 
 ! intentions give(X,Y,Z) :- intentions have(Y, Z) & beliefs have(X, Z).
 
-! beliefs have(Y,Z) :- beliefs have(X,Z) & give(X,Y,Z). //ownership
+! beliefs have(Y,Z) :- beliefs have(X,Z) & beliefs give(X,Y,Z). //ownership
 
   	
 

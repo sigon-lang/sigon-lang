@@ -4,8 +4,14 @@ communication:
 
 //uma percepção alfa só é adicionada ao contexto de crenças se ela for uma pre-condição de algum plano.
 beliefs:	
-	have(a).
-	have(d) :- have(a) | have(b).
+	
+	can(X, hangMirror) :- have(X, screw) & have(X, screwDriver) & have(X, mirror).
+	
+	not can(X, hangMirror) :- not have(X, screw) | not have(X, screwDriver) | not have(X, mirror).
+	
+	aux.
+	aux2.
+	//conclusao :- hipotese
 	
 	
 	
