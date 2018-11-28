@@ -50,6 +50,7 @@ public class Body {
 						boolean hasOpenAlternatives = true;
 						while (hasOpenAlternatives) {
 							hasOpenAlternatives = solve.hasOpenAlternatives();
+							
 
 							StringBuilder builder = new StringBuilder();
 
@@ -57,7 +58,7 @@ public class Body {
 
 								split[i] = split[i].replace(" ", "");
 								if (Character.isUpperCase(split[i].charAt(0))) {
-									Term solution = solve.getTerm(split[i].trim());
+									Term solution = solve.getTerm(split[i].trim());									
 									builder.append(solution.toString().replaceAll("_([0-9])*", "_"));
 
 								} else {
@@ -197,7 +198,6 @@ public class Body {
 	private Theory defineBodyTheory() throws InvalidTheoryException {
 
 		StringBuilder builder = new StringBuilder();
-		System.out.println(context.getTheory().toJSON());
 		//String terms = context.getTheory().toString().replaceAll("(.*):-[\\s]*(.*)([,| ; ]?[\\s]*)*", "$1:- $2");
 		String terms = context.getTheory().toString().replaceAll("(.*):-[\\s]*(.*)(,|\\s*;\\s*?[\\s]*)*", "$1:- $2");
 		String[] contextSplit = terms

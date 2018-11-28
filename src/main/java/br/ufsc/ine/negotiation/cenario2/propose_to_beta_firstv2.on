@@ -4,9 +4,8 @@ communication:
 
 //uma percepção alfa só é adicionada ao contexto de crenças se ela for uma pre-condição de algum plano.
 beliefs:	
-		
-	have(alpha, picture).
 	have(mi, screwDriver). 
+	have(alpha, picture).
 	have(alpha, screw). 
 	have(alpha, hammer). 
 	have(beta, nail). 
@@ -14,25 +13,20 @@ beliefs:
 	not have(beta, screw).
 	not have(beta, screwDriver).
 	not have(alpha, nail).
-	//can(X, hangMirror) :- have(X, screw) & have(X, screwDriver) & have(X, mirror).
-	
-	
-	not can(X, hangMirror) :- not have(X, screw) | not have(X, screwDriver) | not have(X, mirror).
-	
+	can(X, hangMirror) :- have(X, screw) & have(X, screwDriver) & have(X, mirror).	
+	have(Y,Z) :- have(X,Z) & give(X,Y,Z). //ownership
 
 
-//! beliefs  can(X, hangMirror) :- beliefs have(X, screw) & beliefs have(X, screDriver) & beliefs have(X, mirror). //M.2
-
-//! beliefs  can(X, hangPicture) :- beliefs have(X, hammer) & beliefs have(X, nail) & beliefs have(X, picture). //M.3
-
-
-desires:
-		
+desires:		
 	
 
 intentions:	
 	can(alpha, hangPicture). //M.4
 	can(beta, hangMirror). //M.5
+	
+	
+! communication sendPropose(tell,X,Y,Z,W,Q) :- beliefs intention(X,Y,Z,W,Q).
+
 	
 		
 ! intentions have(X, screwDriver) :- intentions can(X, hangMirror) & beliefs not have(X, screwDriver). //G.2 especifico
@@ -42,8 +36,11 @@ intentions:
 
 ! intentions give(X,Y,Z) :- intentions have(Y, Z) & beliefs have(X, Z).
 
-! beliefs have(Y,Z) :- beliefs have(X,Z) & beliefs give(X,Y,Z). //ownership
+! beliefs intention(Y,give,X,Y,Z) :- intentions have(Y, Z) & beliefs have(X, Z).
 
+
+//! beliefs have(Y,Z) :- beliefs have(X,Z) & beliefs give(X,Y,Z). //ownership
+
+//! intentions have(X,Y) :- beliefs not can(X, hangMirror) & intentions can(X, hangMirror) & beliefs not have(X,Y). //nao funcionou
   	
-
 
