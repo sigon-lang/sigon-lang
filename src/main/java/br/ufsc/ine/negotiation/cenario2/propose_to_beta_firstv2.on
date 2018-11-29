@@ -25,8 +25,6 @@ intentions:
 	can(beta, hangMirror). //M.5
 	
 	
-! communication sendPropose(tell,X,Y,Z,W,Q) :- beliefs intention(X,Y,Z,W,Q).
-
 	
 		
 ! intentions have(X, screwDriver) :- intentions can(X, hangMirror) & beliefs not have(X, screwDriver). //G.2 especifico
@@ -36,11 +34,17 @@ intentions:
 
 ! intentions give(X,Y,Z) :- intentions have(Y, Z) & beliefs have(X, Z).
 
-! beliefs intention(Y,give,X,Y,Z) :- intentions have(Y, Z) & beliefs have(X, Z).
+
+! communication sendPropose(tell,Y,give,X,Y,Z) :- intentions give(X,Y,Z).
+
+
+
+//! beliefs intention(Y,give,X,Y,Z) :- intentions have(Y, Z) & beliefs have(X, Z).
+
 
 
 //! beliefs have(Y,Z) :- beliefs have(X,Z) & beliefs give(X,Y,Z). //ownership
 
 //! intentions have(X,Y) :- beliefs not can(X, hangMirror) & intentions can(X, hangMirror) & beliefs not have(X,Y). //nao funcionou
-  	
+  
 
