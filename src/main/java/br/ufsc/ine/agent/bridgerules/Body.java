@@ -46,6 +46,10 @@ public class Body {
 						String clauses = head.getClause().substring(head.getClause().indexOf("(") + 1,
 								head.getClause().indexOf(")"));
 						String[] split = clauses.trim().split(",");
+						String previousBinding = "";
+						
+						
+						
 
 						boolean hasOpenAlternatives = true;
 						while (hasOpenAlternatives) {
@@ -53,6 +57,7 @@ public class Body {
 							
 
 							StringBuilder builder = new StringBuilder();
+							
 
 							for (int i = 0; i < split.length; i++) {
 
@@ -68,6 +73,12 @@ public class Body {
 									builder.append(",");
 								}
 							}
+							if(previousBinding.equals(builder.toString()) && hasOpenAlternatives) {
+								hasOpenAlternatives = false;
+							}
+							
+							previousBinding = builder.toString();
+							
 
 							variableFacts.add(
 									head.getClause().substring(0, head.getClause().indexOf("(") + 1) + builder + ").");
