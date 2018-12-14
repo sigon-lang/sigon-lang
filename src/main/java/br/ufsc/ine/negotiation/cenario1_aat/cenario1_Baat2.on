@@ -1,0 +1,93 @@
+/*Cenário 1 - Home improvements
+Modelagem do agente Beta usando AAT*/
+
+communication:
+    sensor("readPropose", "br.ufsc.ine.negotiation.ReadMessage").
+    actuator("sendPropose", "br.ufsc.ine.negotiation.SendMessage").
+
+
+beliefs:
+	have(b, mirror).
+	have(b, nail).
+	not have(b, hammer).
+	not have(b, screw).
+	not have(b, screwDriver).
+	give(b, a, nail). //recebido 1 b define increase  - usa
+	give(a, b, screw). //recebido 1 b define decrease - nao uso
+	give(a,b, screwDriver). //recebido 1 b define decrease - nao usa
+	hangMirror(hammer). //inicial
+	hangMirror(nail). //inicial
+	hangMirror(screw). //recebido em 2
+	hangMirror(screwDriver). //recebido depois 2
+	
+	
+	
+	
+
+//! beliefs can(X, hangMirror) :- have(X, screw) & have(X, screwDriver) :- communication(sense(advice))
+	
+! intentions have(b, X) :- desires can(b, hangMirror) & beliefs hangMirror(X) & beliefs not have(X). //generica  
+
+
+//! intentions give(X,Y,Z) :- intentions have(Y, Z) & beliefs have(X, Z).
+
+
+
+
+
+
+desires:
+	can(b, hangMirror).
+
+intentions:
+		
+		
+_negotiation:
+increaseUrgency(b, hammer, 10). //primeira rodada 
+increaseUrgency(b, nail, 10). // primeira rodada
+//decreaseUrgency(b, screw, 0). //primeira rodada
+//decreaseUrgency(b, screwDriver, 0). //primeira rodada
+
+
+//impede de dar algo a alguem
+//! _negotiation increaseUrgency(b, X, 10) :- desires can(b, hangMirror) & beliefs have(b, X) & beliefs hangMirror(X). //primeira parte generico
+//usado para o pedido
+//! _negotiation increaseUrgency(b, X, 10) :- desires can(b, hangMirror) & beliefs not have(b, X) & beliefs hangMirror(X). //primeira parte generico
+
+
+//! _negotiation increaseUrgency(b, X, 10) :- beliefs advice(hangMirror, X). generico lembrar de por a intencao do beta em alpha
+
+
+! _negotiation increaseUrgency(b, screw, 10) :- desires can(b, hangMirror) & beliefs hangMirror(screw) & beliefs not have(b, screw). //generico lembrar de por a intencao do beta em alpha
+! _negotiation increaseUrgency(b, screwDriver, 10) :- desires can(b, hangMirror) & beliefs hangMirror(screwDriver) & beliefs not have(b, screwDriver). //generico lembrar de por a intencao do beta em alpha
+
+
+! _negotiation decreaseUrgency(b, X, 0) :- intentions not use(b, X).
+
+
+
+! intentions not give(b,X,Y) :- _negotiation increaseUrgency(b, Y, 10) & beliefs give(b, X, Y). //parcial
+
+
+! intentions give(a,b,screwDriver) :- _negotiation increaseUrgency(b,screwDriver,10) & beliefs not have(b, screwDriver). //parcial
+! intentions give(a,b,screw) :- _negotiation increaseUrgency(b, screw, 10) & beliefs not have(b, screw). //parcial
+! intentions give(a,b,hammer) :- _negotiation increaseUrgency(b, hammer, 10) & beliefs not have(b, hammer). //parcial  
+//! communication sendPropose(not,give,X,Y,Z) :- intentions not give(X,Y,Z).
+
+! communication sendPropose(not,give,X,Y,Z) :- intentions not give(X,Y,Z).
+
+//! communication sendPropose(askGive,X,Y,Z) :- intentions give(X,Y,Z).
+! communication sendPropose(give,a,b,hammer) :- intentions give(a,b,hammer).
+! communication sendPropose(give,a,b,screw) :- intentions give(a,b,screw).
+! communication sendPropose(give,a,b,screwDriver) :- intentions give(a,b,screwDriver).
+
+
+
+
+//! communication sendPropose(not,give,X,Y,Z, reason,hangMirror) :- intentions not give(X,Y,Z) & intentions can(b, hangMirror).
+
+
+
+	
+
+

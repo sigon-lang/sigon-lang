@@ -1,0 +1,83 @@
+/*Modelagem do cenário 1 Usando AAT
+Casos a serem abordados:
+Negociação de tarefas domésticas usando dois agentes
+Inicialmente alpha e beta definem valores de aspiração para os itens.
+Alpha define um valor alto de aspiração para o prego, e valores baixos para o parafuso e furadeira
+Beta também define um valor alto para o prego, pois acredita que apenas pode atingir seu objetivo usando ele.
+Autor do cenário define que existe uma troca de informação em um certo momento alpha informa para beta que ele
+pode pendurar o espelho usando o parafuso e a furadeira. Usando essa abordagem, posso usar a questão da alteração
+da aspiração. 
+
+Modelagem de alpha:
+
+Modelagem de beta:
+Receber primeira proposta, e nega, recebe nova informação:
+altera urgencia de itens.
+
+*/
+
+
+communication:
+    sensor("readPropose", "br.ufsc.ine.negotiation.ReadMessage").
+    actuator("sendPropose", "br.ufsc.ine.negotiation.SendMessage").
+
+
+beliefs:
+	have(a, picture).
+	have(a, hammer).
+	have(a, screw).
+	have(a, screwDriver).
+	have(b, nail).	
+	not have(a, nail).
+
+! beliefs  can(X, hangMirror) :- beliefs have(X, screw) & beliefs have(X, screDriver) & beliefs have(X, mirror). //M.2
+
+! beliefs  can(X, hangPicture) :- beliefs have(X, hammer) & beliefs have(X, nail) & beliefs have(X, picture). //M.3
+	
+	
+! intentions have(a, nail) :- intentions can(a, hangPicture) &  beliefs not have(a, nail).
+! intentions have(a, hammer) :- intentions can(a, hangPicture) &  beliefs not have(a, hammer).
+! intentions have(a, picture) :- intentions can(a, hangPicture) &  beliefs not have(a, picture).
+
+
+! intentions give(X,Y,Z) :- intentions have(Y, Z) & beliefs have(X, Z).
+
+
+
+desires:
+	can(a, hangPicture).
+
+
+intentions:
+	
+	
+! intentions not use(X, screw) :- desires can(X, hangPicture) & beliefs have(X, screw).
+! intentions not use(X, screwDriver) :- desires can(X, hangPicture) & beliefs have(X, screwDriver).
+		
+		
+_negotiation:
+
+
+//! communication sendPropose(give,X,Y,Z) :- _negotiation decreaseUrgency(X,Z,0) & _negotiation increaseUrgency(Y,Z,10).
+
+//! intentions not use(X, nail) :- intentions can(X, hangPicture) & beliefs have(X, nail).
+
+
+//! _negotiation decreaseUrgency(X, Y, 0) :- beliefs have(X, Y) & intentions not use(X,Y). REGRA GENERICA
+
+! _negotiation decreaseUrgency(a, screw, 0) :- beliefs have(a, screw) & intentions not use(a,screw). //bug: nao infere duas coisas
+
+! _negotiation decreaseUrgency(a, screwDriver, 0) :- beliefs have(a, screwDriver) & intentions not use(a,screwDriver). 
+//bug: infere coisas diferentes se roda no modo debug
+
+
+! _negotiation increaseUrgency(a, nail, 10) :- desires can(a, hangPicture) & beliefs not have(a, nail).
+
+//! intentions give(X, Y, Z) :- _negotiation decreaseUrgency(X, Z, 0) & beliefs askGive(Y,X,Z). //REGRA GENERICA
+! intentions give(a, b, screw) :- _negotiation decreaseUrgency(a, screw, 0) & beliefs askGive(b,a,screw).
+! intentions give(a, b, screwDriver) :- _negotiation decreaseUrgency(a, screwDriver, 0) & beliefs askGive(b,a,screwDriver).
+! intentions askGive(a, b, nail) :- _negotiation increaseUrgency(a, nail, 10).
+
+! communication sendPropose(give, X, Y, Z) :- intentions askGive(X,Y, Z).
+
+	

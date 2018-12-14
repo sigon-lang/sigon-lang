@@ -1,0 +1,46 @@
+communication:
+    sensor("readPropose", "br.ufsc.ine.negotiation.ReadMessage").
+    actuator("sendPropose", "br.ufsc.ine.negotiation.SendMessage").
+
+//uma percepção alfa só é adicionada ao contexto de crenças se ela for uma pre-condição de algum plano.
+beliefs:	
+	aux.
+	t.
+
+//morar próximo do local do trabalho me parece ser um desejo "melhor" do que comprar uma casa
+desires:
+	teste.
+	
+	
+_negotiation:
+	
+	aux1. //ação 1	
+	aux2.
+	teste(teste).
+	increaseUrgency(car, 10).
+	
+
+intentions:
+	
+
+
+//! _negotiation teste(prop1) :- beliefs teste(aux) | _negotiation testeQ.
+
+
+! desires propose(car) :- _negotiation aux1.
+
+
+
+
+
+/*! planner [teste, aux, aux1] :- _negotiation X.
+
+! planner [propose, not car, propose(car)] :- _negotiation increaseUrgency(car, 10) & _negotiation car & beliefs not car.*/
+
+
+
+
+planner:
+
+	
+

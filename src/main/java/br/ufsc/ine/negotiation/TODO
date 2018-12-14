@@ -1,0 +1,27 @@
+TODO Planning:
+
+Implementar questão do _
+Verificar impacto do binding quando o plano é criado de forma diferente
+Implementar questão de múltiplicas precondicoes
+Implementar planejamento usando custos
+Testar controle de custo por meio de regras de ponte e negociacao
+Criar ações levando em consideracao o args (usado na hora de adicionar a acao)
+
+
+TODO geral:
+
+Melhorar AAT: 
+questao do binding de ações ainda é feita de maneira estranha, isso torna necessário uma RP para cada increase/decrease
+Label de crenças que serão usadas na negociacao
+Strategy(X,Y) ainda não foi feito
+Graded beliefs seria legal de implementar - CONTORNO: usar lógica proposicional da seguinte forma: term(valor)
+Valores para Increase e decrease poderiam ser definidos com os valores de graded bdi (alguma tecnica de logica fuzzy)
+
+AAT controlar atitude do agente:
+Ignorar a parte de crenças
+Poderia mudar o fluxo proposto
+Negociacao adiciona crenças e ações : mas como definir o que é urgente?
+
+
+
+

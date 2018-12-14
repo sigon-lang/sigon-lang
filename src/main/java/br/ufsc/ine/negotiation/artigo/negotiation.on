@@ -1,0 +1,75 @@
+communication:
+    sensor("readPropose", "br.ufsc.ine.negotiation.ReadMessage").
+    actuator("sendPropose", "br.ufsc.ine.negotiation.SendMessage").
+
+
+beliefs:
+	availablemoney(150000).
+	workdistance(20).
+	enterAuction(house).
+	
+
+//morar próximo do local do trabalho me parece ser um desejo "melhor" do que comprar uma casa
+desires:
+	workdistance(5).
+	
+
+//como atrelar um desejo baseando-se em uma intenção?
+intentions:
+
+	
+_negotiation:
+	auction(Z, blind). //Nome do leilão e seu tipo.
+	bid(X,Y). //ação 1 - lance no item Y com Valor Z de um leilao X
+	exit(Z). //ação 2 - retirar-se do leilão X
+	
+
+//regra de ponte para definir como será feito o lance aka - estratégia
+! _negotiation bid(house, Y) :- 
+			beliefs availablemoney(Y) &
+				beliefs workdistance(20) & 
+					desires workdistance(5) &						
+							_negotiation auction(Z, blind).
+							
+							
+! _negotiation auction(X, blind) :- 
+			beliefs enterAuction(X) &									
+							_negotiation auction(X, blind).							
+					
+
+//regra de ponte para definir ação
+//! planner action(bid(house, X), available_money(X), buy(house)) :- _negotiation bid(house, X). Feito pelo código
+
+/*Duvidas - ideias de como adicionar planos
+
+Mostrar caso da não adição da crença
+Usar "labels" para pegar estrategias:
+strategy(X,Y)
+
+
+Regra de ponte entre CC e NC para adição de protocolo
+
+
+*/
+
+//regra de ponte para definir desejo
+//! desires buy(house) :- _negotiation bid(house, X). -> PODE SER DEFINIDO PELA INTENCAO // Feito pelos planos
+
+
+//somethingToBeTrue buy house?
+					 
+
+planner:
+	//plan(somethingToBeTrue, compoundaction, preconditions, postconditions)
+	plan(
+		buy(house),
+		[
+			action(sendPropose(msg),  availablemoney(Y), workdistance(5))
+			
+		],		
+		[enterAuction(house) , availablemoney(Y)],
+		[
+			buy(house),
+			workdistance(5)
+			
+		]).

@@ -1,0 +1,72 @@
+/*maquina de estados do processo inteiro
+impactos em reescalar atributos e como isso é feito
+
+Objetivo é modelar o agente mediador mi, inicialmente ele não possui conhecimento
+Os agentes alfa e beta enviam seus objetivos para o agente mi
+
+1-Descobrir como o createSolution funciona -> no primeiro caso ele falha
+
+*/
+
+
+communication:
+    sensor("readPropose", "br.ufsc.ine.negotiation.ReadMessage").
+    actuator("sendPropose", "br.ufsc.ine.negotiation.SendMessage").
+
+//uma percepção alfa só é adicionada ao contexto de crenças se ela for uma pre-condição de algum plano.
+beliefs:	
+	have(mi, screwDriver). //M.1	
+	have(alpha, picture). //M.6
+	have(alpha, screw). //M.7
+	have(alpha, hammer). //M.8
+	have(beta, nail). //M.9
+	have(beta, mirror). //M.10
+	not have(beta, screw).
+	not have(beta, screwDriver).
+	not have(alpha, nail).
+	
+
+
+! beliefs  can(X, hangMirror) :- beliefs have(X, screw) & beliefs have(X, screDriver) & beliefs have(X, mirror). //M.2
+
+! beliefs  can(X, hangPictuire) :- beliefs have(X, hammer) & beliefs have(X, nail) & beliefs have(X, picture). //M.3
+
+
+desires:
+		
+	
+
+intentions:	
+	can(alpha, hangPicture). //M.4
+	can(beta, hangMirror). //M.5
+	
+	
+! intentions have(X, screw) :- intentions can(X, hangMirror) & beliefs not have(X, screw). //G.2 especifico
+! intentions have(X, screwDriver) :- intentions can(X, hangMirror) & beliefs not have(X, screwDriver). //G.2 especifico
+! intentions have(X, mirror) :- intentions can(X, hangMirror) & beliefs not have(X, mirror). //G.2 especifico
+
+! intentions have(X, nail) :- intentions can(X, hangPicture) & beliefs not have(X, nail).
+! intentions have(X, hammer) :- intentions can(X, hangPicture) & beliefs not have(X, hammer).
+! intentions have(X, picture) :- intentions can(X, hangPicture) & beliefs not have(X, picture).
+
+
+
+! intentions give(alpha , Y ,screw) :- intentions have(Y, screw) & beliefs have(alpha,screw).
+
+! intentions give(mi, Y, screwDriver) :- intentions have(Y, screwDriver) & beliefs have(mi, screwDriver).
+
+//! intentions give(beta , alpha , nail) :- intentions have(alpha, nail) & beliefs have(beta, nail).
+
+
+ 
+//tell se X é um pre req pra atingir um objetivo
+! communication sendPropose(give,mi,Y,Z) :- intentions give(mi,Y,Z).
+! communication sendPropose(give,alpha,Y,Z) :- intentions give(alpha,Y,Z).
+//! communication sendPropose(give,beta,Y,Z) :- intentions give(beta,Y,Z).
+
+
+  	
+
+
+
+

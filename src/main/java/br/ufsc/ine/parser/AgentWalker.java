@@ -9,6 +9,7 @@ import agent.AgentParser;
 import agent.AgentParser.LogicalContextNameContext;
 import agent.AgentParser.ContextContext;
 import agent.AgentParser.FormulasContext;
+import agent.AgentParser.HeadContext;
 import agent.AgentParser.LogicalContextContext;
 import br.ufsc.ine.agent.context.communication.LangActuator;
 import br.ufsc.ine.agent.context.LangContext;
@@ -30,7 +31,7 @@ public class AgentWalker extends AgentBaseListener {
 
 	private List<AgentParser.BridgeRuleContext> bridgeRules  = new ArrayList<>();
 
-
+	
 	private LangContext lastLangContext;
 	private LangSensor lastSensor;
 	private LangActuator lastActuator;
@@ -74,7 +75,15 @@ public class AgentWalker extends AgentBaseListener {
 		this.getLangSensors().add(this.lastSensor);
 		super.enterSensorImplementation(ctx);
 	}
-
+	
+	@Override
+	public void enterHead(HeadContext ctx) {
+		// TODO Auto-generated method stub
+		
+		super.enterHead(ctx);
+	}
+	
+	
 	 
 
 
@@ -117,7 +126,7 @@ public class AgentWalker extends AgentBaseListener {
 	@Override
 	public void enterLogicalContext(LogicalContextContext ctx) {
 		this.lastLangContext = new LangContext();
-		this.lastLangContext.setName(ctx.logicalContextName().getText());
+		this.lastLangContext.setName(ctx.logicalContextName().getText().replace("_", ""));
 		if(ctx.formulas()!=null && ctx.formulas().term()!=null) { 
 			ctx.formulas().term().forEach(t->{
 				 this.lastLangContext.addClause(t.getText());
@@ -240,10 +249,12 @@ public class AgentWalker extends AgentBaseListener {
 	@Override
 	public void enterBridgeRule(AgentParser.BridgeRuleContext ctx) {
 		this.bridgeRules.add(ctx);
+		
 		super.enterBridgeRule(ctx);
 	}
 
 	public List<AgentParser.BridgeRuleContext> getBridgeRules() {
+		
 		return bridgeRules;
 	}
 

@@ -43,7 +43,7 @@ logicalContextName
 	;
 
 primitiveContextName
-	: 'beliefs' | 'desires' | 'intentions'
+	: 'beliefs' | 'desires' | 'intentions' 
 	;
 
 customContextName
@@ -175,7 +175,7 @@ head
 
 body
 	: negation? contextName   ((term | negation? VARIABLE) | plan)
-((AND | OR) negation?  contextName   ((term | negation? VARIABLE) | plan))*
+(logicalOperator negation?  contextName   ((term | negation? VARIABLE) | plan))*
 	;
 
 
@@ -183,7 +183,7 @@ body
 
 term
 	:  negation? CONSTANT ( annotation | (LeftParen atom (',' atom )* RightParen) annotation?)? 
-	| term (AND | OR) term
+	| term (logicalOperator) term
 	| ('[' term (',' term)* ']')
 	| term ':-' term
 	;
@@ -220,6 +220,12 @@ gradedValue
 cost
     : '0.' NUMERAL
     ;
+    
+    
+    
+logicalOperator
+	: AND | OR;
+	
 NUMERAL
 	: DIGIT+
 	;

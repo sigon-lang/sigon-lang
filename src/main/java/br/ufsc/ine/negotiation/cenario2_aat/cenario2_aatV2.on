@@ -1,0 +1,55 @@
+/*Modelagem do cenário 2 do trescak usando AAT
+Utilizando o modelo proposto será usado AAT como estratégia de negociação
+Aqui nesse cenário o mediador irá propor 2 formas dos agentes alpha e beta atingirem seus objetivos
+Como definir a urgencia? O mediador sabe o que cada agente precisa para atingir seus objetivos
+Então usando essa informação o mediador pode definir o nível de urgência de cada item (nail, screw, hammer e etc)
+Por exemplo: o agente alpha nao precisa do mirror e nem do screw para atingir o objetivo dele, então a urgencia é baixa
+Já o agente beta precisa do screw e do screwDriver, logo terão urgencia alta
+Setar tudo como 0 de urgencia
+*/
+
+
+communication:
+    sensor("readPropose", "br.ufsc.ine.negotiation.ReadMessage").
+    actuator("sendPropose", "br.ufsc.ine.negotiation.SendMessage").
+
+//uma percepção alfa só é adicionada ao contexto de crenças se ela for uma pre-condição de algum plano.
+beliefs:	
+	have(mi, screwDriver). //M.1	
+	have(alpha, picture). //M.6
+	have(alpha, screw). //M.7
+	have(alpha, hammer). //M.8
+	have(beta, nail). //M.9
+	have(beta, mirror). //M.10
+	not have(beta, screw).
+	not have(beta, screwDriver).
+	not have(alpha, nail).
+	
+	
+
+desires:	
+	can(alpha, hangPicture). //M.4
+	can(beta, hangMirror). //M.5
+	
+
+intentions:	
+	
+
+
+
+_negotiation:
+	increaseUrgency(X,Y,Z).
+	decreaseUrgency(X,Y,Z).
+	
+
+! communication sendPropose(give,X,Y,Z) :- _negotiation decreaseUrgency(X,Z,0) & _negotiation increaseUrgency(Y,Z,10).
+
+! intentions not use(X, nail) :- desires can(X, hangMirror) & beliefs have(X, nail).
+
+! _negotiation decreaseUrgency(X, Y, 0) :- beliefs have(X, Y) & intentions not use(X,Y).
+
+! _negotiation increaseUrgency(X, Y, 10) :- desires can(X, hangPicture) & beliefs not have(X, Y).
+
+	
+ 
+

@@ -1,0 +1,5 @@
+communication:
+	sensor("identifier1", "implementation1").
+
+planner:
+    plan( aux, [action(asd(p1))], p2, p3).

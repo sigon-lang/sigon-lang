@@ -1,0 +1,50 @@
+communication:
+    sensor("readPropose", "br.ufsc.ine.negotiation.ReadMessage").
+    actuator("sendPropose", "br.ufsc.ine.negotiation.SendMessage").
+
+//uma percepção alfa só é adicionada ao contexto de crenças se ela for uma pre-condição de algum plano.
+beliefs:	
+	have(mi, screwDriver). 
+	have(alpha, picture).
+	have(alpha, screw). 
+	have(alpha, hammer). 
+	have(beta, nail). 
+	have(beta, mirror). 
+	not have(beta, screw).
+	not have(beta, screwDriver).
+	not have(alpha, nail).
+	can(X, hangMirror) :- have(X, screw) & have(X, screwDriver) & have(X, mirror).	
+	have(Y,Z) :- have(X,Z) & give(X,Y,Z). //ownership
+
+
+desires:		
+	
+
+intentions:	
+	can(alpha, hangPicture). //M.4
+	can(beta, hangMirror). //M.5
+	
+	
+	
+		
+! intentions have(X, screwDriver) :- intentions can(X, hangMirror) & beliefs not have(X, screwDriver). //G.2 especifico
+	
+! intentions have(X, screw) :- intentions can(X, hangMirror) & beliefs not have(X, screw). //G.2 especifico
+
+
+! intentions give(X,Y,Z) :- intentions have(Y, Z) & beliefs have(X, Z).
+
+
+! communication sendPropose(tell,Y,give,X,Y,Z) :- intentions give(X,Y,Z).
+
+
+
+//! beliefs intention(Y,give,X,Y,Z) :- intentions have(Y, Z) & beliefs have(X, Z).
+
+
+
+//! beliefs have(Y,Z) :- beliefs have(X,Z) & beliefs give(X,Y,Z). //ownership
+
+//! intentions have(X,Y) :- beliefs not can(X, hangMirror) & intentions can(X, hangMirror) & beliefs not have(X,Y). //nao funcionou
+  
+

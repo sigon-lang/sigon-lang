@@ -1,0 +1,32 @@
+communication:
+    sensor("readPropose", "br.ufsc.ine.negotiation.ReadMessage").
+    actuator("sendPropose", "br.ufsc.ine.negotiation.SendMessage").
+
+//uma percepção alfa só é adicionada ao contexto de crenças se ela for uma pre-condição de algum plano.
+beliefs:	
+	
+	can(X, hangMirror) :- have(X, screw) & have(X, screwDriver) & have(X, mirror).
+	
+	not can(X, hangMirror) :- not have(X, screw) | not have(X, screwDriver) | not have(X, mirror).
+	
+	aux.
+	aux2.
+	//conclusao :- hipotese
+	
+	
+	
+! beliefs news :- beliefs have(d).
+	
+	
+
+//morar próximo do local do trabalho me parece ser um desejo "melhor" do que comprar uma casa
+desires:
+
+	
+_negotiations:
+
+
+intentions:
+	testeF(g).
+
+

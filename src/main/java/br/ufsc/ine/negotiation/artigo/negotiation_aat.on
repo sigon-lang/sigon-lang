@@ -1,0 +1,151 @@
+/*Estudo de caso de negociacao usando AAT
+readpropose deve conter as normas e o que será negociado
+	Como definir magicamente o que será negociado? Binding com o contexto de comunicacao e negociacao
+Caminhos a serem seguidos:
+1-Definir hardcoded o que será usado para aumentar ou diminuir a urgencia de um atributo
+2-Utilizar estratégia de binding com o prolog pra definir quais crenças serão usadas
+3-Graded analisar necessidade de utilizar -> Para evitar poderia usar algo assim: negociacao(algo, valor)
+
+
+Ideia 1: posso fazer um negociador generico que recebe uma msg num padrao especifico e extrai os atributos de negociacao.
+
+Negotiating Agent receives an offer.
+
+jobOffer(
+salary(7000, 10000, 12000),
+jobDescription(qa, programmer, teamManager, projectManager),
+car(leased, noLeased, noAgreement),
+pension(0, 10, 20, noAgreement),
+promotion(2, 4, noAgreement),
+workingHours(8, 9, 10)
+)
+
+
+
+\item Salary per month: (a) \$ 7.000, (b) \$ 12.000, or (c) \$ 20.000.
+    \item Job description: (a) QA, (b) Programmer, (c) Team Manager, or (d) Project Manager.
+    \item Car benefits: (a) providing a leased car company car, (b) no leased car, or (c) no agreement.
+    \item Pension benefits: The possible value for the percentage of the salary deposited in the pension funds are (a) 0\%, (b) 10\%, (c) 20\%, or (d) no agreement. 
+    \item Promotion possibilities: (a) fast promotion track (2 years), (b) slow promotion track (4 years), or (c) no agreement.  
+    \item Working hours per day: (a) 8 hours, (b) 9 hours, or (c) 10 hours.  
+Problema com parser da regra de ponte, mas nao afeta negociacao
+*/
+
+
+communication:
+    sensor("readPropose", "br.ufsc.ine.negotiation.ReadMessage").
+    actuator("sendPropose", "br.ufsc.ine.negotiation.SendMessage").
+    
+    
+
+
+beliefs:
+	occupiedHours(2). //Bob faz um curso que ocupa 2 horas diarias dele
+	workdistance(5). //Bob vive proximo do empresa que pretende trabalhar
+	car.
+	
+
+
+desires:
+	occupiedHours(10). //isso só vai ser satisfeito depois de acertarem o working hours
+	workdistance(5). //mesma ideia
+	
+
+	
+
+//como atrelar um desejo baseando-se em uma intenção?
+intentions:
+
+	
+_negotiation:
+	exit(Z). //ação 2 - retirar-se do leilão X
+	increaseUrgency(X,Y).
+	decreaseUrgency(X,Y). //usado para controlar desejos positivos e negativos
+	
+
+
+
+//usando o CC para definir o que será negociado - replicar para outros casos
+
+/*
+! _negotiation salary(X,Y,Z) :- 
+	communication sense(jobOffer(salary(X,Y,Z),_,_,_,_,_)).
+	
+	
+! _negotiation jobDescription(X,Y,Z,W) :- 
+	communication sense(jobOffer(_,jobDescription(X,Y,Z,W),_,_,_,_)).
+	
+! _negotiation car(X,Y,Z) :- 
+	communication sense(jobOffer(_,_,car(X,Y,Z),_,_,_)).
+	
+! _negotiation pension(X,Y,Z,W) :- 
+	communication sense(jobOffer(_,_,_,pension(X,Y,Z,W),_,_)).
+	
+	
+! _negotiation promotion(X,Y,Z) :- 
+	communication sense(jobOffer(_,_,_,_,promotion(X,Y,Z),_)).
+	
+! _negotiation workingHours(X,Y,Z) :- 
+	communication sense(jobOffer(_,_,_,_,_,workingHours(X,Y,Z))).
+
+*/
+	
+
+/*como definir o gamma?
+	Assumindo que as termos sejam graduados, poderia pegar o valor de cada termo do body e fazer algum calculo
+	Assumindo que todos sejam maximo: entao será algo binário na primeira versao
+*/ 
+
+//usando crencas e desejos para definir o AAT
+! _negotiation decreaseUrgency(car, 0) :- 
+	beliefs workdistance(5) | beliefs car(working).
+	
+//! _negotiation increaseUrgency(occupiedHours(8), 10) :- desires occupiedHours(10) & beliefs occupiedHours(2).
+
+! _negotiation increaseUrgency(eightHours, 10) :- desires occupiedHours(10) & beliefs occupiedHours(2).
+	
+/*! _negotiation decreaseUrgency(occupiedHours(10), 10) :- 
+	desires occupiedHours(10) & beliefs occupiedHours(2).*/
+	
+	
+! _negotiation decreaseUrgency(tenHours, 10) :- desires occupiedHours(10) & beliefs occupiedHours(2).
+	
+//usando AAT para definir ações 													
+
+! planner [propose, not car, propose(car)] :- _negotiation increaseUrgency(car, 10) & _negotiation car & beliefs not car.
+
+//! planner [propose(noCar), car, propose(noCar)] :- _negotiation decreaseUrgency(car, 0) & _negotiation car(X,Y,Z) & beliefs car.
+
+! planner [sendPropose(msg), car, propose(noCar)] :- _negotiation decreaseUrgency(car, 0).
+
+
+/*Uma ação de negociação consiste em propor algo, ou seja, propor X
+ A pré-condicao de propor X é que X seja um atributo de negociação (garantido na RP entre PC e NC), ou seja, 
+ BC nao deve ter X (isso pode ser usado para decidir se algo foi acordado ou nao)
+ Pós-condição de propor algo: propor X
+ 
+ */
+
+//usando AAT para definir desejos de negociacao
+
+! desires propose(noCar) :- _negotiation decreaseUrgency(car, 0) .
+
+
+
+
+/*Duvidas - ideias de como adicionar planos
+
+Mostrar caso da não adição da crença
+Usar "labels" para pegar estrategias:
+strategy(X,Y)
+
+
+Regra de ponte entre CC e NC para adição de protocolo
+
+
+*/
+
+					 
+
+planner:
+

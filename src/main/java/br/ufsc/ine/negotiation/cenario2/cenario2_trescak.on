@@ -1,0 +1,86 @@
+/*maquina de estados do processo inteiro
+impactos em reescalar atributos e como isso é feito
+
+Objetivo é modelar o agente mediador mi, inicialmente ele não possui conhecimento
+Os agentes alfa e beta enviam seus objetivos para o agente mi
+
+1-Descobrir como o createSolution funciona -> no primeiro caso ele falha
+
+*/
+
+
+communication:
+    sensor("readPropose", "br.ufsc.ine.negotiation.ReadMessage").
+    actuator("sendPropose", "br.ufsc.ine.negotiation.SendMessage").
+
+//uma percepção alfa só é adicionada ao contexto de crenças se ela for uma pre-condição de algum plano.
+beliefs:	
+	
+	have(alpha, picture).
+	have(alpha, screw). //M.7
+	have(alpha, hammer).
+	have(beta, nail).
+	have(beta, mirror).
+	not have(beta, screw).
+	not have(beta, screwDriver).
+	have(mi, screwDriver).	
+ 	have(Y,Z) :- have(X,Z) & give(X,Y,Z). //G.1 Ownership
+
+	
+! beliefs can(X, hangMirror) :- beliefs have(X, screw) & beliefs have(X, screwDriver) 
+	& beliefs have(X, mirror). //M.2 OK 
+	
+//M7 e G.1
+	//! beliefs have(Y,screw) :- beliefs have(X,screw) & beliefs give(X,Y,screw).  //G.1
+	
+//m.12
+
+	
+
+desires:
+	resolveDispute.
+	createProposal.
+	
+	
+
+	
+	
+
+intentions:	
+	can(alpha, hangPicture). //M.5
+	can(beta, hangMirror). //M.6
+	
+	
+! intentions have(X, screw) :- intentions can(X, hangMirror) & beliefs not have(X, screw). //parte dos pre req
+! intentions have(X, screwDriver) :- intentions can(X, hangMirror) & beliefs not have(X, screwDriver).
+! intentions have(X, mirror) :- intentions can(X, hangMirror) & beliefs not have(X, mirror). //mudar parte das intencoes do agente
+
+
+! beliefs give1(alpha, Y, screw) :- intentions have(Y, screw) & beliefs have(alpha, screw).
+
+! beliefs give2(mi, Y, screwDriver) :- intentions have(Y, screwDriver) & beliefs have(mi, screwDriver).
+
+
+! intentions give(alpha,Y, screw) :- intentions have(Y, screw).
+
+! intentions give2(mi, Y, screwDriver) :- intentions have(Y, screwDriver) & beliefs have(mi, screwDriver).
+
+ 
+//tell se X é um pre req pra atingir um objetivo
+! communication sendPropose(X,Y,Z) :- intentions give(X,Y,Z). // equivalente ao tell do artigo 
+
+//! communication tell(mi, Y, I) :- intentions intentions(Y, I).   
+	
+	
+_negotiations:
+	
+	//modelar argumentacao usando o G.1  e G.2
+	//Reduction - if there is a way to achieve an intention, an agent
+	//adopts the intention to achieve its preconditions: Rever questao de intencao
+	//se o agente pretender atingir q, ele deve ter suas precondicoes satisfeitas
+		
+  	
+
+
+
+
