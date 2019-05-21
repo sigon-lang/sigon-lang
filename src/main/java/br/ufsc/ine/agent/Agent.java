@@ -1,5 +1,7 @@
 package br.ufsc.ine.agent;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import br.ufsc.ine.agent.bridgerules.BridgeRulesService;
 import br.ufsc.ine.agent.context.communication.Actuator;
 import br.ufsc.ine.agent.context.communication.CommunicationContextService;
@@ -27,20 +29,44 @@ public class Agent {
     private List<Actuator> actuators = new ArrayList<>();
     public static boolean removeBelief = false;
 
-    public void run(AgentWalker walker) {
-        this.initAgent(walker);
+    
+    private String profilingFile;
+ 
+    //TODO: Profiling true
+  	private boolean doProfiling = false;
+  	
+  	public void run(AgentWalker walker) {
+  	  	long startTime = System.nanoTime();
+
+  		this.initAgent(walker);
         this.subscribeSensors();
         this.startSensors();
         CommunicationContextService.getInstance().actuators(this.actuators);
+        if(doProfiling)
+        	profiling(startTime);
     }
-
+	private void profiling(long startTime) {
+		if (profilingFile != null) {
+			long endTime = System.nanoTime();
+			long duration = (endTime - startTime) / 1000000;
+			try {
+				BufferedWriter writer = new BufferedWriter(new FileWriter(profilingFile, true));
+				writer.append(cycles + ";" + duration + System.lineSeparator());
+				writer.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
     private void subscribeSensors() {
         List<Observable<String>> observables = this.sensors.stream()
                 .map(s -> s.getPublisher()).collect(Collectors.toList());
         observables.forEach(stringObservable -> stringObservable
                 .subscribe(this::bdiAlgorithmCycle, Throwable::printStackTrace));
     }
-
+	public void setProfilingFile(String profilingFile) {
+		this.profilingFile = profilingFile;
+	}
     long cycles = 0;
     private synchronized void bdiAlgorithmCycle(String literal){
         if(literal.startsWith("-")){
