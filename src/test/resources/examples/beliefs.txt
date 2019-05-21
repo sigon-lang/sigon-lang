@@ -1,0 +1,74 @@
+communication:
+	sensor("identifier1", "implementation1").
+	
+beliefs:
+	proposition.
+	propositiON.
+	propositionWithAnnotationAction[preAction].
+	propositionWithAnnotationGradedValue->0.3.
+	propositionWithAnnotationActionAndGradedValue[preAction]->0.3.
+	
+	constant(a).
+	constant(X).
+	constant(a,X).
+	constant(X,a).
+	constant(a,a).
+	constant(X,X).
+	
+	constanT(a).
+	constanT(X).
+	constanT(a,X).
+	constanT(X,a).
+	constanT(a,a).
+	constanT(X,X).
+	
+	constant(a)[preAction].
+	constant(X)[preAction].
+	constant(a,X)[preAction].
+	constant(X,a)[preAction].
+	constant(a,a)[preAction].
+	constant(X,X)[preAction].
+	
+	constant(a)->0.3.
+	constant(X)->0.3.
+	constant(a,X)->0.3.
+	constant(X,a)->0.3.
+	constant(a,a)->0.3.
+	constant(X,X)->0.3.
+	
+	constant(a)[preAction]->0.3.
+	constant(X)[preAction]->0.3.
+	constant(a,X)[preAction]->0.3.
+	constant(X,a)[preAction]->0.3.
+	constant(a,a)[preAction]->0.3.
+	constant(X,X)[preAction]->0.3.
+
+	a & b.
+	a(a) & b.
+	a(a) & b(b).
+	a(a,b) & b(b,a).
+	a(A,a) & b(B, a).
+
+	a | b.
+	a(a) | b.
+	a(a) | b(b).
+	a(a,b) | b(b,a).
+	a(A,a) | b(B, a).
+	
+	//TODO: Analisar a semântica
+	a :- b.
+	a(a) :- b.
+	a(a,b) :- b.
+	a :- b(b).
+	a :- b(b,b).
+	a(a) :- b(b).
+	a(a,a) :- b(b,b).
+	a :- b(X).
+	a :- b(X,y).
+	a :- b(X,Y).
+	a(X) :- b.
+	a(X,Y) :- b.
+	a(X) :- b(X).
+	a(X,Y) :- b(X,Y).
+	a :- b | a & b.
+	a(a) :- b & b(x) | a(X).

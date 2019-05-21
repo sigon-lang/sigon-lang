@@ -34,10 +34,10 @@ public class Run {
     public static void main(String args[]) {
 
         try {
-            String fileName = "/home/valdirluiz/resultado-stress/target";
+            String fileName = "/home/thiago/projetos/phd-stress/target";
 
-            FileOutputStream fosExecute = new FileOutputStream("/home/valdirluiz/resultado-stress/1_contexto-copia.csv", true);
-            FileOutputStream fosVerifica = new FileOutputStream("/home/valdirluiz/resultado-stress/1_contexto-verifica.csv", true);
+            FileOutputStream fosExecute = new FileOutputStream("/home/thiago/projetos/phd-stress/a.csv", true);
+            FileOutputStream fosVerifica = new FileOutputStream("/home/thiago/projetos/phd-stress/b.csv", true);
 
             try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
 

@@ -143,7 +143,26 @@
 					</execution>
 				</executions>
 			</plugin>
-
+			<plugin>
+				<groupId>com.khubla.antlr</groupId>
+				<artifactId>antlr4test-maven-plugin</artifactId>
+				<configuration>
+					<verbose>true</verbose>
+					<showTree>true</showTree>
+					<entryPoint>agent</entryPoint>
+					<packageName>agent</packageName>
+					<grammarName>Agent</grammarName>
+					<testFileExtension>.txt</testFileExtension>
+					<exampleFiles>src/test/resources/examples</exampleFiles>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>

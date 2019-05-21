@@ -15,7 +15,7 @@ public class Prepare {
         try {
             String fileName = "/tmp/sigon-lang/examples/stressFile";
 
-            FileOutputStream fos = new FileOutputStream("/home/valdirluiz/resultado-stress/target", true);
+            FileOutputStream fos = new FileOutputStream("/home/thiago/resultado-stress/target", true);
             try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
 
                 stream.forEach((String l) ->{
