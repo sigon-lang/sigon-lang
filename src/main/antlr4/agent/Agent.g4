@@ -28,12 +28,12 @@ functionalContext
 	;
 
 communicationContext:
-	COMMUNICATION ':' (sensor | actuator)+
+	'communication' ':' (sensor | actuator)+
 	;
 
 plannerContext
 	:
-	PLANNER  ':' plansFormulas
+	'planner'  ':' plansFormulas
 	;
 
 
@@ -43,16 +43,19 @@ logicalContextName
 	;
 
 primitiveContextName
-	: BELIEFS | DESIRES | INTENTIONS
+	: 'beliefs' | 'desires' | 'intentions'
 	;
 
 customContextName
 	:
-	'_'(LCLETTER | UCLETTER)+ character*
+	CUSTOMNAME
 	;
 
+CUSTOMNAME :
+	'_'  ALPHA CHARACTER*
+;
 plan
-	: PLAN '(' somethingToBeTrue ',' compoundAction (',' planPreconditions ',' internalOperator? planPostconditions)? (',' cost)? ').'
+	: 'plan' LeftParen somethingToBeTrue ',' compoundAction (',' planPreconditions ',' internalOperator? planPostconditions)? (',' cost)? RightParen '.'
 	;
 
 
@@ -74,7 +77,7 @@ conditions
 	;
 
 action
-	: ACTION '(' functionInvocation (',' actionPreconditions ',' internalOperator? actionPostconditions)? (',' cost)? ')'
+	: 'action' LeftParen functionInvocation (',' actionPreconditions ',' internalOperator? actionPostconditions)? (',' cost)? RightParen
 	;
 
 actionPreconditions
@@ -86,15 +89,19 @@ actionPostconditions
 	;
 
 functionInvocation
-	: functionName '(' argumentList? ')'
+	: functionName LeftParen argumentList? RightParen
 	;
 
 functionName
-	: LCLETTER + character*
+	: CONSTANT
 	;
 
+
+
+
+
 sensor
-    : 'sensor('  sensorIdentifier  ',' sensorImplementation ').'
+    : 'sensor' LeftParen  sensorIdentifier  ',' sensorImplementation RightParen '.'
     ;
 
 
@@ -107,7 +114,7 @@ sensorImplementation
     ;
 
 actuator
-    : 'actuator(' actuatorIdentifier ',' actuatorImplementation ').'
+    : 'actuator' LeftParen actuatorIdentifier ',' actuatorImplementation RightParen '.'
     ;
 
 
@@ -141,7 +148,7 @@ argumentList
 ;
 
 expression
-	: constant | variable
+	: CONSTANT | VARIABLE
 	;
 
 compoundAction
@@ -157,40 +164,39 @@ plansFormulas
 
 
 contextName:
-	logicalContextName | PLANNER | COMMUNICATION
+	logicalContextName | 'planner' | 'communication'
 	;
 
 
 head
 	:
-	'!' negation?  contextName (term | negation? variable)
+	'!' negation?  contextName (term | negation? VARIABLE)
 	;
 
 body
-	: negation? contextName   ((term | negation? variable) | plan)
-((AND | OR) negation?  contextName   ((term | negation? variable) | plan))*
+	: negation? contextName   ((term | negation? VARIABLE) | plan)
+((AND | OR) negation?  contextName   ((term | negation? VARIABLE) | plan))*
 	;
-
 
 
 
 
 term
-	:  negation? constant ('(' atom (',' atom )* ')')?annotation?
+	:  negation? CONSTANT ( annotation | (LeftParen atom (',' atom )* RightParen) annotation?)? 
 	| term (AND | OR) term
 	| ('[' term (',' term)* ']')
 	| term ':-' term
 	;
 
-
-
 formulas
-	: (term '.')*
+	: (term '.' )*
 	;
 
 
+
+
 atom
-    : (numeral | constant | variable | '_') (operator (numeral | constant | variable | '_') )?
+    : (NUMERAL | CONSTANT | VARIABLE | '_') (operator (NUMERAL | CONSTANT | VARIABLE | '_') )?
     ;
 
 operator
@@ -205,41 +211,33 @@ annotation
      ;
 
 preAction
-    : '['constant']'
+    : '['CONSTANT']'
     ;
 
 gradedValue
-    : '->0.' numeral
+    : '->0.' NUMERAL
     ;
 cost
-    : '0.' numeral
+    : '0.' NUMERAL
     ;
-
-numeral
+NUMERAL
 	: DIGIT+
 	;
 
-constant
-	: LCLETTER character*
+CONSTANT
+	: LCLETTER CHARACTER*
 	;
 
-variable
-	: UCLETTER character*
+VARIABLE
+	: UCLETTER CHARACTER*
 	;
 
 
-
-
-
-
-character
-    : LCLETTER | UCLETTER | DIGIT
-    ;
 
 /*
 * TODO: user been able to add a semantic for a context.
 *semanticRules
-*	: (LCLETTER | UCLETTER) character* '.semantic'
+*	: (LCLETTER | UCLETTER) CHARACTER* '.semantic'
 *	;
 */
 
@@ -251,65 +249,32 @@ OR
    : '|'
    ;
 
+LeftParen : '(';
+RightParen : ')';
 
 STRING
 	:
     '"' (~["\\\r\n])* '"';
-
-
-
-BELIEFS
-	: 'beliefs'
+fragment ALPHA:
+	LCLETTER | UCLETTER
 	;
-
-DESIRES
-	: 'desires'
-	;
-
-INTENTIONS
-	: 'intentions'
-	;
-PLANNER
-	: 'planner'
-	;
-
-COMMUNICATION
-	: 'communication'
-	;
-SENSOR
-	: 'sensor'
-	;
-ACTUATOR
-	: 'actuator'
-	;
-PLAN
-	: 'plan'
-	;
-ACTION
-	: 'action'
-	;
-
-
-LCLETTER
+fragment CHARACTER
+    : LCLETTER | UCLETTER | DIGIT
+    ;
+fragment LCLETTER
     : [a-z_];
-
-UCLETTER
+fragment UCLETTER
     : [A-Z];
-
-DIGIT
+fragment DIGIT
     : [0-9];
-
 WS
    : [ \t\r\n] -> skip
 ;
-
-
 BlockComment
     : '/*' .*? '*/' -> skip
     ;
-
 LineComment
     :   '//' ~[\r\n]*
         -> skip
 ;
-
+    
