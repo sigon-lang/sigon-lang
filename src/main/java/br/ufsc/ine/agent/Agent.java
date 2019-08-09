@@ -8,6 +8,7 @@ import br.ufsc.ine.agent.context.communication.CommunicationContextService;
 import br.ufsc.ine.agent.context.LangContext;
 import br.ufsc.ine.agent.context.beliefs.BeliefsContextService;
 import br.ufsc.ine.agent.context.desires.DesiresContextService;
+import br.ufsc.ine.agent.context.intentions.IntentionsContextService;
 import br.ufsc.ine.agent.context.plans.PlansContextService;
 import br.ufsc.ine.parser.AgentWalker;
 import br.ufsc.ine.agent.context.communication.Sensor;
@@ -25,6 +26,7 @@ public class Agent {
 
     private static final String DESIRES = "desires";
     private static final String BELIEFS = "beliefs";
+	private static final String INTENTIONS = "intentions";
     private List<Sensor> sensors = new ArrayList<>();
     private List<Actuator> actuators = new ArrayList<>();
     public static boolean removeBelief = false;
@@ -33,17 +35,16 @@ public class Agent {
     private String profilingFile;
  
     //TODO: Profiling true
-  	private boolean doProfiling = false;
+  	private boolean doProfiling = true;
   	
   	public void run(AgentWalker walker) {
-  	  	long startTime = System.nanoTime();
+  	  	
 
   		this.initAgent(walker);
         this.subscribeSensors();
         this.startSensors();
         CommunicationContextService.getInstance().actuators(this.actuators);
-        if(doProfiling)
-        	profiling(startTime);
+        
     }
 	private void profiling(long startTime) {
 		if (profilingFile != null) {
@@ -51,7 +52,7 @@ public class Agent {
 			long duration = (endTime - startTime) / 1000000;
 			try {
 				BufferedWriter writer = new BufferedWriter(new FileWriter(profilingFile, true));
-				writer.append(cycles + ";" + duration + System.lineSeparator());
+				writer.append(duration + ";");
 				writer.close();
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -69,6 +70,7 @@ public class Agent {
 	}
     long cycles = 0;
     private synchronized void bdiAlgorithmCycle(String literal){
+    	long startTime = System.nanoTime();
         if(literal.startsWith("-")){
             literal = literal.replace("-","").trim();
             removeBelief = true;
@@ -79,12 +81,32 @@ public class Agent {
         cycles++;
         CommunicationContextService.getInstance().appendFact(this.getSense(literal));
         BridgeRulesService.getInstance().executeBdiRules();
+        if(doProfiling)
+        	profiling(startTime);
         PlansContextService.getInstance().executePlanAlgorithm();
+        if(doProfiling)
+        	profiling(startTime);
+        
+        
+        appendValueProfiling(Integer.toString(BeliefsContextService.getInstance().getTheory().toString().split("\n\n").length));
+        
+    }
+    
+    private void appendValueProfiling(String value) {
+    	try {
+    		BufferedWriter writer = new BufferedWriter(new FileWriter(profilingFile, true));
+			writer.append(value + ";");
+			writer.append(System.lineSeparator());
+			writer.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 
 
 
-
+    
 
 
     private String getSense(String literal) {
@@ -102,6 +124,7 @@ public class Agent {
 
         List<LangContext> desires = getContext(walker, DESIRES);
         List<LangContext> beliefs = getContext(walker, BELIEFS);
+		List<LangContext> intentions = getContext(walker, INTENTIONS);
 
         walker.getLangActuators().forEach(a ->{
             try{
@@ -132,6 +155,7 @@ public class Agent {
 
         BeliefsContextService.getInstance().beliefs(beliefs);
         DesiresContextService.getInstance().desires(desires);
+		IntentionsContextService.getInstance().intentions(intentions);
         PlansContextService.getInstance().plans(walker.getPlans());
         PlansContextService.getInstance().plansClauses(walker.getPlansClauses());
     }

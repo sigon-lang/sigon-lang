@@ -32,8 +32,8 @@ public class BridgeRulesService {
 
     public List<BridgeRule> bridgeRules(){
 
-
-        Body body = Body.builder().context(communicationContext).clause("sense(X)").build();
+/*TODO: refactor between this method and bdiBridgeRules*/
+        /*Body body = Body.builder().context(communicationContext).clause("sense(X)").build();
         Body plan = Body.builder().context(plansContext).clause("plan(Y,_,Z,_)").build();
         Body planMember = Body.builder().context(plansContext).clause("member(X, Z)").build();
         Body desires = Body.builder().context(desiresContext).clause("Y").build();
@@ -44,18 +44,9 @@ public class BridgeRulesService {
                 .head(Head.builder().context(beliefsContext).clause("X").build())
                 .body(body)
                 .build();
+*/
+        List<BridgeRule> rules = new ArrayList<BridgeRule>();
 
-        //com problema
-        BridgeRule r2 =  BridgeRule.builder()
-                .head(Head.builder().context(intentionsContext).clause("X").build())
-                .body(Body.builder().context(desiresContext).clause("X")
-                        .and(Body.builder().context(beliefsContext)
-                                .notClause("X").build()).build())
-                .build();
-
-        List<BridgeRule> rules = new ArrayList<BridgeRule>( );
-        rules.add(r1);
-        //rules.add(r2);
         return rules;
     }
 
@@ -78,7 +69,22 @@ public class BridgeRulesService {
                 .body(body)
                 .build().execute();
 
+ 		Body desireIntention = Body.builder().context(desiresContext).clause("X").build();
+ 		Body notBelief = Body.builder().context(beliefsContext).notClause("X").build();
+ 		Body planSomethingToBeTrue = Body.builder().context(plansContext).clause("plan(X,_,_,_)").build();
+        
+ 		Body notIntention = Body.builder().context(intentionsContext).notClause("X").build();
 
+ 		desireIntention.setAnd(notBelief);
+		notBelief.setAnd(planSomethingToBeTrue);
+		planSomethingToBeTrue.setAnd(notIntention);
+		
+ 		
+ 		BridgeRule.builder().head(Head.builder().context(intentionsContext).clause("X").build()).body(desireIntention)
+ 				.build().execute();
+
+        
+         
 
     }
 }

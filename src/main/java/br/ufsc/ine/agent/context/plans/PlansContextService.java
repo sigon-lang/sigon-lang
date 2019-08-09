@@ -1,6 +1,7 @@
 package br.ufsc.ine.agent.context.plans;
 
 import alice.tuprolog.InvalidTheoryException;
+
 import alice.tuprolog.MalformedGoalException;
 import alice.tuprolog.SolveInfo;
 import alice.tuprolog.Theory;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import br.ufsc.ine.agent.context.intentions.IntentionsContextService;
 
 public class PlansContextService implements ContextService{
 
@@ -52,10 +54,12 @@ public class PlansContextService implements ContextService{
 
     public void executePlanAlgorithm() {
 
-		//TODO: add intencao na verificacao para busca do plano
-
-
-		Optional<Plan> plan = plans.stream()
+		//TODO: testar uso da intencao no planejamento
+    	//TODO: criar algoritmo de priorização de intenção
+		//TODO: criar estrutura para receber o plano corrente e salvar as ações já executadas
+		
+		
+    	Optional<Plan> plan = plans.stream()
 				.filter(p -> !this.hasBelief(p.getSomethingToBeTrue()) && checkPreConditions(p))
 				.findFirst();
 
@@ -82,7 +86,17 @@ public class PlansContextService implements ContextService{
 			}
 		}
 		
+
+		
     }
+
+	private boolean hasIntention(String somethingToBeTrue) {
+		return Body.builder()
+				.head(Head.builder().clause(somethingToBeTrue).build())
+				.context(IntentionsContextService.getInstance())
+				.clause(somethingToBeTrue).build()
+				.verify();
+	}
 
 	private boolean checkPreConditions(Plan p) {
 		if(p.getPreConditions().isEmpty()) {
