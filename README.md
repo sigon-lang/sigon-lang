@@ -7,8 +7,6 @@ It is generic and extensible in the sense that it allows modeling agents accordi
 ## Quick Build
 
 
-Para manter e desenvolver o projeto é necessário ter as seguintes tecnologias instaladas:
-
   - Java v8 or higher 
   - Maven 3
   - Eclipse
