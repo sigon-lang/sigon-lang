@@ -1,59 +1,62 @@
-# Sigon Language
+# Sigon 
 
-Sigon is a framework for the development of agents as multi-context systems. It is generic and extensible, in the sense that it allows modeling agents according to existing architectures or to create new ones, as well as to extend an agent construction with additional features through other contexts and bridge rules.
+Sigon is a framework for the development of agents as multi-context systems.
+It is generic and extensible in the sense that it allows modeling agents according to existing architectures or to create new ones, as well as to extend an agent construction with additional features through other contexts and bridge rules.
 
-## Environment
+
+## Quick Build
 
 
 Para manter e desenvolver o projeto é necessário ter as seguintes tecnologias instaladas:
 
-  - Java versão 8 ou superior 
+  - Java v8 or higher 
   - Maven 3
   - Eclipse
   - Lombok : https://projectlombok.org/
-Como como compilar o projeto:
+
+### Setup
 
 ```sh
 $ cd  agent-project 
 $ mvn clean install
 ```
-_Obs: A IDE utilizada para o desenvolvimento é o Eclipse, para importar o projeto : File > Import > Existing Mavem Projects, selecionar o diretório do projeto e fazer a importação._
 
-## Gerar as classes da gramática
+We recommend Eclipse for development.
+To import the project: File > Import > Existing Mavem Projects, select the root folder.
 
-_O comando clean install já deve gerar as classes, o objetivo de usar o goal antlr4 é forçar a geração_
+### Grammar class generation
+
+_The command clean install will generate, but with the goal antlr4 it will be forced_
 
 
 ```sh
 $ mvn antlr4:antlr4 
 ```
-O pacote gerado fica disponível para ser usado no projeto de forma automática. As classes geradas ficam em target/generated-sources/java 
+The generated class are in target/generated-sources/java 
 
 
-## Como gerar um arquivo executável
+## How to create a executable file
 
 ```sh
 $ mvn clean package assembly:single
 ```
-Após a geração basta entrar na pasta target e executar o comando para rodar o interpretador:
 
 ```sh
  java -jar agent-parser-jar-with-dependencies.jar filename 
 ```
 
-## Como contribuir 
+## Contributing 
 
 
-### Com código
+### With development
 
-1. Crie um fork do master
-2. Implemente uma atualização
-3. Seja descritivo nos commits. Se for de uma issue, coloque o número
-4. Faça pull request para o branch Master
+1. Creating a fork from master
+2. Making and Submitting Changes
+3. Submit a pull request to the repository
 
-### Com ideias
+### With ideas
 
-1. Crie uma issue com etiqueta
+1. Creating an issue
 
 
 
