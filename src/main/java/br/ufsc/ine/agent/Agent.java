@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import br.ufsc.ine.agent.bridgerules.BridgeRulesService;
+import br.ufsc.ine.agent.context.ContextService;
 import br.ufsc.ine.agent.context.LangContext;
 import br.ufsc.ine.agent.context.beliefs.BeliefsContextService;
 import br.ufsc.ine.agent.context.communication.Actuator;
@@ -31,14 +32,46 @@ public class Agent {
 	private boolean doProfiling = false;
     private CustomContext[] customContexts;
 
-    public void run(AgentWalker walker, CustomContext[] contexts) {
-    	this.customContexts = contexts;
-    	
-        this.initAgent(walker);
-        this.subscribeSensors();
-        this.startSensors();
-        CommunicationContextService.getInstance().actuators(this.actuators);
-    }
+	public void run(AgentWalker walker, CustomContext[] contexts) {
+		this.customContexts = contexts;
+		this.initAgent(walker);
+		this.subscribeSensors();
+		this.startSensors();
+		CommunicationContextService.getInstance().actuators(this.actuators);
+	}
+	
+	public void run(AgentWalker walker) {
+		
+		this.initAgent(walker);
+		this.subscribeSensors();
+		this.startSensors();
+		CommunicationContextService.getInstance().actuators(this.actuators);
+	}
+
+	public void run(AgentWalker walker, ContextService[] contexts) {
+
+		initCustomClauses(walker, contexts);
+		this.initAgent(walker);
+		this.subscribeSensors();
+		this.startSensors();
+		CommunicationContextService.getInstance().actuators(this.actuators);
+	}
+
+	public void initCustomClauses(AgentWalker walker, ContextService[] contexts) {
+
+		for (ContextService contextService : contexts) {
+			List<LangContext> langCustom = getContext(walker, contextService.getName());
+			for (LangContext langContext : langCustom) {
+				//langContext.setName(langContext.getName().replaceAll("_", ""));
+				for (String clause : langContext.getClauses()) {
+					contextService.appendFact(clause);
+				}
+
+			}
+
+			//BridgeRulesService.getInstance().addCustomContext(contextService);
+		}
+	}
 
     private void subscribeSensors() {
         List<Observable<String>> observables = this.sensors.stream()
