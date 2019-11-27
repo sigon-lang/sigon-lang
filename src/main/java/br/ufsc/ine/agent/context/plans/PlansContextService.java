@@ -11,6 +11,8 @@ import br.ufsc.ine.agent.context.ContextService;
 import br.ufsc.ine.agent.context.beliefs.BeliefsContextService;
 import br.ufsc.ine.agent.context.communication.Actuator;
 import br.ufsc.ine.agent.context.communication.CommunicationContextService;
+import br.ufsc.ine.agent.context.intentions.IntentionsContextService;
+import br.ufsc.ine.context.bayesian.BayesianContextService;
 import br.ufsc.ine.utils.PrologEnvironment;
 
 import java.util.Arrays;
@@ -49,16 +51,50 @@ public class PlansContextService implements ContextService{
 				.clause(clause).build()
 				.verify();
 	}
+	
+	public boolean hasIntention(String somethingToBeTrue) {
+		return Body.builder()
+				.head(Head.builder().clause(somethingToBeTrue).build())
+				.context(IntentionsContextService.getInstance())
+				.clause(somethingToBeTrue).build()
+				.verify();
+	}
+	
+	public boolean hasPreCondition(String clause) {
+		return clause.equalsIgnoreCase("aware") && BayesianContextService.queryAwareNode();
+	}
+	
+	public boolean checkPreConditionsCustom(Plan p) {
+		if(p.getPreConditions().isEmpty()) {
+			return true;
+		}
+		boolean check = false;
+		for(String clause : p.getPreConditions()){
 
+			if(clause.startsWith("not")){
+				check =  !hasPreCondition(clause.replace("not", ""));
+			} else{
+				check =  hasPreCondition(clause);
+			}
+
+			if(!check){
+				return  check;
+			}
+
+
+		}
+		return check;
+
+	}
     public void executePlanAlgorithm() {
-
+    	
 		//TODO: add intencao na verificacao para busca do plano
 
 
 		Optional<Plan> plan = plans.stream()
-				.filter(p -> !this.hasBelief(p.getSomethingToBeTrue()) && checkPreConditions(p))
+				.filter(p -> (this.hasIntention(p.getSomethingToBeTrue())) && (checkPreConditions(p) || this.checkPreConditionsCustom(p)))
 				.findFirst();
-
+		
 		if(plan.isPresent()) {
 
 			List<Action> actions = plan.get().getActions().stream().filter(actionPredicate).collect(Collectors.toList());
@@ -97,7 +133,7 @@ public class PlansContextService implements ContextService{
 				check =  hasBelief(clause);
 			}
 
-			if(check==false){
+			if(!check){
 				return  check;
 			}
 

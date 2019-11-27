@@ -94,7 +94,8 @@ public class Agent {
 
         CommunicationContextService.getInstance().appendFact(this.getSense(literal));
         BridgeRulesService.getInstance().executeBdiRules();
-        PlansContextService.getInstance().executePlanAlgorithm();
+        //fazer condicao de execucao do plano
+        PlansContextService.getInstance().executePlanAlgorithm();        
         if(doProfiling)
         	profiling(startTime);
     }
