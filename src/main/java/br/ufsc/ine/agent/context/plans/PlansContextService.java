@@ -58,10 +58,11 @@ public class PlansContextService implements ContextService{
 				.context(IntentionsContextService.getInstance())
 				.clause(somethingToBeTrue).build()
 				.verify();
+		//return true;
 	}
 	
 	public boolean hasPreCondition(String clause) {
-		return clause.equalsIgnoreCase("aware") && BayesianContextService.queryAwareNode();
+		return clause.equalsIgnoreCase("aware") && BayesianContextService.getInstance().queryAwareNode();
 	}
 	
 	public boolean checkPreConditionsCustom(Plan p) {

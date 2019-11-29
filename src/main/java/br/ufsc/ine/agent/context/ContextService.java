@@ -10,4 +10,5 @@ public interface ContextService {
 	public void appendFact(String fact);
 	public void addInitialFact(String fact) throws InvalidTheoryException;
 	public String getName();
+	
 }

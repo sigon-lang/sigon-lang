@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import alice.tuprolog.InvalidTheoryException;
 import br.ufsc.ine.agent.bridgerules.BridgeRulesService;
 import br.ufsc.ine.agent.context.ContextService;
 import br.ufsc.ine.agent.context.LangContext;
@@ -16,6 +17,7 @@ import br.ufsc.ine.agent.context.communication.CommunicationContextService;
 import br.ufsc.ine.agent.context.communication.Sensor;
 import br.ufsc.ine.agent.context.custom.CustomContext;
 import br.ufsc.ine.agent.context.desires.DesiresContextService;
+import br.ufsc.ine.agent.context.intentions.IntentionsContextService;
 import br.ufsc.ine.agent.context.plans.PlansContextService;
 import br.ufsc.ine.parser.AgentWalker;
 import rx.Observable;
@@ -24,6 +26,7 @@ public class Agent {
 
     private static final String DESIRES = "desires";
     private static final String BELIEFS = "beliefs";
+	private static final String INTENTIONS = "intentions";
     private List<Sensor> sensors = new ArrayList<>();
     private List<Actuator> actuators = new ArrayList<>();
     public static boolean removeBelief = false;
@@ -60,11 +63,18 @@ public class Agent {
 	public void initCustomClauses(AgentWalker walker, ContextService[] contexts) {
 
 		for (ContextService contextService : contexts) {
-			List<LangContext> langCustom = getContext(walker, contextService.getName());
+			List<LangContext> langCustom = getContext(walker, contextService.getName());			
+			try {
+				contextService.addInitialFact(""); //TODO: Implementar versão correta do custom context
+			} catch (InvalidTheoryException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} //
 			for (LangContext langContext : langCustom) {
 				//langContext.setName(langContext.getName().replaceAll("_", ""));
 				for (String clause : langContext.getClauses()) {
 					contextService.appendFact(clause);
+					
 				}
 
 			}
@@ -132,6 +142,7 @@ public class Agent {
 
         List<LangContext> desires = getContext(walker, DESIRES);
         List<LangContext> beliefs = getContext(walker, BELIEFS);
+		List<LangContext> intentions = getContext(walker, INTENTIONS);
 
         walker.getLangActuators().forEach(a ->{
             try{
@@ -162,6 +173,7 @@ public class Agent {
 
         BeliefsContextService.getInstance().beliefs(beliefs);
         DesiresContextService.getInstance().desires(desires);
+		IntentionsContextService.getInstance().intentions(intentions);
         PlansContextService.getInstance().plans(walker.getPlans());
         PlansContextService.getInstance().plansClauses(walker.getPlansClauses());
         

@@ -1,5 +1,6 @@
 package br.ufsc.ine.agent.context.intentions;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,6 +17,7 @@ public class IntentionsContextService implements ContextService {
 
 	public static IntentionsContextService instance = new IntentionsContextService();
 	private static PrologEnvironment prologEnvironment;
+	private List<LangContext> intentions = new ArrayList<>();
 
 	private IntentionsContextService() {
 		prologEnvironment = new PrologEnvironment();
@@ -25,6 +27,18 @@ public class IntentionsContextService implements ContextService {
 
 	public static IntentionsContextService getInstance() {
 		return instance;
+	}
+	
+	public void intentions(List<LangContext> intentions) {
+		this.intentions = intentions;
+		List<String> clauses = intentions.stream().map(c -> c.getClauses()).flatMap(l -> l.stream())
+
+				.collect(Collectors.toList());
+
+		clauses.forEach(clause -> {
+			this.addInitialFact(clause);
+		});
+
 	}
 
 	public void checkIntentions(List<LangContext> desires) {
@@ -77,6 +91,10 @@ public class IntentionsContextService implements ContextService {
 
 	@Override
 	public void addInitialFact(String fact) {
-
+		try {
+			prologEnvironment.appendFact(fact);
+		} catch (InvalidTheoryException e) {
+			e.printStackTrace();
+		}
 	}
 }

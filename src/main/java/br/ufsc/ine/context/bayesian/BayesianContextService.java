@@ -8,6 +8,7 @@ import alice.tuprolog.Theory;
 import br.ufsc.ine.agent.context.ContextService;
 import norsys.netica.Environ;
 import norsys.netica.Net;
+import norsys.netica.NeticaException;
 import norsys.netica.Streamer;
 import norsys.neticaEx.aliases.Node;
 
@@ -15,6 +16,14 @@ public class BayesianContextService implements ContextService {
 
 	private static BayesianContextService instance = new BayesianContextService();
 	private List<String> beliefs = new ArrayList<String>();
+	private Net net;
+	private Node isAware;
+	private Node carComming;
+	private Node listeningMusic;
+	private Node distraction;
+	
+	
+
 
 	@Override
 	public Theory getTheory() {
@@ -37,45 +46,21 @@ public class BayesianContextService implements ContextService {
 		beliefs.add(fact);
 
 	}
-
+	
 	@Override
 	public void addInitialFact(String fact) throws InvalidTheoryException {
 		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public String getName() {
-
-		return "BaeyesianContext";
-	}
-
-	public static double getBeliefValue() {
-
-		return 0.0;
-
-	}
-
-	/*
-	 * TODO: 1- Parametrizar o método 2- Definir como integrar com o ciclo de
-	 * raciocinio 3- Integrar com o ciclo e definir como será feita a saída
-	 */
-	public static boolean queryAwareNode() {
 		try {
-
 			Node.setConstructorClass("norsys.neticaEx.aliases.Node");
 			Environ env = new Environ(null);
-
-			Net net = new Net();
-			net.setName("Awareness");
-
-			Node isAware = new Node("IsAware", "yes,no", net);
-			Node carComming = new Node("CarComming", "present,absent", net);
-			Node listeningMusic = new Node("ListeningMusic", "yes,no", net);
-			Node distraction = new Node("Distraction", "present,absent", net);
-
-			isAware.setTitle("Is aware of a vehicle");
-
+			net = new Net();
+			
+			isAware = new Node("IsAware", "yes,no", net);
+			carComming = new Node("CarComming", "present,absent", net);
+			listeningMusic = new Node("ListeningMusic", "yes,no", net);
+			distraction = new Node("Distraction", "present,absent", net);
+			
 			carComming.addLink(isAware); // link from visitAsia to tuberculosis
 			listeningMusic.addLink(isAware); // link from visitAsia to tuberculosis
 			distraction.addLink(isAware); // link from visitAsia to tuberculosis
@@ -95,14 +80,50 @@ public class BayesianContextService implements ContextService {
 			distraction.setCPTable("yes", 0.05, 0.95);
 			distraction.setCPTable("no", 0.01, 0.99);
 
-			carComming.finding().enterState("present");
-			distraction.finding().enterState("present");
+		} catch (NeticaException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+	}
+
+	@Override
+	public String getName() {
+
+		return "_bayesian";
+	}
+
+	public static double getBeliefValue() {
+
+		return 0.0;
+
+	}
+
+	/*
+	 * TODO: 1- Parametrizar o método 2- Definir como integrar com o ciclo de
+	 * raciocinio 3- Integrar com o ciclo e definir como será feita a saída
+	 */
+	public boolean queryAwareNode() {
+		try {
+
+			
+
+			
+			//net.setName("Awareness");
+
+			
+			//isAware.setTitle("Is aware of a vehicle");
+
+			
+			//carComming.finding().enterState("present");
+			//distraction.finding().enterState("present");
 			net.compile();
 
 			double belief = isAware.getBelief("yes");
 			System.out.println("\nThe probability of being aware is " + belief);
 			if (belief - BayesianContextService.getBeliefValue() > 0.0) {
-				BayesianContextService.getInstance().beliefs.add("aware");
+				//BayesianContextService.getInstance().beliefs.add("aware");
 				return true;
 
 			}

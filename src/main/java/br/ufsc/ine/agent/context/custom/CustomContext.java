@@ -10,12 +10,13 @@ import br.ufsc.ine.utils.PrologEnvironment;
 public class CustomContext  implements ContextService {
 
     protected String name;
-    protected PrologEnvironment prologEnvironment;
+    protected PrologEnvironment prologEnvironment; //esse cara nao faz sentido, estamos assumindo que todo custom deveria ter um prologenv
 
     public CustomContext(String name){
         this.name = name;
         prologEnvironment = new PrologEnvironment();
     }
+    
 
     @Override
     public Theory getTheory() {
