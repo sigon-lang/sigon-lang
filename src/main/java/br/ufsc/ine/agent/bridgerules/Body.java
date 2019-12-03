@@ -2,6 +2,7 @@ package br.ufsc.ine.agent.bridgerules;
 
 import alice.tuprolog.*;
 import br.ufsc.ine.agent.context.ContextService;
+import br.ufsc.ine.agent.context.beliefs.BeliefsContextService;
 import lombok.Builder;
 import lombok.Data;
 
@@ -25,64 +26,93 @@ public class Body {
     @Builder.Default
     private List<String> variableFacts = new ArrayList<>();
 
-    public boolean verify(){
-        try {
-            Theory contextTheory = defineBodyTheory();
-            Prolog prolog = new Prolog();
-            prolog.setTheory(contextTheory);
+    public boolean verify() {
+		try {
+			Theory contextTheory = defineBodyTheory();
 
+			Prolog prolog = new Prolog();
+			prolog.setTheory(contextTheory);
+			
 
-            String toTest = this.toString().endsWith(".") ? this.toString() : this.toString()+ END;
-            SolveInfo solve = prolog.solve( toTest );
+			String toTest = this.toString().endsWith(".") ? this.toString() : this.toString() + END;
 
-            try{
-                if(head!=null && !head.isVariable()){
-                    variableFacts.add(head.getClause());
-                } else {
+			SolveInfo solve = prolog.solve(toTest);
+			
+			try {
+				if (head != null && !head.isVariable()) {
+					variableFacts.add(head.getClause());
+				} else {
 
-                    if(head.getClause().contains("(") && head.getClause().contains(")")){
-                        String clauses = head.getClause().substring(head.getClause().indexOf("(")+1, head.getClause().indexOf(")"));
-                        String[] split = clauses.trim().split(",");
-                        StringBuilder builder = new StringBuilder();
-                        for (int i=0;i<split.length;i++){
-                            split[i] = split[i].replace(" ", "");
-                            if(Character.isUpperCase(split[i].charAt(0))){
-                                Term solution = solve.getTerm(split[i].trim());
-                                builder.append(solution.toString().replaceAll("_([0-9])*", "_"));
-                                if(i+1<split.length) {
-                                    builder.append(",");
-                                }
-                            } else{
-                                builder.append(split[i]);
-                            }
-                        }
+					if (head.getClause().contains("(") && head.getClause().contains(")")) {
+						String clauses = head.getClause().substring(head.getClause().indexOf("(") + 1,
+								head.getClause().indexOf(")"));
+						String[] split = clauses.trim().split(",");
+						String previousBinding = "";
+						
+						
+						
 
-                        variableFacts.add(head.getClause().substring(0, head.getClause().indexOf("(")+1)+builder+").");
-                        return solve.isSuccess();
-                    }
+						boolean hasOpenAlternatives = true; //pode dar bugs
+						
+						while (hasOpenAlternatives) {
+							Term t = prolog.toTerm(toTest.replace(".", ""));
+							hasOpenAlternatives = prolog.solve(t).hasOpenAlternatives();
 
+							StringBuilder builder = new StringBuilder();
+							
 
-                    Term solution = solve.getTerm(this.head.getTerm());
-                    if (solution.toString().contains("|")) {
-                        String[] result = solution.toString().substring(1, solution.toString().length() - 1).split("\\|");
-                        for (String s : result) {
-                            String item = s.replaceAll("_([0-9])*", "_") + ".";
-                            variableFacts.add(item);
-                        }
-                    } else {
-                        variableFacts.add(solution.toString().replaceAll("_([0-9])*", "_")+ ".");
-                    }
-                }
-            } catch (Exception e){
+							for (int i = 0; i < split.length; i++) {
 
-            }
+								split[i] = split[i].replace(" ", "");
+								if (Character.isUpperCase(split[i].charAt(0))) {
+									Term solution = solve.getTerm(split[i].trim());									
+									builder.append(solution.toString().replaceAll("_([0-9])*", "_"));
 
-            return solve.isSuccess();
-        }  catch (Exception e){
-            e.printStackTrace();
-            return false;
-        }
-    }
+								} else {
+									builder.append(split[i]);
+								}
+								if (i + 1 < split.length) {
+									builder.append(",");
+								}
+							}
+							if(previousBinding.equals(builder.toString()) && hasOpenAlternatives) {
+								hasOpenAlternatives = false;
+							}
+							
+							previousBinding = builder.toString();
+							
+
+							variableFacts.add(
+									head.getClause().substring(0, head.getClause().indexOf("(") + 1) + builder + ").");
+							solve = prolog.solveNext();
+
+						}
+
+						return solve.isSuccess();
+					}
+
+					Term solution = solve.getTerm(this.head.getTerm());
+					if (solution.toString().contains("|")) {
+						String[] result = solution.toString().substring(1, solution.toString().length() - 1)
+								.split("\\|");
+						for (String s : result) {
+							String item = s.replaceAll("_([0-9])*", "_") + ".";
+							variableFacts.add(item);
+						}
+					} else {
+						variableFacts.add(solution.toString().replaceAll("_([0-9])*", "_") + ".");
+					}
+				}
+			} catch (Exception e) {
+
+			}
+
+			return solve.isSuccess();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 
     private Theory defineBodyTheory() throws InvalidTheoryException {

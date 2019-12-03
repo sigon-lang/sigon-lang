@@ -22,6 +22,8 @@ public class BayesianContextService implements ContextService {
 	private Node listeningMusic;
 	private Node distraction;
 	
+	private double awareValue = 0.0;
+	
 	
 
 
@@ -43,7 +45,46 @@ public class BayesianContextService implements ContextService {
 
 	@Override
 	public void appendFact(String fact) {
-		beliefs.add(fact);
+		
+
+		try {
+			carComming.finding().clear();
+			switch (fact) {
+			case "vehicle":								
+				carComming.finding().enterState("yes");				
+				break;
+			case "-vehicle":
+				carComming.finding().enterState("no");
+				break;
+			case "listeningMusic":				
+				listeningMusic.finding().enterState("yes");				
+				break;
+			case "-listeningMusic":
+				listeningMusic.finding().enterState("no");			
+				break;
+			case "distraction":				
+				distraction.finding().enterState("yes");				
+				break;
+			case "-distraction":
+				distraction.finding().enterState("no");
+				break;
+			
+			default:
+				if( fact.contains("aware(")) {
+					awareValue = Double.parseDouble(fact.substring(6, 8))/100;
+					
+				}	
+				System.out.println("Current threshold "+awareValue);
+			
+				break;
+			}
+			
+		} catch (NeticaException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//beliefs.add(fact);
 
 	}
 	
@@ -52,14 +93,15 @@ public class BayesianContextService implements ContextService {
 		// TODO Auto-generated method stub
 
 		try {
+		
 			Node.setConstructorClass("norsys.neticaEx.aliases.Node");
 			Environ env = new Environ(null);
 			net = new Net();
 			
 			isAware = new Node("IsAware", "yes,no", net);
-			carComming = new Node("CarComming", "present,absent", net);
-			listeningMusic = new Node("ListeningMusic", "yes,no", net);
-			distraction = new Node("Distraction", "present,absent", net);
+			carComming = new Node("vehicle", "yes,no", net);
+			listeningMusic = new Node("listeningMusic", "yes,no", net);
+			distraction = new Node("distraction", "yes,no", net);
 			
 			carComming.addLink(isAware); // link from visitAsia to tuberculosis
 			listeningMusic.addLink(isAware); // link from visitAsia to tuberculosis
@@ -69,7 +111,7 @@ public class BayesianContextService implements ContextService {
 			isAware.setCPTable(0.01, 0.99);
 
 			// isAware yes no
-			carComming.setCPTable("yes", 0.05, 0.95);
+			carComming.setCPTable("yes", 0.99, 0.01);
 			carComming.setCPTable("no", 0.01, 0.99);
 
 			// isAware yes no
@@ -96,6 +138,7 @@ public class BayesianContextService implements ContextService {
 
 	public static double getBeliefValue() {
 
+		//return BayesianContextService.getInstance().awareValue;
 		return 0.0;
 
 	}
@@ -119,20 +162,24 @@ public class BayesianContextService implements ContextService {
 			//carComming.finding().enterState("present");
 			//distraction.finding().enterState("present");
 			net.compile();
+			double a = BayesianContextService.getInstance().awareValue;
+			System.out.println(BayesianContextService.getInstance().awareValue);
 
 			double belief = isAware.getBelief("yes");
 			System.out.println("\nThe probability of being aware is " + belief);
-			if (belief - BayesianContextService.getBeliefValue() > 0.0) {
-				//BayesianContextService.getInstance().beliefs.add("aware");
+			
+			if(Double.compare(belief, a) > 0) {
 				return true;
-
 			}
-
+			double c = belief - BayesianContextService.getInstance().awareValue;
+			
 			Streamer stream = new Streamer("data/awareness.dne");
-			net.write(stream);
+			//net.write(stream);
 
-			net.finalize(); // free resources immediately and safely; not strictly necessary, but a good
+			//net.finalize(); // free resources immediately and safely; not strictly necessary, but a good
 							// habit
+			
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();

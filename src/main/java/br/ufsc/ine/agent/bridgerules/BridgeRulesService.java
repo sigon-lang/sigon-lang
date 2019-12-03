@@ -16,6 +16,7 @@ import br.ufsc.ine.agent.context.custom.CustomContext;
 import br.ufsc.ine.agent.context.desires.DesiresContextService;
 import br.ufsc.ine.agent.context.intentions.IntentionsContextService;
 import br.ufsc.ine.agent.context.plans.PlansContextService;
+import br.ufsc.ine.context.bayesian.BayesianContextService;
 
 public class BridgeRulesService {
 
@@ -65,7 +66,8 @@ public class BridgeRulesService {
                 .build();
 
         List<BridgeRule> rules = new ArrayList<BridgeRule>( );
-        rules.add(r1);
+        rules.add(r1);        
+        
         //rules.add(r2);
         return rules;
     }
@@ -183,16 +185,31 @@ public class BridgeRulesService {
     
     public void executeBdiRules() {
         Body body = Body.builder().context(communicationContext).clause("sense(X)").build();
-        Body plan = Body.builder().context(plansContext).clause("plan(Y,_,Z,_)").build();
-        Body planMember = Body.builder().context(plansContext).clause("member(X, Z)").build();
+        //Body plan = Body.builder().context(plansContext).clause("plan(Y,_,Z,_)").build();
+        //Body planMember = Body.builder().context(plansContext).clause("member(X, Z)").build();
         Body desires = Body.builder().context(desiresContext).clause("Y").build();
-        body.setAnd(plan);
-        plan.setAnd(planMember);
-        planMember.setAnd(desires);
+        body.setAnd(desires);
+        //plan.setAnd(planMember);
+        //planMember.setAnd(desires);
          BridgeRule.builder()
                 .head(Head.builder().context(beliefsContext).clause("X").build())
                 .body(body)
                 .build().execute();
+         
+        Body bodyT = Body.builder().context(beliefsContext).clause("car(X, yes)").build();
+         BridgeRule.builder()
+                 .head(Head.builder().context(BayesianContextService.getInstance()).clause("vehicle").build())
+                 .body(bodyT)
+                 .build().execute();
+
+         Body bodyR = Body.builder().context(beliefsContext).clause("car(X, no)").build();
+         BridgeRule.builder()
+                 .head(Head.builder().context(BayesianContextService.getInstance()).clause("-vehicle").build())
+                 .body(bodyR)
+                 .build().execute();
+         
+         
+         
 
 
 
