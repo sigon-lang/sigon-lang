@@ -19,8 +19,8 @@ public class BayesianContextService implements ContextService {
 	private Net net;
 	private Node isAware;
 	private Node carComming;
-	private Node listeningMusic;
-	private Node distraction;
+	private Node soundDistraction;
+	private Node screenDistraction;
 	
 	private double awareValue = 0.0;
 	
@@ -56,17 +56,17 @@ public class BayesianContextService implements ContextService {
 			case "-vehicle":
 				carComming.finding().enterState("no");
 				break;
-			case "listeningMusic":				
-				listeningMusic.finding().enterState("yes");				
+			case "soundDistraction":				
+				soundDistraction.finding().enterState("yes");				
 				break;
-			case "-listeningMusic":
-				listeningMusic.finding().enterState("no");			
+			case "-soundDistraction":
+				soundDistraction.finding().enterState("no");			
 				break;
-			case "distraction":				
-				distraction.finding().enterState("yes");				
+			case "screenDistraction":				
+				screenDistraction.finding().enterState("yes");				
 				break;
-			case "-distraction":
-				distraction.finding().enterState("no");
+			case "-screenDistraction":
+				screenDistraction.finding().enterState("no");
 				break;
 			
 			default:
@@ -100,12 +100,12 @@ public class BayesianContextService implements ContextService {
 			
 			isAware = new Node("IsAware", "yes,no", net);
 			carComming = new Node("vehicle", "yes,no", net);
-			listeningMusic = new Node("listeningMusic", "yes,no", net);
-			distraction = new Node("distraction", "yes,no", net);
+			soundDistraction = new Node("listeningMusic", "yes,no", net);
+			screenDistraction = new Node("distraction", "yes,no", net);
 			
 			carComming.addLink(isAware); // link from visitAsia to tuberculosis
-			listeningMusic.addLink(isAware); // link from visitAsia to tuberculosis
-			distraction.addLink(isAware); // link from visitAsia to tuberculosis
+			soundDistraction.addLink(isAware); // link from visitAsia to tuberculosis
+			screenDistraction.addLink(isAware); // link from visitAsia to tuberculosis
 
 			// isAware.setKind (Node.DECISION_NODE);
 			isAware.setCPTable(0.01, 0.99);
@@ -115,12 +115,12 @@ public class BayesianContextService implements ContextService {
 			carComming.setCPTable("no", 0.01, 0.99);
 
 			// isAware yes no
-			listeningMusic.setCPTable("yes", 0.05, 0.95);
-			listeningMusic.setCPTable("no", 0.01, 0.99);
+			soundDistraction.setCPTable("yes", 0.05, 0.95);
+			soundDistraction.setCPTable("no", 0.01, 0.99);
 
 			// isAware yes no
-			distraction.setCPTable("yes", 0.05, 0.95);
-			distraction.setCPTable("no", 0.01, 0.99);
+			screenDistraction.setCPTable("yes", 0.05, 0.95);
+			screenDistraction.setCPTable("no", 0.01, 0.99);
 
 		} catch (NeticaException e) {
 			// TODO Auto-generated catch block

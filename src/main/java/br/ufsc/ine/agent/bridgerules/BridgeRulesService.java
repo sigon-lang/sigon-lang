@@ -208,6 +208,31 @@ public class BridgeRulesService {
                  .body(bodyR)
                  .build().execute();
          
+         Body bodyScreen = Body.builder().context(beliefsContext).clause("screen(yes)").build();
+         BridgeRule.builder()
+                 .head(Head.builder().context(BayesianContextService.getInstance()).clause("screenDistraction").build())
+                 .body(bodyScreen)
+                 .build().execute();
+         
+         Body bodyScreenNeg = Body.builder().context(beliefsContext).clause("screen(no)").build();
+         BridgeRule.builder()
+                 .head(Head.builder().context(BayesianContextService.getInstance()).clause("-screenDistraction").build())
+                 .body(bodyScreenNeg)
+                 .build().execute();
+         
+         Body bodySound = Body.builder().context(beliefsContext).clause("sound(yes)").build();
+         BridgeRule.builder()
+                 .head(Head.builder().context(BayesianContextService.getInstance()).clause("soundDistraction").build())
+                 .body(bodySound)
+                 .build().execute();
+         
+         Body bodySoundNeg = Body.builder().context(beliefsContext).clause("sound(no)").build();
+         BridgeRule.builder()
+                 .head(Head.builder().context(BayesianContextService.getInstance()).clause("-soundDistraction").build())
+                 .body(bodySoundNeg)
+                 .build().execute();
+         
+         
          
          
 
