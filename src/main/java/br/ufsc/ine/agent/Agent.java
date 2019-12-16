@@ -32,7 +32,7 @@ public class Agent {
     public static boolean removeBelief = false;
 	private String profilingFile;
 	//TODO: Profiling true
-	private boolean doProfiling = false;
+	private boolean doProfiling = true;
     private CustomContext[] customContexts;
 
 	public void run(AgentWalker walker, CustomContext[] contexts) {
@@ -104,20 +104,35 @@ public class Agent {
 
         CommunicationContextService.getInstance().appendFact(this.getSense(literal));
         BridgeRulesService.getInstance().executeBdiRules();
-        //fazer condicao de execucao do plano
-        PlansContextService.getInstance().executePlanAlgorithm();        
         if(doProfiling)
         	profiling(startTime);
+        PlansContextService.getInstance().executePlanAlgorithm();
+        if(doProfiling)
+        	profiling(startTime);
+        appendValueProfiling(Integer.toString(BeliefsContextService.getInstance().getTheory().toString().split("\n\n").length));
+    }
+    
+    private void appendValueProfiling(String value) {
+    	try {
+    		BufferedWriter writer = new BufferedWriter(new FileWriter(profilingFile, true));
+			writer.append(value + ";");
+			writer.append(System.lineSeparator());
+			writer.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 
 
-	private void profiling(long startTime) {
+
+    private void profiling(long startTime) {
 		if (profilingFile != null) {
 			long endTime = System.nanoTime();
 			long duration = (endTime - startTime) / 1000000;
 			try {
 				BufferedWriter writer = new BufferedWriter(new FileWriter(profilingFile, true));
-				writer.append(cycles + ";" + duration + System.lineSeparator());
+				writer.append(duration + ";");
 				writer.close();
 			} catch (Exception e) {
 				e.printStackTrace();
