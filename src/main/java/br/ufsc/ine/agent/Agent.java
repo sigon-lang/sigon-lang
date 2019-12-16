@@ -32,7 +32,7 @@ public class Agent {
     public static boolean removeBelief = false;
 	private String profilingFile;
 	//TODO: Profiling true
-	private boolean doProfiling = true;
+	private boolean doProfiling = false;
     private CustomContext[] customContexts;
 
 	public void run(AgentWalker walker, CustomContext[] contexts) {
@@ -107,9 +107,11 @@ public class Agent {
         if(doProfiling)
         	profiling(startTime);
         PlansContextService.getInstance().executePlanAlgorithm();
-        if(doProfiling)
+        if(doProfiling) {
         	profiling(startTime);
-        appendValueProfiling(Integer.toString(BeliefsContextService.getInstance().getTheory().toString().split("\n\n").length));
+            appendValueProfiling(Integer.toString(BeliefsContextService.getInstance().getTheory().toString().split("\n\n").length));
+        }
+        	
     }
     
     private void appendValueProfiling(String value) {
