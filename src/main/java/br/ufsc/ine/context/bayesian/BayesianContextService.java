@@ -48,13 +48,15 @@ public class BayesianContextService implements ContextService {
 		
 
 		try {
-			carComming.finding().clear();
+			
+			//carComming.finding().clear();
 			switch (fact) {
-			case "vehicle":								
-				carComming.finding().enterState("yes");				
+			case "vehicle":			
+				carComming.changeFinding("yes");
+				//carComming.finding().("yes");				
 				break;
 			case "-vehicle":
-				carComming.finding().enterState("no");
+				carComming.changeFinding("no");
 				break;
 			case "soundDistraction":				
 				soundDistraction.finding().enterState("yes");				
@@ -74,10 +76,11 @@ public class BayesianContextService implements ContextService {
 					awareValue = Double.parseDouble(fact.substring(6, 8))/100;
 					
 				}	
-				System.out.println("Current threshold "+awareValue);
+				
 			
 				break;
 			}
+			
 			
 		} catch (NeticaException e) {
 			// TODO Auto-generated catch block
@@ -93,7 +96,7 @@ public class BayesianContextService implements ContextService {
 		// TODO Auto-generated method stub
 
 		try {
-		
+			
 			Node.setConstructorClass("norsys.neticaEx.aliases.Node");
 			Environ env = new Environ(null);
 			net = new Net();
@@ -108,19 +111,21 @@ public class BayesianContextService implements ContextService {
 			screenDistraction.addLink(isAware); // link from visitAsia to tuberculosis
 
 			// isAware.setKind (Node.DECISION_NODE);
-			isAware.setCPTable(0.01, 0.99);
+			isAware.setCPTable(0.50, 0.50);
 
 			// isAware yes no
-			carComming.setCPTable("yes", 0.99, 0.01);
-			carComming.setCPTable("no", 0.01, 0.99);
+			carComming.setCPTable("yes", 0.20, 0.80);
+			carComming.setCPTable("no", 0.95, 0.05);
 
 			// isAware yes no
-			soundDistraction.setCPTable("yes", 0.05, 0.95);
-			soundDistraction.setCPTable("no", 0.01, 0.99);
+			soundDistraction.setCPTable("yes", 0.80, 0.20);
+			soundDistraction.setCPTable("no", 0.95, 0.05);
 
 			// isAware yes no
-			screenDistraction.setCPTable("yes", 0.05, 0.95);
-			screenDistraction.setCPTable("no", 0.01, 0.99);
+			screenDistraction.setCPTable("yes", 0.20, 0.80);
+			screenDistraction.setCPTable("no", 0.95, 0.05);
+			
+			carComming.finding().enterState("no");
 
 		} catch (NeticaException e) {
 			// TODO Auto-generated catch block
@@ -157,23 +162,25 @@ public class BayesianContextService implements ContextService {
 
 			
 			//isAware.setTitle("Is aware of a vehicle");
-
+			
 			
 			//carComming.finding().enterState("present");
 			//distraction.finding().enterState("present");
+			//carComming.finding().enterState("yes");
 			net.compile();
 			double a = BayesianContextService.getInstance().awareValue;
-			System.out.println(BayesianContextService.getInstance().awareValue);
+			//System.out.println(BayesianContextService.getInstance().awareValue);
 
 			double belief = isAware.getBelief("yes");
-			System.out.println("\nThe probability of being aware is " + belief);
+			//System.out.println("\nThe probability of being aware is " + belief);
 			
 			if(Double.compare(belief, a) > 0) {
 				return true;
 			}
 			double c = belief - BayesianContextService.getInstance().awareValue;
 			
-			Streamer stream = new Streamer("data/awareness.dne");
+			//Streamer stream = new Streamer("data/awareness.dne");
+			
 			//net.write(stream);
 
 			//net.finalize(); // free resources immediately and safely; not strictly necessary, but a good
@@ -191,5 +198,13 @@ public class BayesianContextService implements ContextService {
 		return beliefs;
 
 	}
+	
+	/*public static void main(String[] args) {
+				BayesianContextService.getInstance().appendFact("vehicle");
+		
+		
+		System.out.println(BayesianContextService.getInstance().queryAwareNode());
+		
+	}*/
 
 }

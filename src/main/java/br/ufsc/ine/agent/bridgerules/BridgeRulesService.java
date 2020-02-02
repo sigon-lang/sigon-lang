@@ -196,13 +196,13 @@ public class BridgeRulesService {
                 .body(body)
                 .build().execute();
          
-        Body bodyT = Body.builder().context(beliefsContext).clause("car(X, yes)").build();
+        Body bodyT = Body.builder().context(beliefsContext).clause("car(X,yes)").build();
          BridgeRule.builder()
                  .head(Head.builder().context(BayesianContextService.getInstance()).clause("vehicle").build())
                  .body(bodyT)
                  .build().execute();
 
-         Body bodyR = Body.builder().context(beliefsContext).clause("car(X, no)").build();
+         Body bodyR = Body.builder().context(beliefsContext).clause("car(X,no)").build();
          BridgeRule.builder()
                  .head(Head.builder().context(BayesianContextService.getInstance()).clause("-vehicle").build())
                  .body(bodyR)

@@ -62,7 +62,7 @@ public class PlansContextService implements ContextService{
 	}
 	
 	public boolean hasPreCondition(String clause) {
-		return clause.equalsIgnoreCase("aware") && BayesianContextService.getInstance().queryAwareNode();
+		return clause.contains("aware(") && !BayesianContextService.getInstance().queryAwareNode(); //deve notificar apenas quando o queryAwareNode for false -> belief é menor que o threshhold
 	}
 	
 	public boolean checkPreConditionsCustom(Plan p) {
