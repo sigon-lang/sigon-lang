@@ -185,12 +185,12 @@ public class BridgeRulesService {
     
     public void executeBdiRules() {
         Body body = Body.builder().context(communicationContext).clause("sense(X)").build();
-        //Body plan = Body.builder().context(plansContext).clause("plan(Y,_,Z,_)").build();
-        //Body planMember = Body.builder().context(plansContext).clause("member(X, Z)").build();
+        Body plan = Body.builder().context(plansContext).clause("plan(Y,_,Z,_)").build();
+        Body planMember = Body.builder().context(plansContext).clause("member(X, Z)").build();
         Body desires = Body.builder().context(desiresContext).clause("Y").build();
         body.setAnd(desires);
-        //plan.setAnd(planMember);
-        //planMember.setAnd(desires);
+        desires.setAnd(plan);
+        plan.setAnd(planMember);        
          BridgeRule.builder()
                 .head(Head.builder().context(beliefsContext).clause("X").build())
                 .body(body)
