@@ -43,6 +43,7 @@ public class CommunicationContextService implements ContextService{
         try{
             if(fact.startsWith("sense")) {
                 prologEnvironment = new PrologEnvironment();
+                
                 prologEnvironment.appendFact(fact);
             } else {
             	int i = fact.indexOf("(");

@@ -19,14 +19,14 @@ public class BeliefsContextService implements ContextService {
 	private static BeliefsContextService instance = new BeliefsContextService();
 	private static PrologEnvironment prologEnvironment;
 	private List<LangContext> beliefs = new ArrayList<>();
+
 	private BeliefsContextService() {
 		prologEnvironment = new PrologEnvironment();
 	}
+
 	public static BeliefsContextService getInstance() {
 		return instance;
 	}
-	
-	
 
 	public void beliefs(List<LangContext> beliefs) {
 		this.beliefs = beliefs;
@@ -52,11 +52,6 @@ public class BeliefsContextService implements ContextService {
 		return beliefs;
 	}
 
-
-
-
-
-
 	@Override
 	public boolean verify(String fact) {
 		SolveInfo solveGoal;
@@ -70,67 +65,78 @@ public class BeliefsContextService implements ContextService {
 
 	@Override
 	public void appendFact(String c) {
-		//TODO: refactor code (This may appear in other place).
-		if(c.startsWith("-")){
-            c = c.replace("-","").trim();
-            Agent.removeBelief = true;
-        } 
-		if(Agent.removeBelief){
+		// TODO: refactor code (This may appear in other place).
+		if (c.startsWith("-")) {
+			c = c.replace("-", "").trim();
+			Agent.removeBelief = true;
+		}
+		if (Agent.removeBelief) {
 			Agent.removeBelief = false;
 			try {
 				prologEnvironment.removeFact(c);
 				return;
-			} catch (Exception e){
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
 		}
 
 		try {
-			boolean update = false;
+			boolean update = true;
 			String toTest = null;
 
-			if(c.trim().endsWith(").")){
-				StringBuilder builder = new StringBuilder();
-				String toReplace = c.substring(c.indexOf("(")+1, c.lastIndexOf(")"));
-				Arrays.stream(toReplace.split(",")).map( i-> "_,").forEach(builder::append);
+			if (c.trim().endsWith(").")) {
+				String predicado = c.substring(0, c.indexOf("(") + 1);
+				// String[] toReplace = c.substring(c.indexOf("(") + 1,
+				// c.lastIndexOf(")")).split(",");
+
+				// ArrayList<String> possibilidades = new ArrayList<String>();
 				StringBuilder test = new StringBuilder();
+				String toReplace = c.substring(c.indexOf("(") + 1, c.lastIndexOf(")"));
+				StringBuilder builder = new StringBuilder();
+				Arrays.stream(toReplace.split(",")).map(i -> "_,").forEach(builder::append);
 				test.append(c.substring(0, c.indexOf("(")));
 				test.append("(");
-				test.append(builder.toString().substring(0,builder.toString().length()-1));
+				test.append(builder.toString().substring(0, builder.toString().length() - 1));
 				test.append(").");
 				toTest = test.toString();
+				if (!this.verify(toTest)) {
+					prologEnvironment.appendFact(c);
+				} else {
+					// TODO
 
-				update = (c.startsWith("\\+") && this.verify("\\+" + toTest))
-						|| (!c.startsWith("\\+") && this.verify("\\+" + toTest))
-						|| this.verify(toTest.replace("\\+", ""));
+					String[] args = toReplace.split(",");
+					String currentTest, previousTest;
+					previousTest = predicado + args[0];
+					for (int i = 1; i < args.length-1; i++) {
+						currentTest = previousTest;
+						for (int j = i; j < args.length; j++) {
+							currentTest += ",_";
+						}
+						currentTest += ").";
+						previousTest += "," + args[i];
+						if (!this.verify(currentTest)) {
+							prologEnvironment.appendFact(c);
+							update = false;
+							break;
+						}
 
-
-			} else if(!c.trim().endsWith(").") && (c.startsWith("\\+") || this.verify("\\+" + c))  ){
-				if(!c.startsWith("\\+") && verify("\\+"+c)){
-					toTest = c;
-					update = true;
-				} else if(c.startsWith("\\+")) {
-					String test = c.substring(2);
-					if(this.verify(test)){
-						toTest = test;
-						update = true;
 					}
-				}
-			}
+					if(update) {
+						prologEnvironment.updateFact(c, previousTest+",_).");
+					}
 
-			if(update){
-				prologEnvironment.updateFact(c, toTest);
-			} else {
-				prologEnvironment.appendFact(c);
+				}
+
 			}
-		} catch (InvalidTheoryException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
+
 	}
 
 	@Override
-	public Theory getTheory(){
+	public Theory getTheory() {
 		return prologEnvironment.getEngine().getTheory();
 	}
 

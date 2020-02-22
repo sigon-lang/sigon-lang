@@ -30,6 +30,7 @@ public class Agent {
     private List<Sensor> sensors = new ArrayList<>();
     private List<Actuator> actuators = new ArrayList<>();
     public static boolean removeBelief = false;
+    public static boolean addBelief = false;
 	private String profilingFile;
 	//TODO: Profiling true
 	private boolean doProfiling = false;
