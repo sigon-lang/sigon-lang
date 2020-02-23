@@ -47,9 +47,9 @@ public class BayesianContextService implements ContextService {
 	public void appendFact(String fact) {
 		
 
-		try {
+		try {			
 			
-			//carComming.finding().clear();
+			
 			switch (fact) {
 			case "vehicle":			
 				carComming.changeFinding("yes");
@@ -59,16 +59,17 @@ public class BayesianContextService implements ContextService {
 				carComming.changeFinding("no");
 				break;
 			case "soundDistraction":				
-				soundDistraction.finding().enterState("yes");				
+				soundDistraction.changeFinding("yes");				
 				break;
 			case "-soundDistraction":
-				soundDistraction.finding().enterState("no");			
+				soundDistraction.changeFinding("no");			
 				break;
 			case "screenDistraction":				
-				screenDistraction.finding().enterState("yes");				
+				screenDistraction.changeFinding("yes");
+				
 				break;
 			case "-screenDistraction":
-				screenDistraction.finding().enterState("no");
+				screenDistraction.changeFinding("no");
 				break;
 			
 			default:

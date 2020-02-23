@@ -71,17 +71,18 @@ public class PlansContextService implements ContextService{
 		}
 		boolean check = false;
 		for(String clause : p.getPreConditions()){
+			if(clause.startsWith("aware(")) {
+				if(clause.startsWith("not")){
+					check =  !hasPreCondition(clause.replace("not", ""));
+				} else{
+					check =  hasPreCondition(clause);
+				}
 
-			if(clause.startsWith("not")){
-				check =  !hasPreCondition(clause.replace("not", ""));
-			} else{
-				check =  hasPreCondition(clause);
+				if(!check){
+					return  check;
+				}				
 			}
-
-			if(!check){
-				return  check;
-			}
-
+			
 
 		}
 		return check;
@@ -93,7 +94,7 @@ public class PlansContextService implements ContextService{
 
 
 		Optional<Plan> plan = plans.stream()
-				.filter(p -> (this.hasIntention(p.getSomethingToBeTrue())) && (checkPreConditions(p) || this.checkPreConditionsCustom(p)))
+				.filter(p -> (this.hasIntention(p.getSomethingToBeTrue())) && (checkPreConditions(p) && this.checkPreConditionsCustom(p)))
 				.findFirst();
 		
 		if(plan.isPresent()) {
@@ -127,17 +128,21 @@ public class PlansContextService implements ContextService{
 		}
 		boolean check = false;
 		for(String clause : p.getPreConditions()){
+			if(!clause.startsWith("aware(")) {
+				if(clause.startsWith("not")){
+					check =  !hasBelief(clause.replace("not", ""));
+				} else{
+					check =  hasBelief(clause);
+				}
 
-			if(clause.startsWith("not")){
-				check =  !hasBelief(clause.replace("not", ""));
-			} else{
-				check =  hasBelief(clause);
+				if(!check){
+					return  check;
+				}
+
+				
 			}
 
-			if(!check){
-				return  check;
-			}
-
+			
 
 		}
 		return check;
