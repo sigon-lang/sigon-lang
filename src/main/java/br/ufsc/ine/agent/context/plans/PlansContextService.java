@@ -69,7 +69,7 @@ public class PlansContextService implements ContextService{
 		if(p.getPreConditions().isEmpty()) {
 			return true;
 		}
-		boolean check = false;
+		boolean check = true;
 		for(String clause : p.getPreConditions()){
 			if(clause.startsWith("aware(")) {
 				if(clause.startsWith("not")){
