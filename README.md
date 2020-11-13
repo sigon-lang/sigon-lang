@@ -20,7 +20,7 @@ $ mvn clean install
 ```
 
 We recommend Eclipse for development.
-To import the project: File > Import > Existing Mavem Projects, select the root folder.
+To import the project: File > Import > Existing Maven Projects, select the root folder.
 
 ### Grammar class generation
 
