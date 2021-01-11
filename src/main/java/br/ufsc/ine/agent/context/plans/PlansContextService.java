@@ -12,7 +12,6 @@ import br.ufsc.ine.agent.context.beliefs.BeliefsContextService;
 import br.ufsc.ine.agent.context.communication.Actuator;
 import br.ufsc.ine.agent.context.communication.CommunicationContextService;
 import br.ufsc.ine.agent.context.intentions.IntentionsContextService;
-import br.ufsc.ine.context.bayesian.BayesianContextService;
 import br.ufsc.ine.utils.PrologEnvironment;
 
 import java.util.Arrays;
@@ -61,40 +60,14 @@ public class PlansContextService implements ContextService{
 		//return true;
 	}
 	
-	public boolean hasPreCondition(String clause) {
-		return clause.contains("aware(") && !BayesianContextService.getInstance().queryAwareNode(); //deve notificar apenas quando o queryAwareNode for false -> belief é menor que o threshhold
-	}
 	
-	public boolean checkPreConditionsCustom(Plan p) {
-		if(p.getPreConditions().isEmpty()) {
-			return true;
-		}
-		boolean check = true;
-		for(String clause : p.getPreConditions()){
-			if(clause.startsWith("aware(")) {
-				if(clause.startsWith("not")){
-					check =  !hasPreCondition(clause.replace("not", ""));
-				} else{
-					check =  hasPreCondition(clause);
-				}
-
-				if(!check){
-					return  check;
-				}				
-			}
-			
-
-		}
-		return check;
-
-	}
     public void executePlanAlgorithm() {
     	
 		//TODO: add intencao na verificacao para busca do plano
 
 
 		Optional<Plan> plan = plans.stream()
-				.filter(p -> (this.hasIntention(p.getSomethingToBeTrue())) && (checkPreConditions(p) && this.checkPreConditionsCustom(p)))
+				.filter(p -> (this.hasIntention(p.getSomethingToBeTrue())) && (checkPreConditions(p)))
 				.findFirst();
 		
 		if(plan.isPresent()) {

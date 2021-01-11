@@ -1,0 +1,20 @@
+communication:
+    sensor("sensor", "br.ufsc.ine.agent.DummySensor"). //informacoes relativas ao celular serao simuladas dentro do Sigon
+    actuator("actuator", "br.ufsc.ine.agent.DummyActuator").
+   
+
+
+beliefs:
+    aux.
+	
+	
+desires:
+    notifyPedestrian.
+    
+intentions:
+	notifyPedestrian.
+    
+planner:
+	plan(notifyPedestrian,[action(text(notifyPedestrian))],[aware(no)],_). //a ideia é que esse pegue coisas do BC
+	
+

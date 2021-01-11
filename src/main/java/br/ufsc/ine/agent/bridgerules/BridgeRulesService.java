@@ -16,7 +16,6 @@ import br.ufsc.ine.agent.context.custom.CustomContext;
 import br.ufsc.ine.agent.context.desires.DesiresContextService;
 import br.ufsc.ine.agent.context.intentions.IntentionsContextService;
 import br.ufsc.ine.agent.context.plans.PlansContextService;
-import br.ufsc.ine.context.bayesian.BayesianContextService;
 
 public class BridgeRulesService {
 
@@ -196,42 +195,8 @@ public class BridgeRulesService {
                 .body(body)
                 .build().execute();
          
-        Body bodyT = Body.builder().context(beliefsContext).clause("car(X,yes)").build();
-         BridgeRule.builder()
-                 .head(Head.builder().context(BayesianContextService.getInstance()).clause("vehicle").build())
-                 .body(bodyT)
-                 .build().execute();
-
-         Body bodyR = Body.builder().context(beliefsContext).clause("car(X,no)").build();
-         BridgeRule.builder()
-                 .head(Head.builder().context(BayesianContextService.getInstance()).clause("-vehicle").build())
-                 .body(bodyR)
-                 .build().execute();
-         
-         Body bodyScreen = Body.builder().context(beliefsContext).clause("smartphone(screen, on)").build();
-         BridgeRule.builder()
-                 .head(Head.builder().context(BayesianContextService.getInstance()).clause("screenDistraction").build())
-                 .body(bodyScreen)
-                 .build().execute();
-         
-         Body bodyScreenNeg = Body.builder().context(beliefsContext).clause("smartphone(screen, off)").build();
-         BridgeRule.builder()
-                 .head(Head.builder().context(BayesianContextService.getInstance()).clause("-screenDistraction").build())
-                 .body(bodyScreenNeg)
-                 .build().execute();
-         
-         Body bodySound = Body.builder().context(beliefsContext).clause("smartphone(headphone, on)").build();
-         BridgeRule.builder()
-                 .head(Head.builder().context(BayesianContextService.getInstance()).clause("soundDistraction").build())
-                 .body(bodySound)
-                 .build().execute();
-         
-         Body bodySoundNeg = Body.builder().context(beliefsContext).clause("smartphone(headphone, off)").build();
-         BridgeRule.builder()
-                 .head(Head.builder().context(BayesianContextService.getInstance()).clause("-soundDistraction").build())
-                 .body(bodySoundNeg)
-                 .build().execute();
-
+       
+       
 
     }
 }
