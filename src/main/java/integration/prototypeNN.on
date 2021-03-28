@@ -1,0 +1,36 @@
+/*start negotiation by finding data about the product
+after finding data, the agent can elaborate a new stategy based on the retrieved values
+*/
+
+communication:    
+    sensor("textSensor", "integration.TextSensor").
+    sensor("negotiationPerception", "integration.WebScraperPerception").
+    sensor("imageSensor", "integration.ImageSensor").
+    actuator("defineNextValue", "integration.TextActuator").
+    actuator("findInformation", "integration.WebScraper").      
+
+
+beliefs:
+	assistHuman.
+	negotiating.
+	
+
+//!beliefs currentEmotion(X) :- beliefs negotiating & _neuralNetwork currentEmotion(X) & _neuralNetwork detectEmotion.
+	
+_neuralNetwork:
+	detecEmotion. 
+	//currentEmotion(X).	
+	
+
+desires:	
+	updateDecision.
+
+    
+intentions:
+	updateDecision.
+	
+
+planner:
+    plan(updateDecision,[action(findInformation())],[negotiating, currentEmotion(angry)],_).            
+
+    

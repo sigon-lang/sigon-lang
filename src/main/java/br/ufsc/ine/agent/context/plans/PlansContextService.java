@@ -12,8 +12,8 @@ import br.ufsc.ine.agent.context.beliefs.BeliefsContextService;
 import br.ufsc.ine.agent.context.communication.Actuator;
 import br.ufsc.ine.agent.context.communication.CommunicationContextService;
 import br.ufsc.ine.agent.context.intentions.IntentionsContextService;
-import br.ufsc.ine.context.bayesian.BayesianContextService;
 import br.ufsc.ine.utils.PrologEnvironment;
+import integration.NeuralNetworkContext;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -62,7 +62,9 @@ public class PlansContextService implements ContextService{
 	}
 	
 	public boolean hasPreCondition(String clause) {
-		return clause.contains("aware(") && !BayesianContextService.getInstance().queryAwareNode(); //deve notificar apenas quando o queryAwareNode for false -> belief é menor que o threshhold
+		//return false;
+		
+		return clause.contains("currentEmotion(") && NeuralNetworkContext.getInstance().checkEmotion(clause); //deve notificar apenas quando o queryAwareNode for false -> belief é menor que o threshhold
 	}
 	
 	public boolean checkPreConditionsCustom(Plan p) {
@@ -71,7 +73,7 @@ public class PlansContextService implements ContextService{
 		}
 		boolean check = true;
 		for(String clause : p.getPreConditions()){
-			if(clause.startsWith("aware(")) {
+			if(clause.startsWith("currentEmotion(")) {
 				if(clause.startsWith("not")){
 					check =  !hasPreCondition(clause.replace("not", ""));
 				} else{
@@ -128,7 +130,7 @@ public class PlansContextService implements ContextService{
 		}
 		boolean check = false;
 		for(String clause : p.getPreConditions()){
-			if(!clause.startsWith("aware(")) {
+			if(!clause.startsWith("currentEmotion(")) {
 				if(clause.startsWith("not")){
 					check =  !hasBelief(clause.replace("not", ""));
 				} else{

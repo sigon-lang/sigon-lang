@@ -57,16 +57,14 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>2.9.5</version>
-		</dependency>
-		
+		</dependency>	
+			
+			
 		<dependency>
-		    <groupId>br.ufsc.ine</groupId>		
-		    <artifactId>netica-app</artifactId>		
-		    <version>1.0</version>		
-		    <scope>system</scope>		
-		    <systemPath>${basedir}/lib/NeticaJ.jar</systemPath>
+		    <groupId>com.googlecode.json-simple</groupId>
+		    <artifactId>json-simple</artifactId>
+		    <version>1.1.1</version>
 		</dependency>
-
 
 
 		<!-- https://mvnrepository.com/artifact/junit/junit -->
@@ -97,7 +95,29 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>1.8.9</version>
 		</dependency>
-
+		
+		 <dependency>
+      <groupId>org.deeplearning4j</groupId>
+      <artifactId>deeplearning4j-core</artifactId>
+      <version>1.0.0-beta7</version>
+    </dependency> 
+    
+    <dependency>
+      <groupId>org.deeplearning4j</groupId>
+      <artifactId>deeplearning4j-modelimport</artifactId>
+      <version>1.0.0-beta7</version>
+    </dependency>           
+        
+    <dependency>
+      <groupId>org.nd4j</groupId>
+      <artifactId>nd4j-native-platform</artifactId>
+      <version>1.0.0-beta7</version>
+    </dependency>
+<dependency>
+   <groupId>org.apache.commons</groupId>
+   <artifactId>commons-lang3</artifactId>
+   <version>3.6</version>
+</dependency>
 
 
 	</dependencies>
