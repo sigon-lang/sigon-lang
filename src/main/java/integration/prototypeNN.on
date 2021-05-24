@@ -4,23 +4,25 @@ after finding data, the agent can elaborate a new stategy based on the retrieved
 
 communication:    
     sensor("textSensor", "integration.TextSensor").
-    sensor("negotiationPerception", "integration.WebScraperPerception").
-    sensor("imageSensor", "integration.ImageSensor").
     actuator("defineNextValue", "integration.TextActuator").
-    actuator("findInformation", "integration.WebScraper").      
+    
 
 
 beliefs:
-	assistHuman.
+	assistHuman(teste(aux), teste).
 	negotiating.
 	
 
-//!beliefs currentEmotion(X) :- beliefs negotiating & _neuralNetwork currentEmotion(X) & _neuralNetwork detectEmotion.
-	
 _neuralNetwork:
-	detecEmotion. 
-	//currentEmotion(X).	
+	detecEmotion.		
+	currentEmotion(seller, X).
+	//currentEmotion(buyer, X).	
 	
+_auxiliary:
+	retrievedPrice(X). //proposes a new value based on the retrieved price
+	
+! desires aux(aux) :- beliefs aux(aux). 
+! beliefs aux(aux) :- desires aux(aux). 
 
 desires:	
 	updateDecision.
@@ -30,7 +32,10 @@ intentions:
 	updateDecision.
 	
 
-planner:
-    plan(updateDecision,[action(findInformation())],[negotiating, currentEmotion(angry)],_).            
+planner:	
+    
+    
+    
+                
 
     

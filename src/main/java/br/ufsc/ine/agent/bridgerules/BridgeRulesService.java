@@ -183,7 +183,7 @@ public class BridgeRulesService {
     
     
     public void executeBdiRules() {
-        Body body = Body.builder().context(communicationContext).clause("sense(X)").build();
+        Body body = Body.builder().context(communicationContext).clause("sense(X)").build(); //criar metodo para constroir um contexto e circundas com bc, pc e etc
         Body plan = Body.builder().context(plansContext).clause("plan(Y,_,Z,_)").build();
         Body planMember = Body.builder().context(plansContext).clause("member(X, Z)").build();
         Body desires = Body.builder().context(desiresContext).clause("Y").build();

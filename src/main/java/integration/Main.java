@@ -78,7 +78,7 @@ public class Main {
 	private static void percept(){
         System.out.println("Percept");    
         
-        //TextSensor.msg.onNext("negotiating.");
+        TextSensor.msg.onNext("negotiating.");
         
         //ImageSensor.msg.onNext("negotiating."); //path to the image
         

@@ -27,11 +27,22 @@ public class WebScraperPerception extends Sensor{
 			reader = new FileReader("/home/rr/repositorios/sigon/sigon-lang/perception.json");
 			JSONParser jsonParser = new JSONParser();
 			Object obj = jsonParser.parse(reader);
-			 JSONArray perceptions = (JSONArray) obj;
+			JSONArray perceptions = (JSONArray) obj;
+			double mean = 0;
 			 for (Object object : perceptions) {
-				System.out.println(((JSONObject) object).get("Title"));
+				 mean += (double) ((JSONObject) object).get("Price");				
 			}
-	         System.out.println(perceptions);
+	         System.out.println(mean/perceptions.size());
+	         mean = mean/perceptions.size();
+	         double variance = 0.0;
+	         double currentPrice = 0.0;
+	         for (Object object : perceptions) {
+	        	 currentPrice = (double) ((JSONObject) object).get("Price");
+				 variance +=  Math.pow((Math.abs(currentPrice - mean)), 2);				
+			}
+	         double stdDeviation = Math.sqrt(variance/perceptions.size());
+	         System.out.println(stdDeviation);
+	         
 			
 			System.out.println("Reading perceptions");
 		} catch (IOException | ParseException e) {
